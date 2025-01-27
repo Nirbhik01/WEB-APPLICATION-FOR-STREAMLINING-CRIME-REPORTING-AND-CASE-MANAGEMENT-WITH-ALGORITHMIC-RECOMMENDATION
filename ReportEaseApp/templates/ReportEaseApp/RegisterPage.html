@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {%load static tailwind_tags%}
+    {%tailwind_css%}
+    <style>
+    </style>
+</head>
+
+<body class="relative">
+    {%block register_form%}
+
+    <div class=" bg-gradient-to-b from-dark-blue  w-full min-h-screen px-6 py-6">
+        <div class="text-center sm:p-6 p-4">
+            <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Create your account</h4>
+        </div>
+        <div class="mx-4 mb-4 ">
+            <form class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md">
+                <div class="grid sm:grid-cols-2 gap-6">
+                    {%block first_name%}
+                    <div>
+                        <label class="text-gray-900 text-sm font-medium mb-2 block">First Name</label>
+                        <input name="name" type="text"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter name" />
+                    </div>
+                    {%endblock%}
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Last Name</label>
+                        <input name="lname" type="text"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter last name" />
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Email Id</label>
+                        <input name="email" type="text"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter email" />
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Mobile No.</label>
+                        <input name="number" type="number"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter mobile number" />
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Password</label>
+                        <input name="password" type="password"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter password" />
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Confirm Password</label>
+                        <input name="cpassword" type="password"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter confirm password" />
+                    </div>
+
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Register As </label>
+                        <select name="cpassword" type="password" id="registerAs"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all">
+                            <option value="" disabled selected value>--select an option--</option>
+                            <option value="Citizen">Citizen</option>
+                            <option value="Lawyer">Lawyer</option>
+                            <option value="Investigator">Investigator</option>
+                        </select>
+                    </div>
+
+                    <div id="lawyerDetails" class="hidden">
+                        <p>Lawyer-specific content goes here.</p>
+                    </div>
+
+                    <div id="investigatorDetails" class="hidden">
+                        <p>Investigator-specific content goes here.</p>
+                    </div>
+
+                </div>
+                <div class="mt-8 ">
+                    <button type="submit"
+                        class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const selectElement = document.getElementById('registerAs');
+
+        const citizenDetails = document.querySelectorAll('#citizenDetails');
+        // console.log(citizenDetails);
+        selectElement.addEventListener('change', function () {
+            // Hide all conditional elements
+            for (let i = 0; i < 2; i++) {
+
+                citizenDetails[i].classList.add('hidden');
+            }
+            // lawyerDetails.classList.add('hidden');
+            // investigatorDetails.classList.add('hidden');
+
+            // Show the selected element
+            if (selectElement.value === 'Citizen') {
+                for (let i = 0; i < 2; i++) {
+                    citizenDetails[i].classList.remove('hidden');
+                }
+                // citizenDetails.classList.remove('hidden');
+            }
+            // } else if (selectElement.value === 'Lawyer') {
+            //     lawyerDetails.classList.remove('hidden');
+            // } else if (selectElement.value === 'Investigator') {
+            //     investigatorDetails.classList.remove('hidden');
+            // }
+        });
+
+    </script>
+
+    {%endblock%}
+</body>
+
+<!-- <div class="hidden" id="citizenDetails">
+                        <label class="text-gray-500 text-sm mb-2 block">Upload Your Citizenship</label>
+                        <input name="cpassword" type="file"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-[0.45rem] rounded border focus:border-blue-600 outline-none transition-all" />
+                    </div>
+                    <div class="hidden" id="citizenDetails">
+                        <label class="text-gray-500 text-sm mb-2 block">Upload Your Recent Photo</label>
+                        <input name="cpassword" type="file" accept="image/*" capture="environment"
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-[0.45rem] rounded border focus:border-blue-600 outline-none transition-all" />
+                    </div> -->
+
+</html>

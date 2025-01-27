@@ -1,0 +1,98 @@
+{% extends 'BaseTemplate.html' %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% tailwind_css %}
+</head>
+
+<body>
+    {%block main_content%}
+        <div id="main_content" class="mt-10 px-5 md:px-7 md:mt-14">
+            <div class="px-3 md:px-0 md:mx-7 md:border-t">
+                <ol
+                    class="relative text-gray-500 border-s border-gray-200 -mt-4   dark:border-gray-700 md:text-center dark:text-gray-400 md:flex md:border-s-0 md:justify-between ">
+                    <li class="flex items-center bg-white -ml-3  mb-10 md:mb-0 md:ml-0 md:block ">
+                        <span
+                            class=" bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8 bg-green-200 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900 md:mx-auto">
+                        </span>
+                        <div class="mx-3 md:mx-0">
+                            <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
+                                    class="hidden md:inline"><br></span> Registration</h3>
+                        </div>
+                    </li>
+                    <li class="flex items-center bg-white mb-10 -ml-3  md:mb-0 md:ml-0 md:block">
+                        <span
+                            class="bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                        </span>
+                        <div class="mx-3 md:mx-0">
+                            <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
+                                    class="hidden md:inline"><br></span> Verification</h3>
+                        </div>
+                    </li>
+
+                    <!-- Add from the middle not from top or bottom -->
+
+                    <li class="flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block">
+                        <span
+                            class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                        </span>
+                        <div class="mx-3 md:mx-0">
+                            <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigator<span
+                                    class="hidden md:inline"><br></span> Assigning</h3>
+                        </div>
+                    </li>
+                    <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block ">
+                        <button class="flex md:block">
+                            <span
+                                class=" group-hover:bg-dark-blue  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                            </span>
+                            <div class="mx-3 md:mx-0 ">
+                                <h3 class="group-hover:hidden font-medium leading-tight text-wrap md:mt-2 ">Investigation<span
+                                        class="hidden md:inline"><br></span> Ongoing</h3>
+                                <p class="hidden font-medium leading-tight text-wrap md:mt-2 group-hover:block">View Activity <span
+                                    class="hidden md:inline"><br></span> Log</p>
+                            </div>
+                        </button>
+                    </li>
+                    <li class="items-center flex -ml-3 md:ml-0 bg-white md:block">
+                        <span
+                            class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                        </span>
+                        <div class="mx-3 md:mx-0">
+                            <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
+                                    class="hidden md:inline"><br></span> Termination</h3>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div id="wanted_posters">
+
+            </div>
+        </div>
+    {%endblock%}
+  
+    <!-- <script>
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+            event.stopPropagation();
+
+            // Add a one-time event listener to close the dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const button = document.getElementById('dropdownMenuIconHorizontalButton');
+
+                // Close the dropdown if the click is outside both the button and dropdown
+                if (!dropdown.contains(e.target) && !button.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            }, { once: true });
+        }
+    </script> -->
+</body>
+
+</html>

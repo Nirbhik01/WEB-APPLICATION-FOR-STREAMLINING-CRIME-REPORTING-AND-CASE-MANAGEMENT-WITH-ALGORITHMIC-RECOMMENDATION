@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {%load static tailwind_tags%}
+    {%tailwind_css%}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</head>
+
+<body class="relative">
+    {%block nav%}
+    <nav class="z-30 sticky top-0 mt-0 flex justify-between mx-auto">
+        <div class="flex w-[100%] p-[.5rem] items-center bg-dark-blue justify-between px-5 md:px-10 ">
+            <div class="md:hidden ">
+                <!-- data-dropdown-toggle="dropdownDotsHorizontal" -->
+                <button id="dropdownMenuIconHorizontalButton" 
+                    class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-dark-blue"
+                    type="button" onclick="toggleDropdown('dropdownDotsHorizontal',event)">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                            d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                    </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="dropdownDotsHorizontal"
+                    class="z-10 absolute mt-[1rem] hidden bg-white  rounded-lg shadow w-44 ">
+                    <ul class=" text-sm text-gray-700 divide-y divide-gray"
+                        aria-labelledby="dropdownMenuIconHorizontalButton">
+                        <li class="hover:bg-cool-gray">
+                            <a href="{%url 'HomePage'%}" class="block px-4 py-2   ">Home</a>
+                        </li>
+                        <li class="hover:bg-cool-gray">
+                            <a href="{%url 'ProfilePage'%}" class="block px-4 py-2   ">Profile</a>
+                        </li>
+                        <li class="hover:bg-cool-gray">
+                            <a href="#" class="block px-4 py-2">Notifications</a>
+                        </li>
+                        <li class="hover:bg-cool-gray">
+                            <a href="#" class="block px-4 py-2">Features</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="max-w-screen-xl py-3 mx-auto ">
+                    <div class="flex items-center">
+                        <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+                            <li>
+                                <a href="{%url 'HomePage'%}" class="text-white hover:underline" aria-current="page">Home</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white hover:underline">Notifiaction</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white hover:underline">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-white hover:underline">Features</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:flex relative space-x-0 md:space-x-7 ">
+                <form class="max-w-md md:w-[100%] w-3/4 float-right md:float-none ring-0 border-0">
+                    <div class="relative justify-between ">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <div class="flex justify-between h-[1.8rem] md:h-[2rem]">
+                            <input type="search" id="" class="w-full ps-10 text-sm rounded-lg border-0" placeholder="" required />
+                            <button type="submit"
+                                class="text-white h-[100%] rounded-r-lg absolute end-0 bottom-0 bg-cool-gray  font-medium text-sm px-2 md:px-3 ">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="hidden md:block ">
+
+                    <button class=" rounded-full w-10 h-8">
+                        <img class="inline w-8 h-8 rounded-full "
+                            src="{%static 'ReportEaseApp/Homepage/user_icon.png'%}" alt="Bordered avatar">
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="dropdownNotification"
+            class="z-10  absolute bg-white divide-y divide-black rounded-lg shadow max-w-[40rem] w-3/4 min-w-70">
+            <div class="p-5  rounded-lg bg-gray-50 ">
+                <time class="text-lg font-semibold text-gray-900 ">January 13th, 2022</time>
+                <ol class="mt-3 divide-y divide-gray ">
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Jese Leos image" />
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal"><span class="font-medium text-gray-900 ">Jese
+                                        Leos</span> likes
+                                    <span class="font-medium text-gray-900 ">Bonnie
+                                        Green's</span> post in <span class="font-medium text-gray-900 "> How to
+                                        start with
+                                        Flowbite library</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Bonnie Green image" />
+                            <div>
+                                <div class="text-base font-normal text-gray-600 "><span
+                                        class="font-medium text-gray-900 ">Bonnie Green</span>
+                                    react to <span class="font-medium text-gray-900 ">Thomas
+                                        Lean's</span> comment
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+
+
+
+            <div class="p-5 bg-gray-50 ">
+                <time class="text-lg font-semibold text-gray-900 ">January 12th, 2022</time>
+                <ol class="mt-3 divide-y divide-gray ">
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Laura Romeros image" />
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal"><span class="font-medium text-gray-900 ">Laura
+                                        Romeros</span>
+                                    likes <span class="font-medium text-gray-900 ">Bonnie
+                                        Green's</span> post in <span class="font-medium text-gray-900 "> How to
+                                        start with
+                                        Flowbite library</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Mike Willi image" />
+                            <div>
+                                <div class="text-base font-normal text-gray-600 "><span
+                                        class="font-medium text-gray-900 ">Mike Willi</span>
+                                    react to <span class="font-medium text-gray-900 ">Thomas
+                                        Lean's</span> comment
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Jese Leos image" />
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal"><span class="font-medium text-gray-900 ">Jese
+                                        Leos</span> likes
+                                    <span class="font-medium text-gray-900 ">Bonnie
+                                        Green's</span> post in <span class="font-medium text-gray-900 "> How to
+                                        start with
+                                        Flowbite library</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="items-center flex p-3 sm:flex  ">
+                            <img class="w-12 h-12 mb-3 me-3 rounded-full sm:mb-0"
+                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Bonnie Green image" />
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal"><span class="font-medium text-gray-900 ">Bonnie
+                                        Green</span>
+                                    likes <span class="font-medium text-gray-900 ">Bonnie
+                                        Green's</span> post in <span class="font-medium text-gray-900 "> Top
+                                        figma
+                                        designs</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>  -->
+    </nav>
+
+    {%endblock%}
+
+
+    {% block main_content %}
+    <!-- Default content if not overridden -->
+    {% endblock %}
+
+    {%block footer%}
+    <!-- Default footer if not overridden -->
+    {%endblock%}
+
+
+    <script>
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+            event.stopPropagation();
+
+            // Add a one-time event listener to close the dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const button = document.getElementById('dropdownMenuIconHorizontalButton');
+
+                // Close the dropdown if the click is outside both the button and dropdown
+                if (!dropdown.contains(e.target) && !button.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            }, { once: true });
+        }
+    </script>
+
+
+
+</body>
+
+</html>
