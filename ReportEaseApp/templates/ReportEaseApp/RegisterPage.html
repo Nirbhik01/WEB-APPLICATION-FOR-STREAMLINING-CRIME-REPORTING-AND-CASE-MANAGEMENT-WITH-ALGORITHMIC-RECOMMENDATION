@@ -12,23 +12,32 @@
 </head>
 
 <body class="relative">
+
+    
+    {%block nav_bar%}
+    {%endblock%}
+    {%block camera%}
+    {%endblock%}
+
     {%block register_form%}
 
     <div class=" bg-gradient-to-b from-dark-blue  w-full min-h-screen px-6 py-6">
         <div class="text-center sm:p-6 p-4">
+            {%block topic%}
             <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Create your account</h4>
+            {%endblock%}
         </div>
         <div class="mx-4 mb-4 ">
             <form class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md">
                 <div class="grid sm:grid-cols-2 gap-6">
-                    {%block first_name%}
+                    {%block fields%}
                     <div>
-                        <label class="text-gray-900 text-sm font-medium mb-2 block">First Name</label>
+                        <label class="text-gray-900 text-sm mb-2 block">First Name</label>
                         <input name="name" type="text"
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter name" />
                     </div>
-                    {%endblock%}
+                    
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Last Name</label>
                         <input name="lname" type="text"
@@ -71,6 +80,8 @@
                         </select>
                     </div>
 
+                    {%endblock%}
+
                     <div id="lawyerDetails" class="hidden">
                         <p>Lawyer-specific content goes here.</p>
                     </div>
@@ -83,42 +94,15 @@
                 <div class="mt-8 ">
                     <button type="submit"
                         class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
-                        Sign up
+                        {%block button%}
+                        <p>Signup</p>
+                        {%endblock%}
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
-        const selectElement = document.getElementById('registerAs');
-
-        const citizenDetails = document.querySelectorAll('#citizenDetails');
-        // console.log(citizenDetails);
-        selectElement.addEventListener('change', function () {
-            // Hide all conditional elements
-            for (let i = 0; i < 2; i++) {
-
-                citizenDetails[i].classList.add('hidden');
-            }
-            // lawyerDetails.classList.add('hidden');
-            // investigatorDetails.classList.add('hidden');
-
-            // Show the selected element
-            if (selectElement.value === 'Citizen') {
-                for (let i = 0; i < 2; i++) {
-                    citizenDetails[i].classList.remove('hidden');
-                }
-                // citizenDetails.classList.remove('hidden');
-            }
-            // } else if (selectElement.value === 'Lawyer') {
-            //     lawyerDetails.classList.remove('hidden');
-            // } else if (selectElement.value === 'Investigator') {
-            //     investigatorDetails.classList.remove('hidden');
-            // }
-        });
-
-    </script>
 
     {%endblock%}
 </body>

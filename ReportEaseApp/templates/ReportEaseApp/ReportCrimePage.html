@@ -1,4 +1,6 @@
-{%extends 'BaseTemplate.html' %}
+{%extends 'RegisterPage.html' %}
+
+<!-- using extends in register page as overriding/modifying of elements happens in register page rather than the base template which has nav bar -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,16 +9,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    {%load static%}
+
     {%load static tailwind_tags%}
     {%tailwind_css%}
 </head>
 
 <body>
-    {% extends 'RegisterPage.html' %}
-    {%block first_name%}
-    <div>report ceomr</div>
+    {%block nav_bar%}
+    {% include 'BaseTemplate.html' %}
+    <!-- i was unable to override/modify elements in parent template using include so using include in base template because nav bar shouldnt be changed anywhere-->
     {%endblock%}
+
+    {%block camera%}
+    <div style="display: none;" class="absolute z-20 w-full h-full bg-black bg-opacity-50 " id="video_div">
+        <button type="button" class="text-white font-bold bg-transparent   rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center " id="close_button">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close menu</span>
+         </button>
+        <video id="video" autoplay class="mx-auto self-center mt-10 rounded-lg"></video>
+        <div class=" mx-auto  text-center mt-5">
+            <button id="capturebtn" class="bg-cool-gray text-white font-medium opacity-100 px-12 py-3 rounded-lg ">Capture Photo</button>
+        </div>
+    </div>
+    {%endblock%}
+
+    {%block topic%}
+
+    <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Report Incident</h4>
+    {%endblock%}
+
+    {%block fields%}
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
+        <select name="name" type="text"
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:border-blue-600 outline-none transition-all"
+            placeholder="Enter name">
+            <option value="" disabled selected value>-- choose an option --</option>
+            <option value="">Antisocial Behaviour</option>
+            <option value="">Burglary</option>
+            <option value="">Criminal Damage</option>
+            <option value="">CyberCrime</option>
+            <option value="">Fraud</option>
+            <option value="">Hate Crime</option>
+            <option value="">Robbery</option>
+            <option value="">Rural Crime</option>
+            <option value="">Spiking</option>
+            <option value="">Stacking</option>
+        </select>
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
+        <input name="password" type="date"
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
+        <input name="password" type="time"
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Loaction of the Crime</label>
+        <input type="text"
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
+            placeholder="Please share your google map location via link if possible">
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
+        <input type="file"
+            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
+        <textarea name="" id=""
+            class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
+            placeholder="Write everything you saw in detail"></textarea>
+    </div>
+
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
+        <input type="file"
+            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
+            accept="image/*">
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
+
+        <button type="button" id="open"
+            class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
+            Camera</button>
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
+        <input type="radio" name="yes_no"
+            class="  selection:bg-black  text-sm text-gray-800 border focus:ring-0 focus:border-black outline-none transition-all/">
+        <label for="">Yes</label>
+        <input type="radio" name="yes_no"
+            class="  ml-5 text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
+        <label for="">No</label>
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <img name="yes_no" src="" id="img" style="display:none;"
+            class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
+
+
+    </div>
+    <script>
+        const open = document.getElementById('open');
+        const video = document.getElementById('video');
+        const capturebtn = document.getElementById('capturebtn');
+        const canvas = document.getElementById('canvas');
+        const img = document.getElementById('img');
+        const videodiv=document.getElementById('video_div');
+        const close_button = document.getElementById('close_button');
+
+        open.addEventListener('click', async function startCam() {
+            try {
+                // IN CHROME I HAVE MARKED THIS http://192.168.1.68:8000/ AS SAFE
+                // by enabling  chrome://flags/#unsafely-treat-insecure-origin-as-secure and adding this ipv4 address to it 
+                // to revert it just disable the above and remove the ip address
+                var stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videodiv.style.display = 'block';
+                video.style.display = 'block';
+                video.srcObject = stream;
+                video.play();
+            } catch (error) {
+                alert("Error accessing the camera: " + error);
+            }
+        });
+
+        capturebtn.addEventListener('click', () => {
+            videodiv.style.display = 'none';
+            video.style.display = 'none';
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            img.src = canvas.toDataURL('image/png');
+            img.style.display = 'block';
+
+            let stream = video.srcObject;
+            let tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+            console.log(img.src);
+        });
+
+        close_button.addEventListener('click', () => {
+            videodiv.style.display = 'none';
+            video.style.display = 'none';
+            let stream = video.srcObject;
+            let tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+            
+        });
+
+    </script>
+    {%endblock%}
+    {%block button%}
+    <p class="text-base">Report</p>
+    {%endblock%}
+
 </body>
 
 </html>
