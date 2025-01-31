@@ -12,87 +12,268 @@
 
 <body>
     {%block main_content%}
-        <div id="main_content" class="mt-10 px-5 md:px-7 md:mt-14">
-            <div class="px-3 md:px-0 md:mx-7 md:border-t">
-                <ol
-                    class="relative text-gray-500 border-s border-gray-200 -mt-4   dark:border-gray-700 md:text-center dark:text-gray-400 md:flex md:border-s-0 md:justify-between ">
-                    <li class="flex items-center bg-white -ml-3  mb-10 md:mb-0 md:ml-0 md:block ">
-                        <span
-                            class=" bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8 bg-green-200 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900 md:mx-auto">
-                        </span>
-                        <div class="mx-3 md:mx-0">
-                            <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
-                                    class="hidden md:inline"><br></span> Registration</h3>
-                        </div>
-                    </li>
-                    <li class="flex items-center bg-white mb-10 -ml-3  md:mb-0 md:ml-0 md:block">
-                        <span
-                            class="bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
-                        </span>
-                        <div class="mx-3 md:mx-0">
-                            <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
-                                    class="hidden md:inline"><br></span> Verification</h3>
-                        </div>
-                    </li>
+    <div id="main_content" class="mt-10 px-5 md:px-7 md:mt-14">
+        <div class="px-3 md:px-0 md:mx-7 md:border-t">
+            <ol
+                class="relative border-s border-gray-200 -mt-4 dark:border-gray-700 md:text-center dark: md:flex md:border-s-0 md:justify-between ">
+                <li class="flex items-center bg-white -ml-3  mb-10 md:mb-0 md:ml-0 md:block ">
+                    <span
+                        class=" bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8 bg-green-200 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900 md:mx-auto">
+                    </span>
+                    <div class="mx-3 md:mx-0">
+                        <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
+                                class="hidden md:inline"><br></span> Registration</h3>
+                    </div>
+                </li>
+                <li class="flex items-center bg-white mb-10 -ml-3  md:mb-0 md:ml-0 md:block">
+                    <span
+                        class="bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                    </span>
+                    <div class="mx-3 md:mx-0">
+                        <h3 class="font-medium leading-tight text-wrap md:mt-2">FIR<span
+                                class="hidden md:inline"><br></span> Verification</h3>
+                    </div>
+                </li>
 
-                    <!-- Add from the middle not from top or bottom -->
+                <!-- Add from the middle not from top or bottom -->
 
-                    <li class="flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block">
+                <li class="flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block">
+                    <span
+                        class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                    </span>
+                    <div class="mx-3 md:mx-0">
+                        <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigator<span
+                                class="hidden md:inline"><br></span> Assigning</h3>
+                    </div>
+                </li>
+                <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block ">
+                    <button class="flex md:block">
                         <span
-                            class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                            class=" group-hover:bg-dark-blue  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
                         </span>
-                        <div class="mx-3 md:mx-0">
-                            <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigator<span
-                                    class="hidden md:inline"><br></span> Assigning</h3>
+                        <div class="mx-3 md:mx-0 ">
+                            <h3 class="group-hover:hidden font-medium leading-tight text-wrap md:mt-2 ">
+                                Investigation<span class="hidden md:inline"><br></span> Ongoing</h3>
+                            <p class="hidden font-medium leading-tight text-wrap md:mt-2 group-hover:block">View
+                                Activity <span class="hidden md:inline"><br></span> Log</p>
                         </div>
-                    </li>
-                    <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block ">
-                        <button class="flex md:block">
-                            <span
-                                class=" group-hover:bg-dark-blue  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
-                            </span>
-                            <div class="mx-3 md:mx-0 ">
-                                <h3 class="group-hover:hidden font-medium leading-tight text-wrap md:mt-2 ">Investigation<span
-                                        class="hidden md:inline"><br></span> Ongoing</h3>
-                                <p class="hidden font-medium leading-tight text-wrap md:mt-2 group-hover:block">View Activity <span
-                                    class="hidden md:inline"><br></span> Log</p>
-                            </div>
-                        </button>
-                    </li>
-                    <li class="items-center flex -ml-3 md:ml-0 bg-white md:block">
-                        <span
-                            class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
-                        </span>
-                        <div class="mx-3 md:mx-0">
-                            <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
-                                    class="hidden md:inline"><br></span> Termination</h3>
+                    </button>
+                </li>
+                <li class="items-center flex -ml-3 md:ml-0 bg-white md:block">
+                    <span
+                        class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                    </span>
+                    <div class="mx-3 md:mx-0">
+                        <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
+                                class="hidden md:inline"><br></span> Termination</h3>
+                    </div>
+                </li>
+            </ol>
+        </div>
+        <div id="wanted_posters">
+
+        </div>
+    </div>
+    <div id="activity_log"
+        class="md:m-10 mx-5 my-10 bg-light-gray p-5 rounded-xl max-h-screen overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+        <div id="log">
+            <h1 class="text-2xl font-medium">Activity Log</h1>
+            <ul role="list" class="divide-y mt-3 divide-gray-100">
+                <li class="flex justify-between gap-x-6 py-5">
+                    <div class="flex min-w-0 gap-x-4">
+                        <div class="min-w-0 flex-auto">
+                            <p class="text-base font-semibold ">Suspect Investigation</p>
+                            <p class="mt-1 text-sm ">Your suspect "hari godar" was investigated about the issue</p>
                         </div>
-                    </li>
-                </ol>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">13h
+                                ago</time></p>
+                    </div>
+                </li>
+
+                <!-- Add Items Here -->
+
+                <li class="flex justify-between gap-x-6 py-5">
+                    <div class="flex min-w-0 gap-x-4">
+                        <div class="min-w-0 flex-auto">
+                            <p class="text-base font-semibold ">Evidence Collection</p>
+                            <p class="mt-1  text-sm ">An artifact regarding </p>
+                        </div>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">3h
+                                ago</time></p>
+                    </div>
+                </li>
+                <li class="flex justify-between gap-x-6 py-5">
+                    <div class="flex min-w-0 gap-x-4">
+                        <div class="min-w-0 flex-auto">
+                            <p class="text-base font-semibold ">Dries Vincent</p>
+                            <p class="mt-1  text-sm ">dries.vincent@example.com</p>
+                        </div>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <div class="flex items-center gap-x-1.5">
+                            <p class="text-xs/5 ">Updated 1h ago</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex justify-between gap-x-6 py-5">
+                    <div class="flex min-w-0 gap-x-4">
+                        <div class="min-w-0 flex-auto">
+                            <p class="text-base font-semibold ">Dries Vincent</p>
+                            <p class="mt-1  text-sm ">dries.vincent@example.com</p>
+                        </div>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <div class="flex items-center gap-x-1.5">
+                            <p class="text-xs/5 ">Updated 1h ago</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex justify-between gap-x-6 pt-5">
+                    <div class="flex min-w-0 gap-x-4">
+                        <div class="min-w-0 flex-auto">
+                            <p class="text-base font-semibold ">Lindsay Walton</p>
+                            <p class="mt-1  text-sm ">lindsay.walton@example.com</p>
+                        </div>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">10h
+                                ago</time></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- component -->
+    <div class="fixed bottom-0 right-0 mb-10 md:mr-10  mr-5">
+        <button id="open-chat"
+            class="bg-dark-blue p-1 text-white  rounded-full hover:bg-blue-600 transition duration-300 flex items-center">
+            <svg class="w-10 h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+    <div id="chat-container" class="hidden fixed bottom-16 right-4 w-72 sm:w-80 md:w-96">
+        <div class="bg-white shadow-md rounded-lg max-w-md w-full">
+            <div class="p-4 border-b bg-dark-blue text-white rounded-t-lg flex justify-between items-center">
+                <p class="text-lg font-semibold">Investigator Name</p>
+                <button id="close-chat"
+                    class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
             </div>
-            <div id="wanted_posters">
-
+            <div id="chatbox" class="p-4 h-80 bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                <!-- Chat messages will be displayed here -->
+                <div class="mb-2 text-right">
+                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">hello</p>
+                </div>
+                <div class="mb-2">
+                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
+                        chatbot.</p>
+                </div>
+                <div class="mb-2 text-right">
+                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">this example of chat</p>
+                </div>
+                <div class="mb-2">
+                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
+                        chatbot.</p>
+                </div>
+                <div class="mb-2 text-right">
+                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">design with tailwind</p>
+                </div>
+                <div class="mb-2">
+                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
+                        chatbot.</p>
+                </div>
+            </div>
+            <div class="p-4 border-t bg-light-gray flex">
+                <input id="user-input" type="text" placeholder="Type a message"
+                    class="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-0 focus:border-black ">
+                <button id="send-button"
+                    class="bg-cool-gray text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
             </div>
         </div>
-    {%endblock%}
-  
-    <!-- <script>
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('hidden');
-            event.stopPropagation();
+    </div>
+    <script>
+        const chatbox = document.getElementById("chatbox");
+        const chatContainer = document.getElementById("chat-container");
 
-            // Add a one-time event listener to close the dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                const button = document.getElementById('dropdownMenuIconHorizontalButton');
+        const userInput = document.getElementById("user-input");
+        const sendButton = document.getElementById("send-button");
+        const openChatButton = document.getElementById("open-chat");
+        const closeChatButton = document.getElementById("close-chat");
 
-                // Close the dropdown if the click is outside both the button and dropdown
-                if (!dropdown.contains(e.target) && !button.contains(e.target)) {
-                    dropdown.classList.add('hidden');
-                }
-            }, { once: true });
+        let isChatboxOpen = true; // Set the initial state to open
+
+        // Function to toggle the chatbox visibility
+        function toggleChatbox() {
+            chatContainer.classList.toggle("hidden");
+            isChatboxOpen = !isChatboxOpen; // Toggle the state
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
-    </script> -->
+
+        // Add an event listener to the open chat button
+        openChatButton.addEventListener("click", toggleChatbox);
+
+        // Add an event listener to the close chat button
+        closeChatButton.addEventListener("click", toggleChatbox);
+
+        // Add an event listener to the send button
+        sendButton.addEventListener("click", function () {
+            const userMessage = userInput.value;
+            if (userMessage.trim() !== "") {
+                addUserMessage(userMessage);
+                respondToUser(userMessage);
+                userInput.value = "";
+            }
+        });
+
+        userInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                const userMessage = userInput.value;
+                addUserMessage(userMessage);
+                respondToUser(userMessage);
+                userInput.value = "";
+            }
+        });
+
+        function addUserMessage(message) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("mb-2", "text-right");
+            messageElement.innerHTML = `<p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function addBotMessage(message) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("mb-2");
+            messageElement.innerHTML = `<p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function respondToUser(userMessage) {
+            // Replace this with your chatbot logic
+            setTimeout(() => {
+                addBotMessage("This is a response from the chatbot.");
+            },500);
+        }
+
+    </script>
+    {%endblock%}
+
+
 </body>
 
 </html>
