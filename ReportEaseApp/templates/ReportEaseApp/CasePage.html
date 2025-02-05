@@ -47,17 +47,19 @@
                     </div>
                 </li>
                 <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block ">
-                    <button class="flex md:block">
-                        <span
-                            class=" group-hover:bg-dark-blue  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                    
+                        <span class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3 ring-4 ring-white  md:start-0 md:mx-auto ">
+                            <!-- <span class="animate-scale  z-0 md:h-8 md:w-8 w-6 h-6 rounded-full "></span>  -->
+                            <span class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-dark-yellow ring-4 ring-white"></span>
                         </span>
-                        <div class="mx-3 md:mx-0 ">
-                            <h3 class="group-hover:hidden font-medium leading-tight text-wrap md:mt-2 ">
+                        <!-- <span
+                            class="   bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                        </span> -->
+                        <div class="mx-9 md:mx-0 ">
+                            <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
                                 Investigation<span class="hidden md:inline"><br></span> Ongoing</h3>
-                            <p class="hidden font-medium leading-tight text-wrap md:mt-2 group-hover:block">View
-                                Activity <span class="hidden md:inline"><br></span> Log</p>
                         </div>
-                    </button>
+
                 </li>
                 <li class="items-center flex -ml-3 md:ml-0 bg-white md:block">
                     <span
@@ -148,9 +150,10 @@
         </div>
     </div>
     <!-- component -->
-    <div class="fixed bottom-0 right-0 mb-10 md:mr-10  mr-5">
+    <div class=" group fixed flex bottom-0 right-0 mb-10 md:mr-10 items-center mr-5">
+        <div class="  hidden group-hover:flex border border-gray h-10 rounded-lg px-2 items-center text-sm mr-3 bg-light-gray  font-medium  "> <p> chat with your investigator</p></div>
         <button id="open-chat"
-            class="bg-dark-blue p-1 text-white  rounded-full hover:bg-blue-600 transition duration-300 flex items-center">
+            class="bg-dark-blue p-1 text-white  rounded-full hover:bg-blue-600 transition duration-100 flex items-center ">
             <svg class="w-10 h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
