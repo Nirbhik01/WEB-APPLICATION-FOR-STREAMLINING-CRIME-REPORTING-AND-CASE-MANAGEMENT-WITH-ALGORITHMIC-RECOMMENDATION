@@ -28,9 +28,13 @@
             {%endblock%}
         </div>
         <div class="mx-4 mb-4 ">
-            <form class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md">
+            <form action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md" >
                 <div class="grid sm:grid-cols-2 gap-6">
                     {%block fields%}
+                    <!-- this form is extended by the report crime page
+                     so i am using this hidden input tag below to identify which form is 
+                     being called while building the api -->
+                    <input type="hidden" name="register_user_form" value="register_user_form">
                     <div>
                         <label class="text-gray-900 text-sm mb-2 block">First Name</label>
                         <input name="name" type="text"

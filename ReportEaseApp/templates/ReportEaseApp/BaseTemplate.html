@@ -30,17 +30,17 @@
                     class="z-10 absolute mt-[1rem] hidden bg-white  rounded-lg shadow w-44 ">
                     <ul class=" text-sm text-gray-700 divide-y divide-gray"
                         aria-labelledby="dropdownMenuIconHorizontalButton">
-                        <li class="hover:bg-cool-gray">
-                            <a href="{%url 'HomePage'%}" class="block px-4 py-2   ">Home</a>
+                        <li class="">
+                            <a href="{%url 'HomePage'%}" class="block px-4 py-2 rounded-t-lg  hover:bg-cool-gray">Home</a>
                         </li>
-                        <li class="hover:bg-cool-gray">
-                            <a href="{%url 'ProfilePage'%}" class="block px-4 py-2   ">Profile</a>
+                        <li >
+                            <a href="{%url 'ProfilePage'%}" class="block px-4 py-2  hover:bg-cool-gray" >Profile</a>
                         </li>
-                        <li class="hover:bg-cool-gray">
-                            <a href="#" class="block px-4 py-2">Notifications</a>
+                        <li class="">
+                            <a href="#" class="block px-4 py-2 hover:bg-cool-gray">Notifications</a>
                         </li>
-                        <li class="hover:bg-cool-gray text-left">
-                            <button class="block px-4 py-2 w-full text-left" type="button"
+                        <li class="">
+                            <button class="block px-4 py-2 w-full text-left hover:bg-cool-gray rounded-b-lg" type="button"
                                 data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
                                 data-drawer-placement="right" aria-controls="drawer-right-example">Settings</button>
                         </li>
@@ -352,9 +352,6 @@
     <!-- Default content if not overridden -->
     {% endblock %}
 
-    {%block footer%}
-    <!-- Default footer if not overridden -->
-    {%endblock%}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script>

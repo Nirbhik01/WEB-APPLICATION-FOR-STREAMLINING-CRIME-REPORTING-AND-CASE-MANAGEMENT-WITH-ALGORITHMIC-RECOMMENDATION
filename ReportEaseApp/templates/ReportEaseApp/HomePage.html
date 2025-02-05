@@ -12,281 +12,284 @@
 
 <body class="h-screen">
     {%block main_content%}
-    <section class="bg-center w-full bg-cover bg-Homepage-bcg ">
-        <div class="px-5 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-black md:text-5xl lg:text-6xl">
-                ReportEase</h1>
-            <p class="mb-8 text-lg font-medium text-black lg:text-xl sm:px-16 lg:px-48"> <span
-                    class="text-xl text-black"> Where Justice Meets Innovation. </span> <br> We bridge the gap between
-                law enforcement and the public, supporting timely justice delivery.</p>
-            <div class="w-full">
-                <a  href="{%url 'ReportCrimePage'%}"
-                class="text-white   bg-dark-blue focus:outline-none font-semibold rounded-md text-lg md:px-16 px-12 py-3 ">Report a Crime</a>
-            </div>
-            <!-- <form class=" relative w-full max-w-md mx-auto  ">
-                <div class="relative">
-                    <input type="email" id="default-email"
-                        class="block w-full p-3 ps-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white   "
-                        placeholder="Search" required />
-                    <button type="submit"
-                        class="text-white absolute end-[.3rem] bottom-[.3rem] bg-cool-gray focus:outline-none  font-medium rounded-md text-sm px-4 py-2 ">Search</button>
 
-
+        {%block background%}
+            <section class="bg-center w-full bg-cover bg-Homepage-bcg ">
+                <div class="px-5 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+                    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-black md:text-5xl lg:text-6xl">ReportEase</h1>
+                    <p class="mb-8 text-lg font-medium text-black lg:text-xl sm:px-16 lg:px-48"><span
+                            class="text-xl text-black">Where Justice Meets Innovation.</span><br>We bridge the gap between law enforcement and the public, supporting timely justice delivery.</p>
+                    <div class="w-full  hover:scale-[1.01] hover:duration-[.2s] group">
+                        <a  href="{%url 'ReportCrimePage'%}"
+                        class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-12 py-3 group-hover:shadow-md">Report a Crime</a>
+                    </div>
                 </div>
-            </form> -->
-        </div>
-    </section>
+            </section>
+        {%endblock%}
 
-    <div id="main-content" class="relative md:flex md:mx-3 h-full">
-        <div id="CasesAndWanted" class="md:w-[75%] md:h-full  mt-10">
-            <!-- cases -->
-            <div class="mx-5  p-5 rounded-lg bg-light-gray md:mx-7">
-                <h1 class="text-3xl font-medium text-gray-900 ">Your Cases</h1>
-                <ol
-                    class="mt-5 md:grid md:grid-cols-2 md:space-y-0 md:gap-4 divide-opacity-5 space-y-4 divider-gray-200 max-h-60 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
-                    <a href="{%url 'CasePage'%}"
-                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
-                        <div class="text-gray-600 ">
-                            <div class="text-base font-normal">Case no.1 - Home Robbery</div>
-                            <div class="text-sm font-normal">Investigation Process</div>
-                        </div>
-                    </a>
-                    <a href="{%url 'CasePage'%}"
-                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
-                        <div class="text-gray-600 ">
-                            <div class="text-base font-normal">Case no.2 - Phone theft</div>
-                            <div class="text-sm font-normal">Investigation Process</div>
-                        </div>
-                    </a>
-                    <a href="{%url 'CasePage'%}"
-                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
-                        <div class="text-gray-600 ">
-                            <div class="text-base font-normal">Case no.3 - Identity Theft</div>
-                            <div class="text-sm font-normal">Investigation Process</div>
+        {%block homepage_body_content%}    
+            <div id="main-content" class="relative md:flex md:mx-3 h-full">
+                {%block cases_and_wanted%}
+                    <div id="CasesAndWanted" class="md:w-[75%] md:h-full md:mx-7 mx-5  mt-10">
+                        
+                        {%block cases%}
+                            <!-- <div class="mx-5 p-5 rounded-lg bg-light-gray md:mx-7">
+                                <h1 class="text-3xl font-medium text-gray-900 ">Your Cases</h1>
+                                <ol
+                                    class="mt-5 md:grid md:grid-cols-2 md:space-y-0 md:gap-4 divide-opacity-5 space-y-4 divider-gray-200 max-h-60 overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+                                    <a href="{%url 'CasePage'%}"
+                                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                                        <div class="text-gray-600 ">
+                                            <div class="text-base font-normal">Case no.1 - Home Robbery</div>
+                                            <div class="text-sm font-normal">Investigation Process</div>
+                                        </div>
+                                    </a>
+                                    <a href="{%url 'CasePage'%}"
+                                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                                        <div class="text-gray-600 ">
+                                            <div class="text-base font-normal">Case no.2 - Phone theft</div>
+                                            <div class="text-sm font-normal">Investigation Process</div>
+                                        </div>
+                                    </a>
+                                    <a href="{%url 'CasePage'%}"
+                                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                                        <div class="text-gray-600 ">
+                                            <div class="text-base font-normal">Case no.3 - Identity Theft</div>
+                                            <div class="text-sm font-normal">Investigation Process</div>
+                                        </div>
+                                    </a>
+                                    <a href="{%url 'CasePage'%}"
+                                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                                        <div class="text-gray-600 ">
+                                            <div class="text-base font-normal">Case no.4 - Bank Account Info</div>
+                                            <div class="text-sm font-normal">Investigation Process</div>
+                                        </div>
+                                    </a>
+                                </ol>
+                            </div> -->
+                            {%include 'CaseTemplate.html'%}
+                        {%endblock%}
 
+                        <!-- wanted -->
+                        {%block wanted%}
+                        <div class=" p-5 mt-10  bg-light-gray rounded-lg">
+                            <div class="flex justify-between items-start">
+                                <p class="text-3xl font-medium">Wanted</p>
+                                <a href="#" class="self-end text-cool-gray"><u>View More</u></a>
+                            </div>
+                            <div
+                                class="grid grid-cols-3 mt-5 gap-x-6 gap-y-10 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 xl:gap-x-8">
+                                <a href="#" class="group">
+                                    <img src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}"
+                                        alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                        class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                                    <div class="flex flex-col">
+                                        <h3 class="mt-2 text-xs md:text-sm lg:text-base">Alexis Thompson</h3>
+                                        <p class="mt-1 text-xs md:text-sm lg:text-base  ">Wanted For : Theft</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="group">
+                                    <img src="{%static 'ReportEaseApp/Homepage/criminal2.jpg'%}"
+                                        alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                        class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                                    <div class="flex flex-col">
+                                        <h3 class="mt-2 text-xs md:text-sm lg:text-base">Daniel Mcnanago</h3>
+                                        <p class="mt-1 text-xs md:text-sm lg:text-base ">Wanted For : Murder</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="group">
+                                    <img src="{%static 'ReportEaseApp/Homepage/criminal3.jpg'%}"
+                                        alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                        class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                                    <div class="flex flex-col">
+                                        <h3 class="mt-2 text-xs md:text-sm lg:text-base">Alex Shiyaki</h3>
+                                        <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Robbery</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="group">
+                                    <img src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}"
+                                        alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                        class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                                    <div class="flex flex-col">
+                                        <h3 class="mt-2 text-xs md:text-sm lg:text-base">Layla Campbell</h3>
+                                        <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Assault</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="group">
+                                    <img src="{%static 'ReportEaseApp/Homepage/criminal2.jpg'%}"
+                                        alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                        class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
+                                    <div class="flex flex-col">
+                                        <h3 class="mt-2 text-xs md:text-sm lg:text-base">Habibulla Mohammad</h3>
+                                        <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Molesting</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </a>
-                    <a href="{%url 'CasePage'%}"
-                        class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
-                        <div class="text-gray-600 ">
-                            <div class="text-base font-normal">Case no.4 - Bank Account Info</div>
-                            <div class="text-sm font-normal">Investigation Process</div>
+                        {%endblock%}
+                    </div>
+                {%endblock%}
+
+                {%block news%}
+                    <article id="NewsArticle"
+                        class="mx-5 p-5 md:ml-3 md:mr-7 my-10 md:w-[25%] rounded-lg bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                        <h1 class="lg:text-3xl md:text-2xl text-3xl font-medium">News Articles</h1>
+                        <div class="grid lg:grid-cols-1 md:grid-cols-1 grid-cols-2 gap-5 mt-5 ">
+                            <a href="#" class="block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
+                                <div class="w-full max-lg:max-w-xl rounded-[.8rem]">
+                                    <div class="flex items-center">
+                                        <img src="" alt="blogs tailwind section"
+                                            class="rounded-t-lg w-full object-cover">
+                                    </div>
+                                    <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
+                                        <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
+                                            your portfolio
+                                        </h4>
+                                        <p class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</p>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class="block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
+                                <div class="w-full max-lg:max-w-xl rounded-lg">
+                                    <div class="flex items-center">
+                                        <img src="" alt="blogs tailwind section"
+                                            class="rounded-t-lg w-full object-cover">
+                                    </div>
+                                    <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
+                                        <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
+                                            your portfolio
+                                        </h4>
+                                        <h6 class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</h6>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#" class=" max-h-full block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
+                                <div class="w-full max-lg:max-w-xl rounded-lg">
+                                    <div class="flex items-center">
+                                        <img src="" alt="blogs tailwind section"
+                                            class="rounded-t-lg w-full object-cover">
+                                    </div>
+                                    <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
+                                        <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
+                                            your portfolio
+                                        </h4>
+                                        <h6 class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</h6>
+
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </ol>
+                    </article>
+                {%endblock%}
             </div>
-            <!-- wanted -->
-            <div class="mx-5 p-5 mt-10 sm:p-5 md:mx-7 md:p-5 md:mt-10 bg-light-gray rounded-lg">
-                <div class="flex justify-between items-start">
-                    <p class="text-3xl font-medium">Wanted</p>
-                    <a href="#" class="self-end text-cool-gray"><u>View More</u></a>
-                </div>
-                <div
-                    class="grid grid-cols-3 mt-5 gap-x-6 gap-y-10 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 xl:gap-x-8">
-                    <a href="#" class="group">
-                        <img src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}"
-                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-                            class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
-                        <div class="flex flex-col">
-                            <h3 class="mt-2 text-xs md:text-sm lg:text-base">Alexis Thompson</h3>
-                            <p class="mt-1 text-xs md:text-sm lg:text-base  ">Wanted For : Theft</p>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <img src="{%static 'ReportEaseApp/Homepage/criminal2.jpg'%}"
-                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-                            class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
-                        <div class="flex flex-col">
-                            <h3 class="mt-2 text-xs md:text-sm lg:text-base">Daniel Mcnanago</h3>
-                            <p class="mt-1 text-xs md:text-sm lg:text-base ">Wanted For : Murder</p>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <img src="{%static 'ReportEaseApp/Homepage/criminal3.jpg'%}"
-                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-                            class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
-                        <div class="flex flex-col">
-                            <h3 class="mt-2 text-xs md:text-sm lg:text-base">Alex Shiyaki</h3>
-                            <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Robbery</p>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <img src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}"
-                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-                            class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
-                        <div class="flex flex-col">
-                            <h3 class="mt-2 text-xs md:text-sm lg:text-base">Layla Campbell</h3>
-                            <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Assault</p>
-                        </div>
-                    </a>
-                    <a href="#" class="group">
-                        <img src="{%static 'ReportEaseApp/Homepage/criminal2.jpg'%}"
-                            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-                            class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-[7/8]">
-                        <div class="flex flex-col">
-                            <h3 class="mt-2 text-xs md:text-sm lg:text-base">Habibulla Mohammad</h3>
-                            <p class="mt-1 text-xs md:text-sm lg:text-base">Wanted For : Molesting</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <article id="NewsArticle"
-            class="  mx-5 p-5 md:ml-3 md:mr-7 my-10 md:w-[25%] rounded-lg bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
-            <h1 class="lg:text-3xl md:text-2xl text-3xl font-medium">News Articles</h1>
-            <div class="grid lg:grid-cols-1 md:grid-cols-1 grid-cols-2 gap-5 mt-5 ">
-                <a href="#" class="block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
-                    <div class="w-full max-lg:max-w-xl rounded-[.8rem]">
-                        <div class="flex items-center">
-                            <img src="https://pagedone.io/asset/uploads/1696244317.png" alt="blogs tailwind section"
-                                class="rounded-t-lg w-full object-cover">
-                        </div>
-                        <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
-                            <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
-                                your portfolio
-                            </h4>
-                            <p class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</p>
+        {%endblock%}    
 
+        {%block footer%}
+            <footer class="bg-dark-blue md:px-10 md:py-7 p-5  text-white">
+                <div class="md:flex md:justify-between">
+                    <div class="mb-6 md:mb-0">
+                        <a href="" class="flex items-center">
+                            <span class="self-center text-4xl font-semibold whitespace-nowrap ">ReportEase</span>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                        <div>
+                            <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Resources</h2>
+                            <ul class=" font-medium">
+                                <li class="mb-4">
+                                    <a href="" class="hover:underline">User Guide</a>
+                                </li>
+                                <li>
+                                    <a href="" class="hover:underline">FAQs</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Follow us</h2>
+                            <ul class=" font-medium">
+                                <li class="mb-4">
+                                    <a href="" class="hover:underline ">Facebook</a>
+                                </li>
+                                <li>
+                                    <a href="" class="hover:underline">Twitter</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Legal</h2>
+                            <ul class=" font-medium">
+                                <li class="mb-4">
+                                    <a href="#" class="hover:underline">Privacy Policy</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </a>
-                <a href="#" class="block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
-                    <div class="w-full max-lg:max-w-xl rounded-lg">
-                        <div class="flex items-center">
-                            <img src="https://pagedone.io/asset/uploads/1696244317.png" alt="blogs tailwind section"
-                                class="rounded-t-lg w-full object-cover">
-                        </div>
-                        <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
-                            <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
-                                your portfolio
-                            </h4>
-                            <h6 class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</h6>
+                </div>
+                <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href=""
+                            class="hover:underline">ReportEase</a>. All Rights Reserved.
+                    </span>
+                    <div class="flex mt-4 sm:justify-center sm:mt-0">
+                        <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 8 19">
+                                <path fill-rule="evenodd"
+                                    d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="sr-only">Facebook page</span>
+                        </a>
 
-                        </div>
+                        <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                viewBox="0 0 20 17">
+                                <path fill-rule="evenodd"
+                                    d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="sr-only">Twitter page</span>
+                        </a>
+
                     </div>
-                </a>
-                <a href="#" class=" max-h-full block w-full border border-gray box-border  p-[.15rem] rounded-[.8rem]">
-                    <div class="w-full max-lg:max-w-xl rounded-lg">
-                        <div class="flex items-center">
-                            <img src="https://pagedone.io/asset/uploads/1696244317.png" alt="blogs tailwind section"
-                                class="rounded-t-lg w-full object-cover">
-                        </div>
-                        <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
-                            <h4 class="md:text-sm lg:text-base text-xs">Clever ways to invest in product to organize
-                                your portfolio
-                            </h4>
-                            <h6 class="md:text-xs lg:text-xs text-[10px] block mt-1">Jan 01, 2023</h6>
-
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </article>
-
-    </div>
-
-
-    <footer class="bg-dark-blue md:px-10 md:py-7 p-5  text-white">
-
-        <div class="md:flex md:justify-between">
-            <div class="mb-6 md:mb-0">
-                <a href="" class="flex items-center">
-
-                    <span class="self-center text-4xl font-semibold whitespace-nowrap ">ReportEase</span>
-                </a>
-            </div>
-            <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
-                    <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Resources</h2>
-                    <ul class=" font-medium">
-                        <li class="mb-4">
-                            <a href="" class="hover:underline">User Guide</a>
-                        </li>
-                        <li>
-                            <a href="" class="hover:underline">FAQs</a>
-                        </li>
-                    </ul>
                 </div>
-                <div>
-                    <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Follow us</h2>
-                    <ul class=" font-medium">
-                        <li class="mb-4">
-                            <a href="" class="hover:underline ">Facebook</a>
-                        </li>
-                        <li>
-                            <a href="" class="hover:underline">Twitter</a>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h2 class="mb-6 text-base font-semibold text-gray-900 uppercase ">Legal</h2>
-                    <ul class=" font-medium">
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="#" class="hover:underline">Terms &amp; Conditions</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href=""
-                    class="hover:underline">ReportEase</a>. All Rights Reserved.
-            </span>
-            <div class="flex mt-4 sm:justify-center sm:mt-0">
-                <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 8 19">
-                        <path fill-rule="evenodd"
-                            d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="sr-only">Facebook page</span>
-                </a>
+            </footer>
+        {%endblock%}    
 
-                <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 20 17">
-                        <path fill-rule="evenodd"
-                            d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="sr-only">Twitter page</span>
-                </a>
 
-            </div>
-        </div>
-    </footer>
 
-    <script>
-        function matchHeight(element1, element2) {
-            // Function to set the height of element1 to match element2
-            const setHeight = () => {
-                const isMdOrLarger = window.matchMedia("(min-width: 768px)").matches; // Check if screen width is md or larger
-                if (isMdOrLarger) {
-                    const height = element2.offsetHeight; // Get the height of element2
-                    element1.style.height = `${height}px`; // Set the height of element1
-                } else {
-                    element1.style.height = "auto"; // Reset height for smaller screens
-                }
-            };
+        <script>
+            function matchHeight(element1, element2) {
+                // Function to set the height of element1 to match element2
+                const setHeight = () => {
+                    const isMdOrLarger = window.matchMedia("(min-width: 768px)").matches; // Check if screen width is md or larger
+                    if (isMdOrLarger) {
+                        const height = element2.offsetHeight; // Get the height of element2
+                        element1.style.height = `${height}px`; // Set the height of element1
+                    } else {
+                        element1.style.height = "auto"; // Reset height for smaller screens
+                    }
+                };
 
-            // Set the height initially
-            setHeight();
+                // Set the height initially
+                setHeight();
 
-            // Update the height on window resize
-            window.addEventListener("resize", setHeight);
-        }
+                // Update the height on window resize
+                window.addEventListener("resize", setHeight);
+            }
 
-        // Usage Example:
-        const element1 = document.getElementById("NewsArticle"); // Element to adjust
-        const element2 = document.getElementById("CasesAndWanted"); // Element to match
-        matchHeight(element1, element2);
-    </script>
+            // Usage Example:
+            const element1 = document.getElementById("NewsArticle"); // Element to adjust
+            const element2 = document.getElementById("CasesAndWanted"); // Element to match
+            matchHeight(element1, element2);
+        </script>
     {%endblock%}
+    
 </body>
 
 </html>

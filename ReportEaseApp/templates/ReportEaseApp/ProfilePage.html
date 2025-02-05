@@ -13,30 +13,30 @@
 </head>
 
 <body>
-
     {%block main_content%}
-
-        <!-- drawer init and show -->
-    <div id="main_content" class="md:flex  sm:flex md:justify-between justify-center mx-5 md:mx-10 my-10">
-        <div class=" w-full">
-            <div class="w-full md:max-w-sm sm:max-w-sm">
-                <div class="rounded-lg border border-gray bg-white px-4 pt-8 pb-10 shadow-lg">
+    {%block profilepage_body_content%}
+    <div id="main_content" class="md:flex sm:block  md:justify-between justify-center mx-5 md:mx-10 my-10">
+        <div class="w-full sm:flex md:flex block justify-between gap-x-10  sm:space-y-0 space-y-10">
+            {%block profile_detail_and_lawyer_recommendation%}
+            <div class="w-full md:max-w-sm sm:max-w-sm mb-6 md:mb-0 sm:mb-0 ">
+                <div class="rounded-lg border border-gray bg-white p-5 shadow-lg">
                     <div class="relative mx-auto w-36 rounded-full">
-                        <img class="mx-auto md:w-32 md:h-32 w-24 h-24 rounded-full"
-                            src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}"
-                            alt=""/>
+                        <img class="mx-auto md:w-32 md:h-32 w-24 h-24 rounded-full object-cover"
+                            src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="" />
                     </div>
-                    <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Ganji Chudel</h1>
+                    <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Ramita Poudel</h1>
                     <h3 class="font-lg text-semibold text-center leading-6 text-gray-600">
                     </h3>
                     <p class="text-center text-sm leading-6 text-gray-500 hover:text-gray-600"></p>
                     <ul
                         class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
                         <li class="flex items-center py-3 text-sm">
-                            <span>Status</span>
-                            <span class="ml-auto"><span
-                                    class="rounded-full py-1 px-2 text-xs font-medium text-green-700">Open
-                                    for side gigs</span></span>
+                            <span>Registered As </span>
+                            <span class="ml-auto">Citizen</span>
+                        </li>
+                        <li class="flex items-center py-3 text-sm">
+                            <span>Contact </span>
+                            <span class="ml-auto">9812345678</span>
                         </li>
                         <li class="flex items-center py-3 text-sm">
                             <span>Joined On</span>
@@ -44,32 +44,63 @@
                         </li>
                     </ul>
                 </div>
+                <div
+                    class="w-full md:max-w-sm sm:max-w-sm mt-10 px-5 py-3 text-center rounded-lg bg-cool-gray text-white font-semibold text-xl box-border hover:shadow-md hover:scale-[1.01] hover:duration-[.2s] group">
+                    <button type="button" class="group-hover:underline">
+                        Need a Lawyer?
+                    </button>
+                </div>
+            </div>
+            <div class="w-full h-auto self-start">
+                {%block cases%}
+                {%include 'CaseTemplate.html'%}
+                {%endblock%}
+
+                <div id="cases" class="w-full p-5 rounded-lg bg-light-gray mt-10 ">
+                    <h1 class="text-3xl font-medium text-gray-900 ">Previous Cases</h1>
+                    <ol
+                        class="mt-5  md:grid md:grid-cols-2 md:space-y-0 md:gap-4 divide-opacity-5 space-y-4 max-h-60 md:max-h-none overflow-y-scroll [&::-webkit-scrollbar]:hidden">
+                        <a href="{%url 'CasePage'%}"
+                            class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal">Home Robbery</div>
+                                <div class="text-sm font-normal">Investigation by Name</div>
+                            </div>
+                        </a>
+                        <a href="{%url 'CasePage'%}"
+                            class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal">Phone theft</div>
+                                <div class="text-sm font-normal">Investigation by Name</div>
+                            </div>
+                        </a>
+                        <a href="{%url 'CasePage'%}"
+                            class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal">Identity Theft</div>
+                                <div class="text-sm font-normal">Investigation by Name</div>
+                            </div>
+                        </a>
+                        <a href="{%url 'CasePage'%}"
+                            class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
+                            <div class="text-gray-600 ">
+                                <div class="text-base font-normal">Bank Account Info</div>
+                                <div class="text-sm font-normal">Investigation by Name</div>
+                            </div>
+                        </a>
+                    </ol>
+                </div>
+
             </div>
 
+            {%endblock%}
+
+
         </div>
-        
-
 
     </div>
-    </div>
 
-    <script>
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.style.translate($`x-full`);
-            event.stopPropagation();
-
-            // Add a one-time event listener to close the dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                const button = document.getElementById('dropdownMenuIconHorizontalButton');
-
-                // Close the dropdown if the click is outside both the button and dropdown
-                if (!dropdown.contains(e.target) && !button.contains(e.target)) {
-                    dropdown.classList.add('hidden');
-                }
-            }, { once: true });
-        }
-    </script>
+    {%endblock%}
     {%endblock%}
 </body>
 
