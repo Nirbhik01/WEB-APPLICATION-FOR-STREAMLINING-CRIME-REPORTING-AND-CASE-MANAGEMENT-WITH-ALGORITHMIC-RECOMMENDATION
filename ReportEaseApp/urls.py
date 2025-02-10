@@ -7,8 +7,12 @@ urlpatterns = [
     path('login/' , LoginPage , name='LoginPage'),
     path('register/' , RegisterPage , name='RegisterPage'),
     path('home/' , HomePage , name='HomePage'),
+    path('caselist/' , CaseListPage , name='CaselistPage'),
+    path('reviewfir/<int:id>',ReviewFirPage,name='ReviewFirPage'),
     path('case/' , CasePage , name='CasePage'),
+    
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
+    
     # path('logout/' , LogoutPage , name='LogoutPage'),
     path('profile/' , ProfilePage , name='ProfilePage'),
     # path('settings/' , SettingsPage , name='SettingsPage'),
