@@ -129,6 +129,11 @@ NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 STATIC_URL = '/static/'
 
+# change these below
+
+MEDIA_URL = '/Videos/'
+MEDIA_ROOT = BASE_DIR/'Videos'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

@@ -19,9 +19,16 @@
                     <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-black md:text-5xl lg:text-6xl">ReportEase</h1>
                     <p class="mb-8 text-lg font-medium text-black lg:text-xl sm:px-16 lg:px-48"><span
                             class="text-xl text-black">Where Justice Meets Innovation.</span><br>We bridge the gap between law enforcement and the public, supporting timely justice delivery.</p>
-                    <div class="w-full  hover:scale-[1.01] hover:duration-[.2s] group">
-                        <a  href="{%url 'ReportCrimePage'%}"
-                        class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-12 py-3 group-hover:shadow-md">Report a Crime</a>
+                    <div class="inline-flex gap-5 justify-center">
+                        {%if False%} <!--true for user false for investigator-->
+                            <a  href="{%url 'ReportCrimePage'%}"
+                            class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Report a Crime</a>
+                        {%else%}
+                            <a  href="{%url 'ReportCrimePage'%}"
+                            class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-lg md:px-12 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Upload Wanted</a>
+                            <a  href="{%url 'ReviewFirPage' 5%}"
+                            class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-12 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Review Fir</a>
+                        {%endif%}
                     </div>
                 </div>
             </section>

@@ -12,6 +12,9 @@ def RegisterPage(request):
 def HomePage(request):
     return render(request, 'HomePage.html')
 
+def ReviewFirPage(request,id):
+    return render(request, 'ReviewFirPage.html')
+
 def CasePage(request):
     # if request.method == 'POST':
     #     return redirect
@@ -23,6 +26,9 @@ def ReportCrimePage(request):
 
 def ProfilePage(request):
     return render(request, 'ProfilePage.html')
+
+def CaseListPage(request):
+    return render(request, 'CaseListPage.html')
 # Create your views here.
 
 
