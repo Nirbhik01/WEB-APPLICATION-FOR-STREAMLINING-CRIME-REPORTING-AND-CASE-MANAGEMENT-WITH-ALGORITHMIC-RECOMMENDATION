@@ -12,14 +12,14 @@
 
 <body class="relative" onclick="toggleDropdown(dropdownDotsHorizontal)">
     {%block nav%}
-    <nav class="z-30 sticky top-0 mt-0 flex justify-between mx-auto">
-        <div class="flex w-[100%] p-[.5rem] items-center bg-dark-blue justify-between px-5 md:px-10 ">
-            <div class="md:hidden ">
+    <nav class="z-30 sticky top-0 mt-0 flex justify-between mx-auto ">
+        <div class="flex w-[100%] p-[.5rem] items-center bg-dark-blue justify-between px-5 md:px-10 transform duration-500">
+            <div class="md:hidden duration-500">
                 <!-- data-dropdown-toggle="dropdownDotsHorizontal" -->
                 <button id="dropdownMenuIconHorizontalButton"
-                    class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-dark-blue"
+                    class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-dark-blue transform duration-500"
                     type="button" onclick="toggleDropdown('dropdownDotsHorizontal',event)">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    <svg class="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 16 3">
                         <path
                             d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
@@ -27,8 +27,8 @@
                 </button>
                 <!-- Dropdown menu -->
                 <div id="dropdownDotsHorizontal"
-                    class="z-10 absolute mt-[1rem] hidden bg-white  rounded-lg shadow w-44 ">
-                    <ul class=" text-sm text-gray-700 divide-y divide-gray"
+                    class="z-10 absolute mt-[1rem] hidden bg-white  rounded-lg shadow w-44 transform duration-500">
+                    <ul class=" text-sm text-gray-700 divide-y divide-gray transform duration-500 "
                         aria-labelledby="dropdownMenuIconHorizontalButton">
                         <li class="">
                             <a href="{%url 'HomePage'%}" class="block px-4 py-2 rounded-t-lg  hover:bg-cool-gray">Home</a>
@@ -47,8 +47,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="hidden md:block">
-                <div class="max-w-screen-xl py-3 mx-auto ">
+            <div class="hidden md:block transform duration-500">
+                <div class="max-w-screen-xl py-3 mx-auto transform duration-500 ">
                     <div class="flex items-center">
                         <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
@@ -82,7 +82,7 @@
                             </svg>
                         </div>
                         <div class="flex justify-between h-[1.8rem] md:h-[2rem]">
-                            <input type="search" id="" class="w-full ps-10 text-sm rounded-lg border-0" placeholder=""
+                            <input type="search" id="" class="w-full ps-10 text-sm rounded-lg border-0 placeholder:md:text-sm placeholder:text-xs" placeholder="Search Cases"
                                 required />
                             <button type="submit"
                                 class="text-white h-[100%] rounded-r-lg absolute end-0 bottom-0 bg-cool-gray  font-medium text-sm px-2 md:px-3 ">Search</button>

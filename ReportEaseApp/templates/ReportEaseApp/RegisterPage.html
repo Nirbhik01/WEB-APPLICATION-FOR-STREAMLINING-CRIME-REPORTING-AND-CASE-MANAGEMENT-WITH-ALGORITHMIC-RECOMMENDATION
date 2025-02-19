@@ -28,8 +28,8 @@
             {%endblock%}
         </div>
         <div class="mx-4 mb-4 ">
-            <form action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md" >
-                <div class="grid sm:grid-cols-2 gap-6">
+            <form action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" >
+                <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
                     {%block fields%}
                     <!-- this form is extended by the report crime page
                      so i am using this hidden input tag below to identify which form is 
@@ -95,7 +95,7 @@
                     </div>
 
                 </div>
-                <div class="mt-8 ">
+                <div class="mt-8 transform duration-500">
                     <button type="submit"
                         class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
                         {%block button%}

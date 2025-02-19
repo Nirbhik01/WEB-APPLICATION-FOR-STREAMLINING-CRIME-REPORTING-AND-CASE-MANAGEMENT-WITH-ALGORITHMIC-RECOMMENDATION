@@ -14,19 +14,19 @@
     {%block main_content%}
     <div class="my-10 md:mx-10 mx-5 box-border rounded-lg ">
         <div class="md:flex md:divide-x box-border ">
-            <!-- Evidenced Images -->
-            <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start"
+            <!-- Evidenced Media -->
+            <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start transform duration-500"
                 onload="getelementdetail(this)">
                 <h1 class="text-2xl font-semibold mb-5">Evidences: </h1>
-                <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                    style="display: none;" alt="Product"
-                    class="object-contain w-full max-h-80 border border-gray rounded-lg shadow-md mb-5 bg-white"
+                <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}"
+                    style="display: block;" alt="Product"
+                    class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
                     id="mainImage">
 
-                <video preload="metadata" src="" aria-disabled="true" autoplay controls
-                    class="w-full h-auto rounded-lg shadow-md mb-5" style="display: none;" id="mainVideo"></video>
-                <p id="imagelabel" class="self-center my-5 font-medium text-center"></p>
-                <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden" id="imagelist">
+                <video preload="metadata" src="" autoplay controls
+                    class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo">Profile</video>
+                <p id="imagelabel" class="self-center my-5 font-medium text-center">Profile</p>
+                <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden" id="imagelist transform duration-500">
                     <div onclick="getinfo(this)">
                         <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}" alt="Thumbnail 2"
                             class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
@@ -63,15 +63,17 @@
                 </div>
             </div>
 
-            <!-- fir report Details -->
-            <div class="w-full mt-10 md:my-0 md:pl-5 ">
-                <div class=" rounded-lg p-5 bg-light-gray">
-                    <h2 class="text-2xl font-semibold mb-5">Home Robbery</h2>
+            <!-- Fir report Details -->
+            <div class="w-full mt-10 md:my-0 md:pl-5 transform duration-500">
+                <div class=" rounded-lg p-5 bg-light-gray transform duration-500">
+                    <h2 class="text-2xl font-semibold mb-2">Home Robbery</h2>
                     <p class="mb-10 text-sm">Uploaded on : 2025/02/14</p>
                     <div class="flex mb-5 items-center gap-5">
                         <button><img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
                                 src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Rounded avatar"></button>
-                        <span class="text-lg mr-2">Sharmila Katwal</span>
+                        <span class="text-lg mr-2">Sharmila Katwal
+                            <p class="text-xs">Not the Victim</p>
+                        </span>
                     </div>
 
                     <p class="text-gray-700 mb-6">I was just laying there on my couch and three guys with black masks
@@ -86,14 +88,14 @@
                             <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p>15 / 12 / 2025</p>
                         </div>
                         <div class="flex gap-2">
-                            <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p>12:53 PM</p>
+                            <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p>12 : 53 PM</p>
                         </div>
                         <div class="flex gap-2">
-                            <h3 class="text-md font-semibold mb-2">Location of Crime :</h3><a href="https://www.facebook.com"> <u> click on this link </u></a>
+                            <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p>Durbarmarg, Kathmandu</p> <a href="https://www.facebook.com"> <u class="text-cool-gray">click for exact location</u></a>
                         </div>
                         
                     </div>
-                    <div class="md:flex mt-10 md:gap-5 ">
+                    <div class="md:flex mt-10 md:gap-5 transform duration-500">
                         <button class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As registered</button>
                         <button class="rounded-lg px-12 py-3 bg-dark-red hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium md:mt-0 mt-5">Mark As Failed</button>
                     </div>

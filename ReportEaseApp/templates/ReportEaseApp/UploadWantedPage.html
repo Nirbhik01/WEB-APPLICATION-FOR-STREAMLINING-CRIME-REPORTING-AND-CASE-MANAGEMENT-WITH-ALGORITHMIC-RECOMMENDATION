@@ -10,7 +10,16 @@
 </head>
 <body>  
     {%block main_content%}
-        
+        <form action="">
+            <div class="mb-3">
+                <label for="caseName" class="form-label">Case Name</label>
+                <input type="text" class="form-control" id="caseName" required>
+            </div>
+            <div class="mb-3">
+                <label for="caseDescription" class="form-label">Case Description</label>
+                <textarea class="form-control" id="caseDescription" rows="3" required></textarea>
+            </div>
+        </form>
     {%endblock%}
 </body>
 </html>
