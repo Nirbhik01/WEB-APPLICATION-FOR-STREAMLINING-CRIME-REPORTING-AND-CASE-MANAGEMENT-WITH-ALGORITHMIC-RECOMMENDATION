@@ -26,6 +26,5 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
-
-if settings.DEBUG:
+if settings.DEBUG:  # Serve media files only in development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
