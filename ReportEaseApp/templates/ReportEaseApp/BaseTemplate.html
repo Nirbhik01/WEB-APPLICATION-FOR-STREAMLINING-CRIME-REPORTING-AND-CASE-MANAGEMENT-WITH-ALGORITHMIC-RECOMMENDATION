@@ -7,7 +7,7 @@
     <title>Document</title>
     {%load static tailwind_tags%}
     {%tailwind_css%}
-    
+    {%load static%}
 </head>
 
 <body class="relative" onclick="toggleDropdown(dropdownDotsHorizontal)">
@@ -93,8 +93,10 @@
                 <div class="hidden md:block ">
 
                     <a class="rounded-full w-10 h-8" href="{%url 'ProfilePage'%}">
-                        <img class="inline w-10 h-8 rounded-full "
-                            src="{%static 'ReportEaseApp/Homepage/user_icon.png'%}" alt="Bordered avatar">
+                        {%if user_type == 'Citizen'%}
+                            <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.citizen_profile_picture.url }}" alt="">
+                        {%else%}
+                        {%endif%}
                     </a>
                 </div>
                 {%endblock%}
@@ -371,9 +373,6 @@
             });
         }
     </script>
-    
-
-
 
 </body>
 

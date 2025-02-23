@@ -3,12 +3,12 @@ from django.shortcuts import render,redirect
 def LandingPage(request):
     return render(request, 'LandingPage.html')
 
-def LoginPage(request):
-    return render(request, 'LoginPage.html')
+# def LoginPage(request):
+#     return render(request, 'LoginPage.html')
 
 
-def RegisterPage(request):
-    return render(request, 'RegisterPage.html')
+# def RegisterPage(request):
+#     return render(request, 'RegisterPage.html')
 
 def HomePage(request):
     return render(request, 'HomePage.html')

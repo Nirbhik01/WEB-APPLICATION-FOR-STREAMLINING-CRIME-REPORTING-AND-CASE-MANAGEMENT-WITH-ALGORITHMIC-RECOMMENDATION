@@ -1,11 +1,16 @@
 from django.contrib import admin
-from django.urls import path
-from .views import *
+from django.urls import path,include
+from .views import * 
+# from userauths.urls import *
+# from userauths.views import *
+
+
 
 urlpatterns = [
     path('' , LandingPage , name='LandingPage'),
-    path('login/' , LoginPage , name='LoginPage'),
-    path('register/' , RegisterPage , name='RegisterPage'),
+    # path('login/' , LoginPage , name='LoginPage'),
+    # path('register/' , RegisterPage , name='RegisterPage'),
+    path('user/', include('userauths.urls')),
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
     path('uploadwanted/' , UploadWantedPage , name='UploadWantedPage'),
