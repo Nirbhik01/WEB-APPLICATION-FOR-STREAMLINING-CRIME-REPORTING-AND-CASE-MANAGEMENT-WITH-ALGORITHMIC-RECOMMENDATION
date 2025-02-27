@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('ReportEaseApp.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("user/", include("userauths.urls", namespace="userauths")),
 ]
 
 if settings.DEBUG:  # Serve media files only in development

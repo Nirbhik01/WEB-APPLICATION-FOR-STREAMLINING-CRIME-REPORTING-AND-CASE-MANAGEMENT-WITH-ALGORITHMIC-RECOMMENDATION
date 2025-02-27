@@ -4,6 +4,7 @@ from .views import *
 # from userauths.urls import *
 # from userauths.views import *
 
+app_name='ReportEaseApp'
 
 
 urlpatterns = [

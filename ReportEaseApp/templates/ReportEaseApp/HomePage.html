@@ -20,13 +20,13 @@
                     <p class="mb-8 text-lg font-medium text-black lg:text-xl sm:px-16 lg:px-48"><span
                             class="text-xl text-black">Where Justice Meets Innovation.</span><br>We bridge the gap between law enforcement and the public, supporting timely justice delivery.</p>
                     <div class="inline-flex gap-5 justify-center transform duration-500">
-                        {%if False%} <!--true for user false for investigator-->
-                            <a  href="{%url 'ReportCrimePage'%}"
+                        {%if user_type == 'Citizen'%} <!--true for user false for investigator-->
+                            <a  href="{%url 'ReportEaseApp:ReportCrimePage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Report a Crime</a>
                         {%else%}
-                            <a  href="{%url 'UploadWantedPage'%}"
+                            <a  href="{%url 'ReportEaseApp:UploadWantedPage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-lg md:px-12 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Upload Wanted</a>
-                            <a  href="{%url 'CaseListPage'%}"
+                            <a  href="{%url 'ReportEaseApp:CaseListPage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-12 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Review Fir</a>
                         {%endif%}
                     </div>
@@ -261,7 +261,14 @@
             const element2 = document.getElementById("CasesAndWanted"); // Element to match
             matchHeight(element1, element2);
         </script>
-
+        <script>
+            let sessionKey = sessionStorage.getItem("session_key");
+            fetch(`/get_user_data/?session_key=${sessionKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("User:", data);
+                });
+        </script>
 {% comment %} handle page sessions {% endcomment %}
 
 

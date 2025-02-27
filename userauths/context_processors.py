@@ -1,10 +1,18 @@
 from userauths.models import Citizen, Investigator
+from django.shortcuts import render,redirect
+# from userauths.views import get_current_user
 
 def user_context(request):
+    # get_user = get_current_user(request)
+    # print(get_user)
+    user_id=None
+    user_type=None
+    try:
+        user_id = request.session.get('user_id')
+        user_type = request.session.get('user_type')
+    except:
+        return redirect("userauths:LoginPage")
     user = None
-    user_id = request.session.get('user_id')
-    user_type = request.session.get('user_type')
-
     if user_id and user_type:
         try:
             if user_type == 'Citizen':
