@@ -31,10 +31,10 @@
                     <ul class=" text-sm text-gray-700 divide-y divide-gray transform duration-500 "
                         aria-labelledby="dropdownMenuIconHorizontalButton">
                         <li class="">
-                            <a href="{%url 'HomePage'%}" class="block px-4 py-2 rounded-t-lg  hover:bg-cool-gray">Home</a>
+                            <a href="{%url 'ReportEaseApp:HomePage'%}" class="block px-4 py-2 rounded-t-lg  hover:bg-cool-gray">Home</a>
                         </li>
                         <li >
-                            <a href="{%url 'ProfilePage'%}" class="block px-4 py-2  hover:bg-cool-gray" >Profile</a>
+                            <a href="{%url 'ReportEaseApp:ProfilePage'%}" class="block px-4 py-2  hover:bg-cool-gray" >Profile</a>
                         </li>
                         <li class="">
                             <a href="#" class="block px-4 py-2 hover:bg-cool-gray">Notifications</a>
@@ -52,7 +52,7 @@
                     <div class="flex items-center">
                         <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
-                                <a href="{%url 'HomePage'%}" class="text-white hover:underline"
+                                <a href="{%url 'ReportEaseApp:HomePage'%}" class="text-white hover:underline"
                                     aria-current="page">Home</a>
                             </li>
                             <li>
@@ -91,9 +91,9 @@
                 </form>
                 {%block profile%}
                 <div class="hidden md:block ">
-
-                    <a class="rounded-full w-10 h-8" href="{%url 'ProfilePage'%}">
-                        {%if user_type == 'Citizen'%}
+                    {% comment %} <p>{{ logged_in_user.citizen_profile_picture.url }}</p> {% endcomment %}
+                    <a class="rounded-full w-10 h-8" href="{%url 'ReportEaseApp:ProfilePage'%}">
+                        {%if logged_in_user.user_type == 'Citizen'%}
                             <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.citizen_profile_picture.url }}" alt="">
                         {%else%}
                         {%endif%}
@@ -222,7 +222,7 @@
         <div class="pb-10 pt-5  overflow-y-auto">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a href="#" class="flex items-center p-2 hover:bg-white  rounded-lg   group">
+                    <a href="{%url 'userauths:LogoutPage'%}" class="flex items-center p-2 hover:bg-white  rounded-lg   group">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                             <path

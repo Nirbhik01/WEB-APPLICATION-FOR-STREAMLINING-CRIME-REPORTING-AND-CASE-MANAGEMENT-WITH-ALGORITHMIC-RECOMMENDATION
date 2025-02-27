@@ -18,6 +18,7 @@ class Citizen(models.Model):
     citizen_email = models.EmailField()
     citizen_phone_number = models.IntegerField()
     citizen_profile_picture = models.ImageField(upload_to = citizen_profile_pic_path,null=True, blank=True)
+    user_type=models.CharField(max_length=15,default="Citizen")
     
     def save(self, *args, **kwargs):
         
@@ -47,6 +48,7 @@ class Investigator(models.Model):
     investigator_address = models.CharField(max_length=400)
     investigator_email = models.EmailField()
     investigator_phone_number = models.IntegerField()
+    user_type=models.CharField(max_length=15,default="Investigator")
     def __str__(self):
         return f"{self.investigator_name}-{self.investigator_email}"
 
