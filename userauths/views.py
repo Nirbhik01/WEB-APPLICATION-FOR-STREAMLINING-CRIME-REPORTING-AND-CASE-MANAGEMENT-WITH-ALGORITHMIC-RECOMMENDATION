@@ -22,11 +22,11 @@ def LoginPage(request):
         user = None
         if user_type == 'Citizen':
             try:
-                user = Citizen.objects.get(citizen_email=email)
+                user = Citizen.objects.get(user_email=email)
                 if not user.verify_password(password):  # Check hashed password
                     messages.error(request, "Incorrect password.")
                     return redirect('userauths:LoginPage')
-                request.session['user_id'] = user.citizen_id  # Store user ID
+                request.session['user_id'] = user.user_id  # Store user ID
                 request.session['user_type'] = 'Citizen' 
                
             except Citizen.DoesNotExist:
@@ -35,11 +35,11 @@ def LoginPage(request):
         
         elif user_type == 'Investigator':
             try:
-                user = Investigator.objects.get(investigator_email=email)
+                user = Investigator.objects.get(user_email=email)
                 if not user.verify_password(password):
                     messages.error(request, "Incorrect email or password.")
                     return redirect('userauths:LoginPage')
-                request.session['user_id'] = user.investigator_id  # Store user ID
+                request.session['user_id'] = user.user_id  # Store user ID
                 request.session['user_type'] = 'Investigator'
                 
             except Investigator.DoesNotExist:
@@ -50,38 +50,23 @@ def LoginPage(request):
             messages.error(request, "Invalid user type selected.")
             return redirect('userauths:LoginPage')
 
-        # If login is successful
-        # request.session['user_email'] = email
-        # request.session['user_type'] = user_type
-        session_key = str(uuid.uuid4())
-        request.session['session_key'] = session_key
-        print(session_key)
-        # Store user data separately for each tab's session_key
-        if user_type == 'Investigator':
-            request.session["user_id_" + session_key] = user.investigator_id
+        
+        # session_key = str(uuid.uuid4())
+        # request.session['session_key'] = session_key
+        # print(session_key)
+        # # Store user data separately for each tab's session_key
+        # if user_type == 'Investigator':
+        #     request.session["user_id_" + session_key] = user.investigator_id
             
-        elif user_type == 'Citizen':
-            request.session["user_id_" + session_key] = user.citizen_id
-        request.session.modified = True
+        # elif user_type == 'Citizen':
+        #     request.session["user_id_" + session_key] = user.citizen_id
+        # request.session.modified = True
         
         print(request.session.items())
         # messages.success(request, f'Welcome, {user.citizen_name if user_type == "Citizen" else user.investigator_name}!')
         return redirect('ReportEaseApp:HomePage')
 
     return render(request, 'LoginPage.html')
-
-# def get_current_user(request):
-#     session_key = request.session.get(f"session_key") 
-#     # Get session key from request
-#     if session_key:
-#         user_id = request.session.get("user_id_" + session_key)
-#         try:
-#             return Investigator.objects.get(investigator_id=user_id) if request.session['user_type'] == 'Investigator' else Citizen.objects.get(citizen_id=user_id)
-#         except:
-#             pass
-#         # if user_id:
-#         #     return User.objects.get(id=user_id)
-#     return None
 
 
 def RegisterPage(request):

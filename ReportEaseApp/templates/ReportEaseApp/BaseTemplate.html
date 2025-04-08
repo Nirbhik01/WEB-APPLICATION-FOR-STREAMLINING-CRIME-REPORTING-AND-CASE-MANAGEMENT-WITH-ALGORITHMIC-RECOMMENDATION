@@ -94,7 +94,7 @@
                     {% comment %} <p>{{ logged_in_user.citizen_profile_picture.url }}</p> {% endcomment %}
                     <a class="rounded-full w-10 h-8" href="{%url 'ReportEaseApp:ProfilePage'%}">
                         {%if logged_in_user.user_type == 'Citizen'%}
-                            <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.citizen_profile_picture.url }}" alt="">
+                            <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.user_profile_picture.url }}" alt="">
                         {%else%}
                         {%endif%}
                     </a>

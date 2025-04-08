@@ -22,9 +22,9 @@
                 <div class="rounded-lg border border-gray bg-white p-5 shadow-lg transform duration-500">
                     <div class="relative mx-auto w-36 rounded-full transform duration-500">
                         <img class="mx-auto md:w-32 md:h-32 w-24 h-24 rounded-full object-cover "
-                            src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="" />
+                            src="{{logged_in_user.user_profile_picture.url}}" alt="" />
                     </div>
-                    <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900 transform duration-500">Ramita Poudel</h1>
+                    <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900 transform duration-500">{{logged_in_user.user_name}}</h1>
                     <h3 class="font-lg text-semibold text-center leading-6 text-gray-600 transform duration-500">
                     </h3>
                     <p class="text-center text-sm leading-6 text-gray-500 hover:text-gray-600"></p>
@@ -32,11 +32,11 @@
                         class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow transform duration-500">
                         <li class="flex items-center py-3 text-sm">
                             <span>Registered As </span>
-                            <span class="ml-auto">Citizen</span>
+                            <span class="ml-auto">{{logged_in_user.user_type}}</span>
                         </li>
                         <li class="flex items-center py-3 text-sm">
                             <span>Contact </span>
-                            <span class="ml-auto">9812345678</span>
+                            <span class="ml-auto">{{logged_in_user.user_phone_number}}</span>
                         </li>
                         <li class="flex items-center py-3 text-sm">
                             <span>Joined On</span>
