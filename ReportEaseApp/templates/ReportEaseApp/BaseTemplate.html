@@ -82,10 +82,10 @@
                             </svg>
                         </div>
                         <div class="flex justify-between h-[1.8rem] md:h-[2rem]">
-                            <input type="search" id="" class="w-full ps-10 text-sm rounded-lg border-0 placeholder:md:text-sm placeholder:text-xs" placeholder="Search Cases"
+                            <input type="search" id="" class="w-full ps-10 text-sm focus:ring-0 rounded-lg border-0 placeholder:md:text-sm placeholder:text-xs" placeholder="Search Cases"
                                 required />
                             <button type="submit"
-                                class="text-white h-[100%] rounded-r-lg absolute end-0 bottom-0 bg-cool-gray  font-medium text-sm px-2 md:px-3 ">Search</button>
+                                class="text-white h-[100%] rounded-r-lg absolute focus:ring-0 end-0 bottom-0 bg-cool-gray  font-medium text-sm px-2 md:px-3 ">Search</button>
                         </div>
                     </div>
                 </form>
@@ -94,7 +94,7 @@
                     {% comment %} <p>{{ logged_in_user.citizen_profile_picture.url }}</p> {% endcomment %}
                     <a class="rounded-full w-10 h-8" href="{%url 'ReportEaseApp:ProfilePage'%}">
                         {%if logged_in_user.user_type == 'Citizen'%}
-                            <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.citizen_profile_picture.url }}" alt="">
+                            <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.user_profile_picture.url }}" alt="">
                         {%else%}
                         {%endif%}
                     </a>

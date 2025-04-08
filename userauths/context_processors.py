@@ -16,7 +16,7 @@ def user_context(request):
     if user_id and user_type:
         try:
             if user_type == 'Citizen':
-                user = Citizen.objects.get(citizen_id=user_id)
+                user = Citizen.objects.get(user_id=user_id)
                 # print(f"found citizen \n {user.citizen_profile_picture}  \n {user.citizen_name}")
                 
             elif user_type == 'Investigator':
