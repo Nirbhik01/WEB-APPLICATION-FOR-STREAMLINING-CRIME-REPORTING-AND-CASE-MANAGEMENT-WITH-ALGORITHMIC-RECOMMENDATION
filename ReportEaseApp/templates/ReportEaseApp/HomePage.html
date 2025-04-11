@@ -23,7 +23,9 @@
                         {%if user_type == 'Citizen'%} <!--true for user false for investigator-->
                             <a  href="{%url 'ReportEaseApp:ReportCrimePage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Report a Crime</a>
-                        {%else%}
+                        {%endif%}
+                        {% comment %} change below if police {% endcomment %}
+                        {%if True%}
                             <a  href="{%url 'ReportEaseApp:UploadWantedPage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-lg md:px-12 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Upload Wanted</a>
                             <a  href="{%url 'ReportEaseApp:CaseListPage'%}"

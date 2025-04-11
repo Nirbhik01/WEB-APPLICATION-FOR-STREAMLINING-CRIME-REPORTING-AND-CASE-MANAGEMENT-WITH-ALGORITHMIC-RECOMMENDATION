@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% tailwind_css %}
+    {%load static%}
 </head>
 
 <body class="transform duration-500">
@@ -76,6 +77,144 @@
             </ol>
         </div>
         {%endif%}
+
+        <div class="my-10 md:mx-5 box-border rounded-lg ">
+            <div class="md:flex md:divide-x box-border ">
+                <!-- Evidenced Media -->
+                <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start transform duration-500"
+                    onload="getelementdetail(this)">
+                    <h1 class="text-2xl font-semibold mb-5">Evidences: </h1>
+                    <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}"
+                        style="display: block;" alt="Product"
+                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
+                        id="mainImage">
+    
+                    <video preload="metadata" src="" autoplay controls
+                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo">Profile</video>
+                    <p id="imagelabel" class="self-center my-5 font-medium text-center">Profile</p>
+                    <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden" id="imagelist transform duration-500">
+                        <div onclick="getinfo(this)">
+                            <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}" alt="Thumbnail 2"
+                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                                id="">
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Profile</p>
+                        </div>
+                        <div onclick="getinfo(this)">
+                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
+                                alt="Thumbnail 2"
+                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                                onclick="" id="">
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence</p>
+                        </div>
+                        <div onclick="getinfo(this)">
+                            <img src="https://images.unsplash.com/photo-1496957961599-e35b69ef5d7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw4fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
+                                alt="Thumbnail 3"
+                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                                onclick="" id="">
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence1</p>
+                        </div>
+                        <div onclick="getinfo(this)">
+                            <img src="https://images.unsplash.com/photo-1528148343865-51218c4a13e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwzfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
+                                alt="Thumbnail 4"
+                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
+                                onclick="" id="">
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence2</p>
+                        </div>
+                        <div onclick="getinfo(this)">
+                            <video src="{%static 'media/ReportEaseApp/Evidence/Video/vid.mp4'%}" alt="evidence"
+                                onclick="changeVideo(this.src)" preload="metadata"
+                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300">play</video>
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence3</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Fir report Details -->
+                <div class="w-full mt-10 md:my-0 md:pl-5 transform duration-500">
+                    <div class=" rounded-lg p-5 bg-light-gray transform duration-500">
+                        <h2 class="text-2xl font-semibold mb-2">Home Robbery</h2>
+                        <p class="mb-10 text-sm">Uploaded on : 2025/02/14</p>
+                        {%if user_type == "Investigator"%}
+                            <div class="flex mb-5 items-center gap-5">
+                                <button><img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
+                                        src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Rounded avatar"></button>
+                                <span class="text-lg mr-2">Sharmila Katwal
+                                    <p class="text-xs">Not the Victim</p>
+                                </span>
+                            </div>
+                        {%endif%}
+    
+                        <p class="text-gray-700 mb-6">I was just laying there on my couch and three guys with black masks
+                            came
+                            raiding in my house.
+                            they tied me up kept me tied in a chair until they cleared out the valuable stuff worth $4000000
+                            dollars.
+                        </p>
+    
+                        <div>
+                            <div class="flex gap-2">
+                                <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p>15 / 12 / 2025</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p>12 : 53 PM</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p>Durbarmarg, Kathmandu</p> <a href="https://www.facebook.com"> <u class="text-cool-gray">click for exact location</u></a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <!-- carousel -->
+    
+    
+        <!-- end carousel -->
+        <script>
+            function callboth() {
+                changeImage(src);
+                changetext(content);
+            }
+            function changeImage(src) {
+                const video = document.getElementById('mainVideo');
+                video.style.display = 'none';
+                video.pause();
+                const image = document.getElementById('mainImage');
+                image.style.display = 'block';
+                document.getElementById('mainImage').src = src;
+            }
+            function changeVideo(src) {
+                const image = document.getElementById('mainImage');
+                image.style.display = 'none';
+                const video = document.getElementById('mainVideo');
+                video.style.display = 'block';
+                video.src = src;
+            }
+            function changetext(content) {
+                document.getElementById('imagelabel').innerHTML = content;
+            }
+            function getinfo(element) {
+                try {
+                    var imgSource = element.querySelector("img");
+                    const imgSrc = imgSource.src;
+                    changeImage(imgSrc);
+                }
+                catch {
+                    var imgSource = element.querySelector("video");
+                    const imgSrc = imgSource.src;
+                    changeVideo(imgSrc);
+                }
+    
+                const textContent = element.querySelector("p").textContent;
+    
+                changetext(textContent);
+            }
+        </script>
+
         <div id="activity_log"
             class=" mx-0 md:mx-5 my-10 bg-light-gray p-5 rounded-xl max-h-screen overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500">
             <div id="log">
@@ -84,7 +223,7 @@
 
                     <!-- true if the user is police -->
 
-                    {%if False%}
+                    {%if True%}
                         <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
                             class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
                             type="button">

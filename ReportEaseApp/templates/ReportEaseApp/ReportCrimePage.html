@@ -12,7 +12,7 @@
 
     {%load static tailwind_tags%}
     {%tailwind_css%}
-    
+
 </head>
 
 <body>
@@ -23,15 +23,19 @@
 
     {%block camera%}
     <div style="display: none;" class="absolute z-20 w-full h-full bg-black bg-opacity-50 " id="video_div">
-        <button type="button" class="text-white font-bold bg-transparent   rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center " id="close_button">
+        <button type="button"
+            class="text-white font-bold bg-transparent   rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center "
+            id="close_button">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
             </svg>
             <span class="sr-only">Close menu</span>
-         </button>
+        </button>
         <video id="video" autoplay class="mx-auto self-center mt-10 rounded-lg"></video>
         <div class=" mx-auto  text-center mt-5">
-            <button id="capturebtn" class="bg-cool-gray text-white font-medium opacity-100 px-12 py-3 rounded-lg ">Capture Photo</button>
+            <button id="capturebtn"
+                class="bg-cool-gray text-white font-medium opacity-100 px-12 py-3 rounded-lg ">Capture Photo</button>
         </div>
     </div>
     {%endblock%}
@@ -42,98 +46,100 @@
     {%endblock%}
 
     {%block fields%}
-    <div>
-        <input type="hidden" name="register_crime_form" value="register_crime_form">
-        <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
-        <select name="name" type="text"
-            class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-            placeholder="Enter name">
-            <option value="" disabled selected value>-- choose an option --</option>
-            <option value="">Antisocial Behaviour</option>
-            <option value="">Burglary</option>
-            <option value="">Criminal Damage</option>
-            <option value="">CyberCrime</option>
-            <option value="">Fraud</option>
-            <option value="">Hate Crime</option>
-            <option value="">Robbery</option>
-            <option value="">Rural Crime</option>
-            <option value="">Spiking</option>
-            <option value="">Stacking</option>
-        </select>
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
-        <input name="password" type="date"
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
-        <input name="password" type="time"
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-    </div>
-    <div class="sm:flex justify-between sm:gap-5">
-        <div class="sm:w-1/2 w-full">
-            <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
-            <input type="text"
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
-            placeholder="Balkhu, Kathmandu">
+    <!-- block fields is inside the form in register page so to identify which just include a hidden input tag with a value "crime" form -->
+        <input type="hidden" name="crime" value="crime">
+        <div>
+            <input type="hidden" name="register_crime_form" value="register_crime_form">
+            <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
+            <select name="name" type="text"
+                class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+                placeholder="Enter name">
+                <option value="" disabled selected value>-- choose an option --</option>
+                <option value="">Antisocial Behaviour</option>
+                <option value="">Burglary</option>
+                <option value="">Criminal Damage</option>
+                <option value="">CyberCrime</option>
+                <option value="">Fraud</option>
+                <option value="">Hate Crime</option>
+                <option value="">Robbery</option>
+                <option value="">Rural Crime</option>
+                <option value="">Spiking</option>
+                <option value="">Stacking</option>
+            </select>
         </div>
-        <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
-            <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
-            <input type="text"
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-            placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
+        <div>
+            <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
+            <input name="password" type="date"
+                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
         </div>
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
-        <input type="file"
-            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
-        <textarea name="" id=""
-            class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
-            placeholder="Write everything you saw in detail"></textarea>
-    </div>
+        <div>
+            <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
+            <input name="password" type="time"
+                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+        </div>
+        <div class="sm:flex justify-between sm:gap-5">
+            <div class="sm:w-1/2 w-full">
+                <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
+                <input type="text"
+                    class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
+                    placeholder="Balkhu, Kathmandu">
+            </div>
+            <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
+                <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
+                <input type="text"
+                    class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+                    placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
+            </div>
+        </div>
+        <div>
+            <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
+            <input type="file"
+                class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
+        </div>
+        <div>
+            <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
+            <textarea name="" id=""
+                class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
+                placeholder="Write everything you saw in detail"></textarea>
+        </div>
 
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
-        <input type="file"
-            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
-            accept="image/*">
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
+        <div class="">
+            <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
+            <input type="file"
+                class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
+                accept="image/*">
+        </div>
+        <div class="">
+            <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
 
-        <button type="button" id="open"
-            class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
-            Camera</button>
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
-        <input type="radio" name="yes_no"
-            class="  selection:bg-black  text-sm text-gray-800 border focus:ring-0 focus:border-black outline-none transition-all/">
-        <label for="">Yes</label>
-        <input type="radio" name="yes_no"
-            class="  ml-5 text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
-        <label for="">No</label>
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
-        <canvas id="canvas" style="display:none;"></canvas>
-        <img name="yes_no" src="" id="img" style="display:none;"
-            class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
+            <button type="button" id="open"
+                class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
+                Camera</button>
+        </div>
+        <div class="">
+            <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
+            <input type="radio" name="yes_no"
+                class="  selection:bg-black  text-sm text-gray-800 border focus:ring-0 focus:border-black outline-none transition-all/">
+            <label for="">Yes</label>
+            <input type="radio" name="yes_no"
+                class="  ml-5 text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
+            <label for="">No</label>
+        </div>
+        <div class="">
+            <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <img name="yes_no" src="" id="img" style="display:none;"
+                class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
 
 
-    </div>
+        </div>
     <script>
         const open = document.getElementById('open');
         const video = document.getElementById('video');
         const capturebtn = document.getElementById('capturebtn');
         const canvas = document.getElementById('canvas');
         const img = document.getElementById('img');
-        const videodiv=document.getElementById('video_div');
+        const videodiv = document.getElementById('video_div');
         const close_button = document.getElementById('close_button');
 
         open.addEventListener('click', async function startCam() {
@@ -175,7 +181,7 @@
             let tracks = stream.getTracks();
             tracks.forEach(track => track.stop());
             video.srcObject = null;
-            
+
         });
 
     </script>
