@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path,include
 from .views import * 
+from django.conf.urls.static import static
+from django.conf import settings
 # from userauths.urls import *
 # from userauths.views import *
 
@@ -24,3 +26,6 @@ urlpatterns = [
     # path('settings/' , SettingsPage , name='SettingsPage'),
     # path('account/' , AccountPage , name='AccountPage'),
 ]
+
+if settings.DEBUG:  # Serve media files only in development
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
