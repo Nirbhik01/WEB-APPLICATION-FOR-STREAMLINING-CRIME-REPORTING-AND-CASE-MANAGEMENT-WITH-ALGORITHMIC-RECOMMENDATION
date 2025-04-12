@@ -8,18 +8,61 @@
     {%load static tailwind_tags%}
     {%tailwind_css%}
 </head>
-<body>  
+<body class="bg-gradient-to-b from-dark-blue transform duration-500">  
     {%block main_content%}
-        <form action="">
-            <div class="mb-3">
-                <label for="caseName" class="form-label">Case Name</label>
-                <input type="text" class="form-control" id="caseName" required>
+        <form action="{%url 'investigator:uploadwanted'%}" id="Upload_wanted_form" class="w-screen flex justify-center bg-gradient-to-b  from-dark-blue mx-auto  bg-white p-5 h-full" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+            <div class="inline-block grid-cols-1 mt-5  p-5 rounded-lg bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.8)]">
+            <p class="mx-auto text-3xl text-center font-medium ">Upload Wanted</p>
+            <div class="my-5 w-full ">
+                <label for="caseName" class="form-label font-medium text-sm">Wanted Name : </label><br>
+                <input name="Wanted_name" type="text" class="form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-0 selection:outline-none block w-full p-2.5" required>
             </div>
-            <div class="mb-3">
-                <label for="caseDescription" class="form-label">Case Description</label>
-                <textarea class="form-control" id="caseDescription" rows="3" required></textarea>
+            <div class="my-5 w-full ">
+                <label for="caseDescription" class="form-label font-medium text-sm ">Wanted For : </label><br>
+                <input name="Wanted_for" class="form-control bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-0 selection:outline-none block w-full p-2.5" id="caseDescription" type="text" required/>
             </div>
+            <div class="my-5 w-full ">
+                <label for="caseDescription" class="form-label font-medium text-sm ">Wanted photo : </label><br>
+                <input name="Wanted_photo" type="file" name="wanted_pic" id="wanted_pic" class=" bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-0 selection:outline-none block w-full py-[0.45rem] px-2.5"/>
+            </div>
+            <p id="invalid" class="text-dark-red text-xs"></p>
+            <div class="mx-auto mt-5 text-center">
+                <button type="submit" id="submit" class="bg-cool-gray text-white font-medium opacity-100 px-12 py-3 rounded-lg hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">Upload</button>
+            </div>
+        </div>
         </form>
     {%endblock%}
+
+    <script>
+        
+            const form = document.getElementById('Upload_wanted_form');
+            const submitButton = document.getElementById('submit');
+            form.addEventListener('submit', function(event) {
+                console.log('Button clicked!'); // Log to console for debugging
+                console.log('Form data:', new FormData(form)); // Log form data for debugging
+                event.preventDefault(); // Prevent the default form submission
+
+                const formData = new FormData(form); // Create a FormData object from the form
+
+                fetch("/investigator/uploadwanted/", {
+                    method: "POST",
+                    body: new FormData(document.getElementById("Upload_wanted_form")),
+                })
+                .then(response => response.json()).then(data => {
+                    if (data.status === "success") {
+                        
+                    }
+                    else if (data.status === "error") {
+                            
+                            document.getElementById("invalid").innerText = data.message;
+                        }
+                    else {
+                            document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
+                        }
+                    });
+            
+            });
+    </script>
 </body>
 </html>

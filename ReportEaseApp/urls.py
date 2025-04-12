@@ -11,14 +11,13 @@ app_name='ReportEaseApp'
 
 urlpatterns = [
     path('' , LandingPage , name='LandingPage'),
-    # path('login/' , LoginPage , name='LoginPage'),
-    # path('register/' , RegisterPage , name='RegisterPage'),
+    
     path('user/', include('userauths.urls')),
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
     path('uploadwanted/' , UploadWantedPage , name='UploadWantedPage'),
     path('reviewfir/<int:id>',ReviewFirPage,name='ReviewFirPage'),
-    path('case/' , CasePage , name='CasePage'),
+    path('casepage/' , CasePage , name='CasePage'),
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
     
     # path('logout/' , LogoutPage , name='LogoutPage'),
@@ -27,5 +26,5 @@ urlpatterns = [
     # path('account/' , AccountPage , name='AccountPage'),
 ]
 
-if settings.DEBUG:  # Serve media files only in development
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:  # Serve media files only in development
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
