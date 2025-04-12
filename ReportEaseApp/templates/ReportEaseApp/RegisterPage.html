@@ -28,58 +28,72 @@
             {%endblock%}
         </div>
         <div class="mx-4 mb-4 ">
-            <form action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" >
+            <form id="register-form" action="{%url 'userauths:RegisterPage'%}" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
                 <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
                     {%block fields%}
                     <!-- this form is extended by the report crime page
-                     so i am using this hidden input tag below to identify which form is 
-                     being called while building the api -->
+                    so i am using this hidden input tag below to identify which form is 
+                    being called while building the api -->
+                    {%csrf_token%}
                     <input type="hidden" name="register_user_form" value="register_user_form">
                     <div>
                         <label class="text-gray-900 text-sm mb-2 block">First Name</label>
-                        <input name="name" type="text"
+                        <input name="fname" type="text" required
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter name" />
                     </div>
                     
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Last Name</label>
-                        <input name="lname" type="text"
+                        <input name="lname" type="text" required
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter last name" />
                     </div>
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Email Id</label>
-                        <input name="email" type="text"
+                        <input name="email" type="email" required
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter email" />
                     </div>
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Mobile No.</label>
-                        <input name="number" type="number"
+                        <input name="number" type="number" requierd
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter mobile number" />
                     </div>
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Password</label>
-                        <input name="password" type="password"
+                        <input name="password" type="password" required id="password"
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter password" />
                     </div>
                     <div>
                         <label class="text-gray-500 text-sm mb-2 block">Confirm Password</label>
-                        <input name="cpassword" type="password"
+                        <input name="cpassword" type="password" required id="cpassword"
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
                             placeholder="Enter confirm password" />
                     </div>
 
                     <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Address:</label>
+                        <input name="address" type="text" required
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
+                            placeholder="Enter Address" />
+                    </div>
+                    <div>
+                        <label class="text-gray-500 text-sm mb-2 block">Profile Picture:</label>
+                        <input name="profile_pic" type="file" required
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
+                            placeholder="" />
+                    </div>
+
+                    <div>
                         <label class="text-gray-500 text-sm mb-2 block">Register As </label>
-                        <select name="cpassword" type="password" id="registerAs"
+                        <select name="registerAs" id="registerAs" required
                             class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all">
                             <option value="" disabled selected value>--select an option--</option>
                             <option value="Citizen">Citizen</option>
-                            <option value="Lawyer">Lawyer</option>
+                            <!-- <option value="Lawyer">Lawyer</option> -->
                             <option value="Investigator">Investigator</option>
                         </select>
                     </div>
@@ -87,28 +101,99 @@
                     {%endblock%}
 
                     <div id="lawyerDetails" class="hidden">
-                        <p>Lawyer-specific content goes here.</p>
+                        <!-- <p>Lawyer-specific content goes here.</p> -->
                     </div>
 
                     <div id="investigatorDetails" class="hidden">
-                        <p>Investigator-specific content goes here.</p>
+                        <div>
+                            <label class="text-gray-500 text-sm mb-2 block">Enter District:</label>
+                            <input name="district" type="text" required
+                                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded focus:ring-0 border focus:border-blue-600 outline-none transition-all"
+                                placeholder="Enter Your District of Operation" />
+                        </div>
+                        
                     </div>
 
                 </div>
+
+                <p id="invalid" class="text-dark-red w-full text-xs text-gray-800  mt-3 rounded focus:ring-0  focus:border-blue-600 outline-none transition-all"></p>
+
                 <div class="mt-8 transform duration-500">
-                    {%block button%}
-                    <button type="submit"
-                        class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white focus:ring-0 bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
+                    <button type="submit" id="submit"
+                    class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white focus:ring-0 bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
+                        {%block button%}
                         <p>Signup</p>
                         {%endblock%}
                     </button>
                 </div>
+                
             </form>
         </div>
     </div>
 
 
     {%endblock%}
+
+    <script>
+
+        let confirmpw=document.getElementById("cpassword");
+        let pw=document.getElementById("password");
+        let submit=document.getElementById("submit");
+
+        submit.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent form submission for validation
+
+            if (confirmpw.value !== pw.value) {
+                document.getElementById("invalid").innerText = "Password and Confirm Password do not match";
+                confirmpw.classList.add("border-dark-red");
+                pw.classList.add("border-dark-red");
+            } else {
+                confirmpw.classList.remove("border-red-500");
+                pw.classList.remove("border-dark-red500");
+                document.getElementById("invalid").innerText = ""; // Clear the error message
+             // Submit the form if valid -->
+                fetch("/user/register/", {
+                    method: "POST",
+                    body: new FormData(document.getElementById("register-form")),
+                })
+                .then(response => response.json()).then(data => {
+                    if (data.status === "error") {
+                            document.getElementById("invalid").innerText = data.message;
+                        }
+                    else if (data.status === "success") {
+                            window.location.href = "/user/login/";
+                        }
+                    else {
+                            document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
+                        }
+                    });
+            }
+            
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const registerAsSelect = document.getElementById("registerAs");
+            const lawyerDetails = document.getElementById("lawyerDetails");
+            const investigatorDetails = document.getElementById("investigatorDetails");
+    
+            registerAsSelect.addEventListener("change", function () {
+                const selectedValue = this.value;
+    
+                // Hide all sections first
+                lawyerDetails.classList.add("hidden");
+                investigatorDetails.classList.add("hidden");
+    
+                // Show the one that matches the selection
+                if (selectedValue === "Lawyer") {
+                    lawyerDetails.classList.remove("hidden");
+                } else if (selectedValue === "Investigator") {
+                    investigatorDetails.classList.remove("hidden");
+                }
+            });
+        });
+    </script>
+    
 </body>
 
 <!-- <div class="hidden" id="citizenDetails">

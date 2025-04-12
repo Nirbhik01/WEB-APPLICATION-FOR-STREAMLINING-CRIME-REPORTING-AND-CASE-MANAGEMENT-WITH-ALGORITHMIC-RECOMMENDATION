@@ -51,9 +51,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userauths',
     'ReportEaseApp',
+    'Case',
     'tailwind',
     'ReportEaseAppTailwind',
     'django_browser_reload',
+    'Citizen',
+    "Investigator",
+    
 ]
 
 MIDDLEWARE = [
@@ -81,7 +85,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'userauths.context_processors.user_context',   
+                'userauths.context_processors.user_context', 
+                'django.template.context_processors.media',  
             ],
         },
     },

@@ -20,7 +20,7 @@ def user_context(request):
                 # print(f"found citizen \n {user.citizen_profile_picture}  \n {user.citizen_name}")
                 
             elif user_type == 'Investigator':
-                user = Investigator.objects.get(investigator_id=user_id)
+                user = Investigator.objects.get(user_id=user_id)
                 # print("found Investigator")
         except (Citizen.DoesNotExist, Investigator.DoesNotExist):
             print("not found user")  # User might have been deleted

@@ -78,6 +78,7 @@
             </div>
 
             <div class="md:flex relative space-x-0 md:space-x-7 ">
+                {%if logged_in_user.user_type == 'Investigator'%}
                 <form class="max-w-md md:w-[100%] w-3/4 float-right md:float-none ring-0 border-0">
                     <div class="relative justify-between ">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -87,6 +88,7 @@
                                     stroke-width="1" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
+                        
                         <div class="flex justify-between h-[1.8rem] md:h-[2rem]">
                             <input type="search" id=""
                                 class="w-full ps-10 text-sm focus:ring-0 rounded-lg border-0 placeholder:md:text-sm placeholder:text-xs"
@@ -96,14 +98,18 @@
                         </div>
                     </div>
                 </form>
+                {%endif%}
                 {%block profile%}
                 <div class="hidden md:block ">
                     {% comment %} <p>{{ logged_in_user.citizen_profile_picture.url }}</p> {% endcomment %}
                     <a class="rounded-full w-10 h-8" href="{%url 'ReportEaseApp:ProfilePage'%}">
                         {%if logged_in_user.user_type == 'Citizen'%}
+                        <img class="inline w-8 h-8 rounded-full" src="{{ logged_in_user.user_profile_picture.url }}"
+                            alt="">
+                        {%elif logged_in_user.user_type == 'Investigator'%}
                         <img class="inline w-10 h-8 rounded-full" src="{{ logged_in_user.user_profile_picture.url }}"
                             alt="">
-                        {%else%}
+
                         {%endif%}
                     </a>
                 </div>

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from userauths.models import Citizen, Investigator
 from django.contrib.sessions.models import Session
+
+from django.http import JsonResponse
 # from ReportEaseApp.views import HomePage
 # from django.http import JsonResponse
 import uuid
@@ -51,25 +53,53 @@ def LoginPage(request):
             return redirect('userauths:LoginPage')
 
         
-        # session_key = str(uuid.uuid4())
-        # request.session['session_key'] = session_key
-        # print(session_key)
-        # # Store user data separately for each tab's session_key
-        # if user_type == 'Investigator':
-        #     request.session["user_id_" + session_key] = user.investigator_id
-            
-        # elif user_type == 'Citizen':
-        #     request.session["user_id_" + session_key] = user.citizen_id
-        # request.session.modified = True
-        
-        print(request.session.items())
-        # messages.success(request, f'Welcome, {user.citizen_name if user_type == "Citizen" else user.investigator_name}!')
+
         return redirect('ReportEaseApp:HomePage')
 
     return render(request, 'LoginPage.html')
 
 
 def RegisterPage(request):
+    if request.method=='POST':
+        if request.POST.get('register_user_form') == 'register_user_form':
+            user_type = request.POST.get('registerAs')
+            fname = request.POST.get('fname')
+            lname = request.POST.get('lname')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            address = request.POST.get('address')
+            phone = int(request.POST.get('number'))
+        
+            profile_pic = request.FILES['profile_pic']
+            
+            # check if email already exists
+            
+            
+            if user_type == 'Citizen':
+                check_email =  Citizen.objects.filter(user_email=email).exists()
+                if check_email:
+                    messages.error(request, "Email already exists.")
+                    return JsonResponse({"status": "error", "message": "Email already exists."})
+                user = Citizen(user_name=fname + " " + lname, user_email=email, user_password=password, user_address=address, user_phone_number=phone,user_profile_picture=profile_pic)
+                user.save()
+                messages.success(request, "Citizen registered successfully.")
+                # return redirect('userauths:LoginPage')
+                return JsonResponse({"status": "success"})
+            elif user_type == 'Investigator':
+                district = request.POST.get('district')
+                check_email =  Investigator.objects.filter(user_email=email).exists()
+                if check_email:
+                    messages.error(request, "Email already exists.")
+                    return JsonResponse({"status": "error", "message": "Email already exists."})
+                user = Investigator(user_name=fname + " " + lname, user_email=email, user_password=password, user_address=address, user_phone_number=phone, user_district=district,user_profile_picture=profile_pic)
+                user.save()
+                messages.success(request, "Investigator registered successfully.")
+                # return redirect('userauths:LoginPage')
+                return JsonResponse({"status": "success"})
+            else:
+                return JsonResponse({"status": "error", "message": "Registration Failed"})
+            
+        
     return render(request, 'RegisterPage.html')
 
 

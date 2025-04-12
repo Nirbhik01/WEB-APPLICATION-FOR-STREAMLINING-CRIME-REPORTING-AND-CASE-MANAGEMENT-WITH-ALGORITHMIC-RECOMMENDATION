@@ -10,6 +10,12 @@ def citizen_profile_pic_path(instance, filename): #instance represents the curre
     new_filename = f"{email_slug}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/ProfilePics/Citizen', new_filename)
 
+def Investigator_profile_pic_path(instance, filename): #instance represents the current class object being used
+    ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
+    email_slug = slugify(instance.user_email.split('.')[0])  # Sanitize email
+    new_filename = f"{email_slug}.{ext}"  # Create new filename
+    return os.path.join('ReportEaseApp/ProfilePics/Investigator', new_filename)
+
 class Citizen(models.Model):
     user_id = models.BigAutoField(primary_key=True)
     user_name = models.CharField(max_length=200)
@@ -49,6 +55,10 @@ class Investigator(models.Model):
     user_email = models.EmailField()
     user_phone_number = models.IntegerField()
     user_type=models.CharField(max_length=15,default="Investigator")
+    user_profile_picture = models.ImageField(upload_to = Investigator_profile_pic_path,null=True, blank=True)
+    user_district=models.CharField(max_length=200,default=None)
+    
+    
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"
 
