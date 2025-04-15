@@ -28,14 +28,15 @@
             {%endblock%}
         </div>
         <div class="mx-4 mb-4 ">
-            <form id="register-form" action="{%url 'userauths:RegisterPage'%}" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
+            <form id="register-form" action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
+                {%csrf_token%}
                 <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
                     {%block fields%}
                     <!-- this form is extended by the report crime page
                     so i am using this hidden input tag below to identify which form is 
                     being called while building the api -->
-                    {%csrf_token%}
-                    <input type="hidden" name="register_user_form" value="register_user_form">
+                    
+                    <input type="hidden" name="register_user_form" id="register_user_form" value="register_user_form">
                     <div>
                         <label class="text-gray-900 text-sm mb-2 block">First Name</label>
                         <input name="fname" type="text" required
@@ -98,13 +99,13 @@
                         </select>
                     </div>
 
-                    {%endblock%}
+                    
 
                     <div id="lawyerDetails" class="hidden">
                         <!-- <p>Lawyer-specific content goes here.</p> -->
                     </div>
 
-                    <div id="investigatorDetails" class="hidden">
+                    <div id="investigatorDetails" class="" style="display:none;" tabindex="-1">
                         <div>
                             <label class="text-gray-500 text-sm mb-2 block">Enter District:</label>
                             <input name="district" type="text" required
@@ -113,6 +114,7 @@
                         </div>
                         
                     </div>
+                    {%endblock%}
 
                 </div>
 
@@ -139,72 +141,69 @@
         let confirmpw=document.getElementById("cpassword");
         let pw=document.getElementById("password");
         let submit=document.getElementById("submit");
+        let form_type = document.getElementById("register_user_form");
+        if (form_type) {
 
-        submit.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent form submission for validation
-
-            if (confirmpw.value !== pw.value) {
-                document.getElementById("invalid").innerText = "Password and Confirm Password do not match";
-                confirmpw.classList.add("border-dark-red");
-                pw.classList.add("border-dark-red");
-            } else {
-                confirmpw.classList.remove("border-red-500");
-                pw.classList.remove("border-dark-red500");
-                document.getElementById("invalid").innerText = ""; // Clear the error message
-             // Submit the form if valid -->
-                fetch("/user/register/", {
-                    method: "POST",
-                    body: new FormData(document.getElementById("register-form")),
-                })
-                .then(response => response.json()).then(data => {
-                    if (data.status === "error") {
-                            document.getElementById("invalid").innerText = data.message;
-                        }
-                    else if (data.status === "success") {
-                            window.location.href = "/user/login/";
-                        }
-                    else {
-                            document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
-                        }
-                    });
-            }
-            
-        });
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const registerAsSelect = document.getElementById("registerAs");
-            const lawyerDetails = document.getElementById("lawyerDetails");
-            const investigatorDetails = document.getElementById("investigatorDetails");
-    
-            registerAsSelect.addEventListener("change", function () {
-                const selectedValue = this.value;
-    
-                // Hide all sections first
-                lawyerDetails.classList.add("hidden");
-                investigatorDetails.classList.add("hidden");
-    
-                // Show the one that matches the selection
-                if (selectedValue === "Lawyer") {
-                    lawyerDetails.classList.remove("hidden");
-                } else if (selectedValue === "Investigator") {
-                    investigatorDetails.classList.remove("hidden");
+            submit.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent form submission for validation
+                if (pw!=null && confirmpw!=null) {
+                    if (confirmpw.value !== pw.value) {
+                        document.getElementById("invalid").innerText = "Password and Confirm Password do not match";
+                        confirmpw.classList.add("border-dark-red");
+                        pw.classList.add("border-dark-red");
+                    } else {
+                        confirmpw.classList.remove("border-red-500");
+                        pw.classList.remove("border-dark-red500");
+                        document.getElementById("invalid").innerText = ""; // Clear the error message
+                    // Submit the form if valid -->
+                        fetch("/user/register/", {
+                            method: "POST",
+                            body: new FormData(document.getElementById("register-form")),
+                        })
+                        .then(response => response.json()).then(data => {
+                            if (data.status === "error") {
+                                    document.getElementById("invalid").innerText = data.message;
+                                }
+                            else if (data.status === "success") {
+                                    window.location.href = "/user/login/";
+                                }
+                            else {
+                                    document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
+                                }
+                            });
+                    }
                 }
             });
-        });
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const registerAsSelect = document.getElementById("registerAs");
+                
+                const investigatorDetails = document.getElementById("investigatorDetails");
+            
+                //check if registerAsSelect value exists
+                if(registerAsSelect != null) {
+                    
+                
+                    
+                    registerAsSelect.addEventListener("change", function () {
+                        const selectedValue = this.value;
+            
+                        // Hide all sections first
+                        lawyerDetails.classList.add("hidden");
+                        investigatorDetails.classList.add("hidden");
+            
+                        // Show the one that matches the selection
+                        if (selectedValue === "Lawyer") {
+                            lawyerDetails.classList.remove("hidden");
+                        } else if (selectedValue === "Investigator") {
+                                investigatorDetails.style.display="block";
+                        }
+                    });
+                }
+            });
+        }
     </script>
     
 </body>
-
-<!-- <div class="hidden" id="citizenDetails">
-                        <label class="text-gray-500 text-sm mb-2 block">Upload Your Citizenship</label>
-                        <input name="cpassword" type="file"
-                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-[0.45rem] rounded border focus:border-blue-600 outline-none transition-all" />
-                    </div>
-                    <div class="hidden" id="citizenDetails">
-                        <label class="text-gray-500 text-sm mb-2 block">Upload Your Recent Photo</label>
-                        <input name="cpassword" type="file" accept="image/*" capture="environment"
-                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-[0.45rem] rounded border focus:border-blue-600 outline-none transition-all" />
-                    </div> -->
-
 </html>

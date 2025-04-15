@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from userauths.models import Citizen, Investigator
 from django.contrib.sessions.models import Session
+from Case.views import register_case
 
 from django.http import JsonResponse
 # from ReportEaseApp.views import HomePage
@@ -98,7 +99,12 @@ def RegisterPage(request):
                 return JsonResponse({"status": "success"})
             else:
                 return JsonResponse({"status": "error", "message": "Registration Failed"})
-            
+        elif request.POST.get('register_crime_form') == 'register_crime_form':
+            if register_case(request):
+                messages.success(request, "Case registered successfully.")
+                return JsonResponse({"status": "success"})
+            else:
+                return JsonResponse({"status": "error", "message": "Registration Failed"})
         
     return render(request, 'RegisterPage.html')
 

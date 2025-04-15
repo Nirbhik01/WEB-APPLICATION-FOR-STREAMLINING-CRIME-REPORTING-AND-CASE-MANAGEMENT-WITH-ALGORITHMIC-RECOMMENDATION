@@ -1,10 +1,9 @@
 from userauths.models import Citizen, Investigator
 from django.shortcuts import render,redirect
-# from userauths.views import get_current_user
+
 
 def user_context(request):
-    # get_user = get_current_user(request)
-    # print(get_user)
+   
     user_id=None
     user_type=None
     try:

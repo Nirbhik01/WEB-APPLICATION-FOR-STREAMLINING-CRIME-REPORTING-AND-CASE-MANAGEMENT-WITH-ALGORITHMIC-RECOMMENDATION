@@ -47,142 +47,206 @@
 
     {%block fields%}
     <!-- block fields is inside the form in register page so to identify which just include a hidden input tag with a value "crime" form -->
-        <input type="hidden" name="crime" value="crime">
-        <div>
-            <input type="hidden" name="register_crime_form" value="register_crime_form">
-            <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
-            <select name="name" type="text"
-                class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-                placeholder="Enter name">
-                <option value="" disabled selected value>-- choose an option --</option>
-                <option value="">Antisocial Behaviour</option>
-                <option value="">Burglary</option>
-                <option value="">Criminal Damage</option>
-                <option value="">CyberCrime</option>
-                <option value="">Fraud</option>
-                <option value="">Hate Crime</option>
-                <option value="">Robbery</option>
-                <option value="">Rural Crime</option>
-                <option value="">Spiking</option>
-                <option value="">Stacking</option>
-            </select>
-        </div>
-        <div>
-            <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
-            <input name="password" type="date"
-                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-        </div>
-        <div>
-            <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
-            <input name="password" type="time"
-                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-        </div>
-        <div class="sm:flex justify-between sm:gap-5">
-            <div class="sm:w-1/2 w-full">
-                <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
-                <input type="text"
-                    class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
-                    placeholder="Balkhu, Kathmandu">
-            </div>
-            <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
-                <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
-                <input type="text"
-                    class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-                    placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
-            </div>
-        </div>
-        <div>
-            <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
-            <input type="file"
-                class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
-        </div>
-        <div>
-            <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
-            <textarea name="" id=""
-                class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
-                placeholder="Write everything you saw in detail"></textarea>
-        </div>
 
-        <div class="">
-            <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
-            <input type="file"
-                class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
-                accept="image/*">
+    <div>
+        <input type="hidden" name="register_crime_form" id="register_crime_form" value="register_crime_form">
+        <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
+        <select name="crime_type" type="text" required
+            class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+            placeholder="Enter name">
+            <option value="" disabled selected value>-- choose an option --</option>
+            <option value="ANTISOCIAL">Antisocial Behaviour</option>
+            <option value="BURGLARY">Burglary</option>
+            <option value="CRIMINAL_DAMAGE">Criminal Damage</option>
+            <option value="CYBERCRIME">CyberCrime</option>
+            <option value="FRAUD">Fraud</option>
+            <option value="HATE_CRIME">Hate Crime</option>
+            <option value="ROBBERY">Robbery</option>
+            <option value="RURAL_CRIME">Rural Crime</option>
+            <option value="SPIKING">Spiking</option>
+            <option value="STACKING">Stacking</option>
+        </select>
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
+        <input name="crime_date" type="date" required
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
+        <input name="crime_time" type="time" required
+            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+    </div>
+    <div class="sm:flex justify-between sm:gap-5">
+        <div class="sm:w-1/2 w-full">
+            <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
+            <input type="text" name="crime_location" required
+                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
+                placeholder="Balkhu, Kathmandu">
         </div>
-        <div class="">
-            <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
+        <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
+            <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
+            <input type="text" name="crime_location_link" required
+                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+                placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
+        </div>
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
+        {% comment %} accept image and video both {% endcomment %}
+        <input type="file" name="crime_evidence" accept="image/*,video/*" required
+            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
+    </div>
+    <div>
+        <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
+        <textarea name="crime_description" id="" required
+            class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
+            placeholder="Write everything you saw in detail"></textarea>
+    </div>
 
-            <button type="button" id="open"
-                class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
-                Camera</button>
-        </div>
-        <div class="">
-            <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
-            <input type="radio" name="yes_no"
-                class="  selection:bg-black  text-sm text-gray-800 border focus:ring-0 focus:border-black outline-none transition-all/">
-            <label for="">Yes</label>
-            <input type="radio" name="yes_no"
-                class="  ml-5 text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
-            <label for="">No</label>
-        </div>
-        <div class="">
-            <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
-            <canvas id="canvas" style="display:none;"></canvas>
-            <img name="yes_no" src="" id="img" style="display:none;"
-                class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
+        <input type="file" name="citizenship" required
+            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
+            accept="image/*">
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
+
+        <button type="button" id="open"
+            class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
+            Camera</button>
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
+
+        <input type="checkbox" name="yes_no"
+            class="rounded-lg text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
+
+    </div>
+    <div class="">
+        <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <img name="recent_photo" src="" id="img" style="display:none;" requierd
+            class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
+        <input type="hidden" name="recent_photo_dataurl" id="recent_photo_dataurl">
 
 
-        </div>
+    </div>
     <script>
-        const open = document.getElementById('open');
-        const video = document.getElementById('video');
-        const capturebtn = document.getElementById('capturebtn');
-        const canvas = document.getElementById('canvas');
-        const img = document.getElementById('img');
-        const videodiv = document.getElementById('video_div');
-        const close_button = document.getElementById('close_button');
+        const form_type_crime = document.getElementById('register_crime_form');
+        if (form_type_crime) {
+            const open = document.getElementById('open');
+            const video = document.getElementById('video');
+            const capturebtn = document.getElementById('capturebtn');
+            const canvas = document.getElementById('canvas');
+            const img = document.getElementById('img');
+            const videodiv = document.getElementById('video_div');
+            const close_button = document.getElementById('close_button');
 
-        open.addEventListener('click', async function startCam() {
-            try {
-                // IN CHROME I HAVE MARKED THIS http://192.168.1.68:8000/ AS SAFE
-                // by enabling  chrome://flags/#unsafely-treat-insecure-origin-as-secure and adding this ipv4 address to it 
-                // to revert it just disable the above and remove the ip address
-                var stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                videodiv.style.display = 'block';
-                video.style.display = 'block';
-                video.srcObject = stream;
-                video.play();
-            } catch (error) {
-                alert("Error accessing the camera: " + error);
-            }
-        });
+            open.addEventListener('click', async function startCam() {
+                try {
+                    // IN CHROME I HAVE MARKED THIS http://192.168.1.68:8000/ AS SAFE
+                    // by enabling  chrome://flags/#unsafely-treat-insecure-origin-as-secure and adding this ipv4 address to it 
+                    // to revert it just disable the above and remove the ip address
+                    var stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    videodiv.style.display = 'block';
+                    video.style.display = 'block';
+                    video.srcObject = stream;
+                    video.play();
+                } catch (error) {
+                    alert("Error accessing the camera: " + error);
+                }
+            });
 
-        capturebtn.addEventListener('click', () => {
-            videodiv.style.display = 'none';
-            video.style.display = 'none';
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            img.src = canvas.toDataURL('image/png');
-            img.style.display = 'block';
+            capturebtn.addEventListener('click', () => {
+                videodiv.style.display = 'none';
+                video.style.display = 'none';
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataURL = canvas.toDataURL('image/png');
+                document.getElementById('recent_photo_dataurl').value = dataURL;
+                img.src = canvas.toDataURL('image/png');
+                img.style.display = 'block';
 
-            let stream = video.srcObject;
-            let tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
-            console.log(img.src);
-        });
 
-        close_button.addEventListener('click', () => {
-            videodiv.style.display = 'none';
-            video.style.display = 'none';
-            let stream = video.srcObject;
-            let tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
+                document.getElementById('recent_photo_dataurl').value = dataURL;
 
-        });
+                let stream = video.srcObject;
+                let tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                video.srcObject = null;
+                console.log(img.src);
+            });
+
+            close_button.addEventListener('click', () => {
+                videodiv.style.display = 'none';
+                video.style.display = 'none';
+                let stream = video.srcObject;
+                let tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                video.srcObject = null;
+
+            });
+
+
+            const form = document.querySelector('form');
+            submitbtn = document.getElementById("submit");
+
+            form.addEventListener('submit', function (event) {
+                
+                const form_type = document.getElementById('register_crime_form').value;
+                // Prevent form submission for validation
+
+
+                const crime_type = document.querySelector('select[name="crime_type"]');
+                const crime_date = document.querySelector('input[name="crime_date"]');
+                const crime_time = document.querySelector('input[name="crime_time"]');
+                const crime_location = document.querySelector('input[name="crime_location"]');
+                const crime_location_link = document.querySelector('input[name="crime_location_link"]');
+                const crime_evidence = document.querySelector('input[name="crime_evidence"]');
+                const crime_description = document.querySelector('textarea[name="crime_description"]');
+                const citizenship = document.querySelector('input[name="citizenship"]');
+                const recent_photo = document.getElementById("recent_photo_dataurl");
+                const yes_no = document.querySelector('input[name="yes_no"]');
+                const inputs = [crime_type.value, crime_date.value, crime_time.value, crime_location.value, crime_location_link.value, crime_evidence.value, crime_description.value, citizenship.value, recent_photo.value, yes_no.checked];
+
+                // Check if any of the required fields are empty
+                let isValid = true;
+                // Prevent form submission for validation
+                inputs.forEach(input => {
+                    if (input === '' || input === undefined || input === null || input === 'null') {
+
+                        event.preventDefault();
+                        invalid = document.getElementById("invalid");
+
+                        invalid.innerHTML = "Please fill all the fields";
+                        return;
+
+                    } else {
+                        
+                        isValid = true;
+                    }
+                });
+                fetch("/user/register/", {
+                    method: "POST",
+                    body: new FormData(document.getElementById("register-form")),
+                })
+                .then(response => response.json()).then(data => {
+                    if (data.status === "error") {
+                            document.getElementById("invalid").innerText = data.message;
+                        }
+                    else if (data.status === "success") {
+                            window.location.href = "/home/";
+                        }
+                    else {
+                            document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
+                        }
+                    });
+            });
+        }
 
     </script>
     {%endblock%}
