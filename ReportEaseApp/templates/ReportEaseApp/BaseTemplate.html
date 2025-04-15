@@ -424,6 +424,7 @@
     <script>
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);
+            if(!dropdown) return; // Exit if dropdown is not found
             dropdown.classList.toggle('hidden');
             event.stopPropagation();
 

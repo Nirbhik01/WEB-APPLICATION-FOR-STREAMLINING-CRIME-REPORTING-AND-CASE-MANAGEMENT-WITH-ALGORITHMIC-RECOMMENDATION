@@ -263,12 +263,7 @@
             matchHeight(element1, element2);
         </script>
         <script>
-            let sessionKey = sessionStorage.getItem("session_key");
-            fetch(`/get_user_data/?session_key=${sessionKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("User:", data);
-                });
+            
         </script>
 {% comment %} handle page sessions {% endcomment %}
 
