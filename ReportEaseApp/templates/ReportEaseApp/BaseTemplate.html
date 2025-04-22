@@ -88,14 +88,15 @@
                                     stroke-width="1" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        
-                        <div class="flex justify-between h-[1.8rem] md:h-[2rem]">
-                            <input type="search" id=""
+                        <form action=""></form>
+                        <form  method="post" action="" id="search_form" class="flex justify-between h-[1.8rem] md:h-[2rem]">
+                            {% csrf_token %}
+                            <input type="search" id="search-input" name="q" 
                                 class="w-full ps-10 text-sm focus:ring-0 rounded-lg border-0 placeholder:md:text-sm placeholder:text-xs"
                                 placeholder="Search Cases" required />
                             <button type="submit"
                                 class="text-white h-[100%] rounded-r-lg absolute focus:ring-0 end-0 bottom-0 bg-cool-gray  font-medium text-sm px-2 md:px-3 ">Search</button>
-                        </div>
+                        </form>
                     </div>
                 </form>
                 {%endif%}
@@ -440,6 +441,21 @@
                 }
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const search_form = document.getElementById('search_form');
+            const search_data = document.getElementById('search-input');
+            if (search_form && search_data) {
+                search_form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const searchValue = search_data.value.trim();
+                    if (searchValue) {
+                        window.location.href = `/caselist/?q=${encodeURIComponent(searchValue)}`;
+                    }
+                });
+            }
+        });
+
     </script>
 
 </body>

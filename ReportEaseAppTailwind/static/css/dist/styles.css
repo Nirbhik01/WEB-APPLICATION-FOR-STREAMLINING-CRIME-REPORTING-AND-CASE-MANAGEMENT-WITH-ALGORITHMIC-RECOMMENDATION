@@ -1017,10 +1017,6 @@ select {
   margin-bottom: 2rem;
 }
 
-.ml-5 {
-  margin-left: 1.25rem;
-}
-
 .ml-auto {
   margin-left: auto;
 }
@@ -1133,14 +1129,6 @@ select {
   aspect-ratio: 2/3;
 }
 
-.aspect-2 {
-  aspect-ratio: 2;
-}
-
-.aspect-3 {
-  aspect-ratio: 3;
-}
-
 .size-16 {
   width: 4rem;
   height: 4rem;
@@ -1213,6 +1201,14 @@ select {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
+.h-1 {
+  height: 0.25rem;
 }
 
 .max-h-60 {
@@ -1632,6 +1628,11 @@ select {
   border-top-width: 1px;
 }
 
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
+}
+
 .border-dark-red {
   --tw-border-opacity: 1;
   border-color: rgb(89 0 22 / var(--tw-border-opacity, 1));
@@ -1745,11 +1746,6 @@ select {
      object-fit: cover;
 }
 
-.object-fill {
-  -o-object-fit: fill;
-     object-fit: fill;
-}
-
 .p-1 {
   padding: 0.25rem;
 }
@@ -1834,6 +1830,16 @@ select {
   padding-right: 1.5rem;
 }
 
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -1872,6 +1878,11 @@ select {
 .py-\[0\.45rem\] {
   padding-top: 0.45rem;
   padding-bottom: 0.45rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .pb-10 {
@@ -2427,6 +2438,14 @@ select {
     margin-top: 0px;
   }
 
+  .sm\:mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  .sm\:mt-5 {
+    margin-top: 1.25rem;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -2510,6 +2529,10 @@ select {
 
   .sm\:gap-6 {
     gap: 1.5rem;
+  }
+
+  .sm\:gap-0 {
+    gap: 0px;
   }
 
   .sm\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
@@ -2743,6 +2766,10 @@ select {
     flex-direction: row-reverse;
   }
 
+  .md\:flex-col {
+    flex-direction: column;
+  }
+
   .md\:justify-center {
     justify-content: center;
   }
@@ -2961,10 +2988,6 @@ select {
 }
 
 @media (min-width: 1280px) {
-  .xl\:aspect-\[2\/3\] {
-    aspect-ratio: 2/3;
-  }
-
   .xl\:h-12 {
     height: 3rem;
   }

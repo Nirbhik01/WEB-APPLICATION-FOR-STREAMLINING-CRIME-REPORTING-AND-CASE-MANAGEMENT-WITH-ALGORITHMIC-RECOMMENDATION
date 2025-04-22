@@ -12,13 +12,14 @@ app_name='ReportEaseApp'
 urlpatterns = [
     path('' , LandingPage , name='LandingPage'),
     
-    path('user/', include('userauths.urls')),
+    
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
     path('uploadwanted/' , UploadWantedPage , name='UploadWantedPage'),
-    path('reviewfir/<int:id>',ReviewFirPage,name='ReviewFirPage'),
+    path('reviewfir/<int:id>/',ReviewFirPage,name='ReviewFirPage'),
     path('casepage/' , CasePage , name='CasePage'),
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
+    path('case/',include('Case.urls')),
     
     # path('logout/' , LogoutPage , name='LogoutPage'),
     path('profile/' , ProfilePage , name='ProfilePage'),
