@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from userauths.models import Citizen, Investigator
 from django.contrib.sessions.models import Session
-from Case.views import register_case
+from Citizen.views import register_case
 
 from django.http import JsonResponse
 # from ReportEaseApp.views import HomePage
