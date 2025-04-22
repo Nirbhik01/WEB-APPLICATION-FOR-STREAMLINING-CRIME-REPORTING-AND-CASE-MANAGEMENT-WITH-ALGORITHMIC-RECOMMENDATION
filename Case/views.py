@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .models import *
 
 def get_wanted_list():
-    # Fetch the list of wanted individuals from the database and 
+    # Fetch the list of wanted individuals from the database 
     wanted_list = Wanted.objects.all().values('wanted_name', 'wanted_reason', 'wanted_pic','upload_date')
     # sort wanted list by upload_date so that recent date comes first
     wanted_list = wanted_list.order_by('-upload_date')
