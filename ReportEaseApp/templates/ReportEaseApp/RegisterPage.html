@@ -27,7 +27,7 @@
             <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Create your account</h4>
             {%endblock%}
         </div>
-        <div class="mx-4 mb-4 ">
+        <div class="mx-4 mb-4">
             <form id="register-form" action="" method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
                 {%csrf_token%}
                 <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
@@ -36,7 +36,7 @@
                     so i am using this hidden input tag below to identify which form is 
                     being called while building the api -->
                     
-                    <input type="hidden" name="register_user_form" id="register_user_form" value="register_user_form">
+                    
                     <div>
                         <label class="text-gray-900 text-sm mb-2 block">First Name</label>
                         <input name="fname" type="text" required
@@ -129,6 +129,10 @@
                     </button>
                 </div>
                 
+                <p class="text-sm font-light text-center mt-5  transform duration-500">
+                    Already have an account ? <a href="{%url 'userauths:LoginPage'%}"
+                    class="font-medium  hover:underline ">Sign In</a>
+                </p>
             </form>
         </div>
     </div>
@@ -141,8 +145,7 @@
         let confirmpw=document.getElementById("cpassword");
         let pw=document.getElementById("password");
         let submit=document.getElementById("submit");
-        let form_type = document.getElementById("register_user_form");
-        if (form_type) {
+        
 
             submit.addEventListener("click", function (event) {
                 event.preventDefault(); // Prevent form submission for validation
@@ -158,6 +161,10 @@
                     // Submit the form if valid -->
                         fetch("/user/register/", {
                             method: "POST",
+                            //include the CSRF token in the request headers
+                            headers: {
+                                "X-CSRFToken": "{{ csrf_token }}",
+                            },
                             body: new FormData(document.getElementById("register-form")),
                         })
                         .then(response => response.json()).then(data => {
@@ -202,7 +209,7 @@
                     });
                 }
             });
-        }
+        
     </script>
     
 </body>

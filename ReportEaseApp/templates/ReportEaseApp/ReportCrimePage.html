@@ -1,4 +1,4 @@
-{%extends 'RegisterPage.html' %}
+{%extends 'BaseTemplate.html' %}
 
 <!-- using extends in register page as overriding/modifying of elements happens in register page rather than the base template which has nav bar -->
 
@@ -16,12 +16,12 @@
 </head>
 
 <body>
-    {%block nav_bar%}
-    {% include 'BaseTemplate.html' %}
-    <!-- i was unable to override/modify elements in parent template using include so using include in base template because nav bar shouldnt be changed anywhere-->
-    {%endblock%}
+    {% block main_content %}
 
-    {%block camera%}
+    <!-- i was unable to override/modify elements in parent template using include so using include in base template because nav bar shouldnt be changed anywhere-->
+
+
+
     <div style="display: none;" class="absolute z-20 w-full h-full bg-black bg-opacity-50 " id="video_div">
         <button type="button"
             class="text-white font-bold bg-transparent   rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center "
@@ -38,104 +38,118 @@
                 class="bg-cool-gray text-white font-medium opacity-100 px-12 py-3 rounded-lg ">Capture Photo</button>
         </div>
     </div>
-    {%endblock%}
 
-    {%block topic%}
+    <div class=" bg-gradient-to-b from-dark-blue  w-full min-h-screen px-6 py-6">
+        
 
-    <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Report Incident</h4>
-    {%endblock%}
-
-    {%block fields%}
-    <!-- block fields is inside the form in register page so to identify which just include a hidden input tag with a value "crime" form -->
-
-    <div>
-        <input type="hidden" name="register_crime_form" id="register_crime_form" value="register_crime_form">
-        <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
-        <select name="crime_type" type="text" required
-            class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-            placeholder="Enter name">
-            <option value="" disabled selected value>-- choose an option --</option>
-            <option value="ANTISOCIAL">Antisocial Behaviour</option>
-            <option value="BURGLARY">Burglary</option>
-            <option value="CRIMINAL_DAMAGE">Criminal Damage</option>
-            <option value="CYBERCRIME">CyberCrime</option>
-            <option value="FRAUD">Fraud</option>
-            <option value="HATE_CRIME">Hate Crime</option>
-            <option value="ROBBERY">Robbery</option>
-            <option value="RURAL_CRIME">Rural Crime</option>
-            <option value="SPIKING">Spiking</option>
-            <option value="STACKING">Stacking</option>
-        </select>
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
-        <input name="crime_date" type="date" required
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
-        <input name="crime_time" type="time" required
-            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
-    </div>
-    <div class="sm:flex justify-between sm:gap-5">
-        <div class="sm:w-1/2 w-full">
-            <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
-            <input type="text" name="crime_location" required
-                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
-                placeholder="Balkhu, Kathmandu">
+        <!-- block fields is inside the form in register page so to identify which just include a hidden input tag with a value "crime" form -->
+        <div class="text-center sm:p-6 p-4">
+            {%block topic%}
+            <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Report Incident</h4>
+            {%endblock%}
         </div>
-        <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
-            <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
-            <input type="text" name="crime_location_link" required
-                class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
-                placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
-        </div>
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
-        {% comment %} accept image and video both {% endcomment %}
-        <input type="file" name="crime_evidence" accept="image/*,video/*" required
-            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
-    </div>
-    <div>
-        <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
-        <textarea name="crime_description" id="" required
-            class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
-            placeholder="Write everything you saw in detail"></textarea>
-    </div>
+        <form action="" method="post" id="register_form" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
+                <div>
+                    <input type="hidden" name="register_crime_form" id="register_crime_form" value="register_crime_form">
+                    <label class="text-gray-900 text-sm  mb-2 block">What Type of crime did you witness/face?</label>
+                    <select name="crime_type" type="text" required
+                        class=" focus:bg-transparent  w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+                        placeholder="Enter name">
+                        <option value="" disabled selected value>-- choose an option --</option>
+                        <option value="ANTI_SOCIAL">Antisocial Behaviour</option>
+                        <option value="BURGLARY">Burglary</option>
+                        <option value="CRIMINAL_DAMAGE">Criminal Damage</option>
+                        <option value="CYBER_CRIME">CyberCrime</option>
+                        <option value="FRAUD">Fraud</option>
+                        <option value="HATE_CRIME">Hate Crime</option>
+                        <option value="ROBBERY">Robbery</option>
+                        <option value="RURAL_CRIME">Rural Crime</option>
+                        <option value="SPIKING">Spiking</option>
+                        <option value="STACKING">Stacking</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-gray-900 text-sm  mb-2 block">Date of the Crime</label>
+                    <input name="crime_date" type="date" required
+                        class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+                </div>
+                <div>
+                    <label class="text-gray-900 text-sm  mb-2 block">Time of the Crime</label>
+                    <input name="crime_time" type="time" required
+                        class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all" />
+                </div>
+                <div class="sm:flex justify-between sm:gap-5">
+                    <div class="sm:w-1/2 w-full">
+                        <label class="text-gray-900 text-sm  mb-2 block">Crime Location</label>
+                        <input type="text" name="crime_location" required
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all/"
+                            placeholder="Balkhu, Kathmandu">
+                    </div>
+                    <div class=" sm:w-1/2 w-full mt-5 sm:mt-0">
+                        <label class="text-gray-900 text-sm  mb-2 block">Google map link</label>
+                        <input type="text" name="crime_location_link" required
+                            class=" focus:bg-transparent w-full text-sm text-gray-800 px-4 py-2.5 rounded border focus:ring-0 focus:border-black outline-none transition-all"
+                            placeholder="google.com/maps/place/Thapagaon,+Kathmandu+44600/@27.6937656,85.3306358,13z/data=!3m1!4b1!4m6!3m5!1s0x39eb1a3a3c4d79a3:0xbc31c43a32d1db97!8m2!3d27.6984077!4d85.3730428!16s%2Fg%2F1tct_vj5?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D ">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
 
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
-        <input type="file" name="citizenship" required
-            class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
-            accept="image/*">
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
+                    <input type="file" name="crime_evidence" accept="image/*,video/*" required
+                        class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
+                </div>
+                <div>
+                    <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
+                    <textarea name="crime_description" id="" required
+                        class="focus:bg-transparent w-full text-sm text-gray-800 rounded border focus:ring-0 focus:border-black h-10 outline-none transition-all "
+                        placeholder="Write everything you saw in detail"></textarea>
+                </div>
 
-        <button type="button" id="open"
-            class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
-            Camera</button>
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
+                <div class="">
+                    <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
+                    <input type="file" name="citizenship" required
+                        class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
+                        accept="image/*">
+                </div>
+                <div class="">
+                    <label class="text-gray-900 text-sm  mb-2 block">Upload your recent photo</label>
 
-        <input type="checkbox" name="yes_no"
-            class="rounded-lg text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
+                    <button type="button" id="open"
+                        class="w-full md:w-3/4 sm:w-3/6 bg-cool-gray min-w-40 text-white font-medium text-sm text-center px-4 py-[0.45rem] rounded focus:ring-0 border outline-0 box-border h-10 selection:ring-0 transition-all hover:underline">Open
+                        Camera</button>
+                </div>
+                <div class="">
+                    <label class="text-gray-900 text-sm  mb-2 block">Are you the victim?</label>
 
-    </div>
-    <div class="">
-        <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
-        <canvas id="canvas" style="display:none;"></canvas>
-        <img name="recent_photo" src="" id="img" style="display:none;" requierd
-            class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
-        <input type="hidden" name="recent_photo_dataurl" id="recent_photo_dataurl">
+                    <input type="checkbox" name="yes_no"
+                        class="rounded-lg text-sm text-gray-800   border focus:ring-0 focus:border-black outline-none transition-all/">
+
+                </div>
+                <div class="">
+                    <label class="text-gray-900 text-sm  mb-2 " id="picturelabel" style="display:none;">Your Picture:</label>
+                    <canvas id="canvas" style="display:none;"></canvas>
+                    <img name="recent_photo" src="" id="img" style="display:none;" requierd
+                        class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
+                    <input type="hidden" name="recent_photo_dataurl" id="recent_photo_dataurl">
 
 
+                </div>
+            </div>
+            <p id="invalid" class="text-dark-red w-full text-xs text-gray-800  mt-3 rounded focus:ring-0  focus:border-blue-600 outline-none transition-all"></p>
+            <div class="mt-8 transform duration-500">
+                <button type="submit" id="submit"
+                class="block py-2.5 mx-auto px-4 text-sm tracking-wider rounded text-white focus:ring-0 bg-dark-blue w-full md:max-w-sm hover:underline hover:shadow-cool-gray hover:shadow-lg hover:scale-[1.02] hover:duration-[0.15s]">
+                    
+                    <p>Report</p>
+                    
+                </button>
+            </div>
+        </form>
     </div>
     <script>
-        const form_type_crime = document.getElementById('register_crime_form');
-        if (form_type_crime) {
+        
             const open = document.getElementById('open');
             const video = document.getElementById('video');
             const capturebtn = document.getElementById('capturebtn');
@@ -196,11 +210,7 @@
             submitbtn = document.getElementById("submit");
 
             form.addEventListener('submit', function (event) {
-                
-                const form_type = document.getElementById('register_crime_form').value;
                 // Prevent form submission for validation
-
-
                 const crime_type = document.querySelector('select[name="crime_type"]');
                 const crime_date = document.querySelector('input[name="crime_date"]');
                 const crime_time = document.querySelector('input[name="crime_time"]');
@@ -226,33 +236,40 @@
                         return;
 
                     } else {
-                        
+
                         isValid = true;
                     }
                 });
-                fetch("/user/register/", {
+                fetch("/citizen/registercase/", {
                     method: "POST",
-                    body: new FormData(document.getElementById("register-form")),
+                    //include csrf_token
+                    headers: {
+
+                        "X-CSRFToken": "{{ csrf_token }}",
+                    },
+                    body: new FormData(document.getElementById("register_form")),
                 })
-                .then(response => response.json()).then(data => {
-                    if (data.status === "error") {
+                    .then(response => response.json()).then(data => {
+                        console.log("response received", data);
+                        if (data.status === "error") {
                             document.getElementById("invalid").innerText = data.message;
                         }
-                    else if (data.status === "success") {
+                        else if (data.status === "success") {
+                            //wait for 1 second to redirect due to broken pipe error
+                            setTimeout(() => {
                             window.location.href = "/home/";
+                            },1000);
+
                         }
-                    else {
+                        else {
                             document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
                         }
                     });
             });
-        }
-
     </script>
-    {%endblock%}
-    {%block button%}
-    <p class="text-base">Report</p>
-    {%endblock%}
+    {% endblock %}
+
+
 
 </body>
 
