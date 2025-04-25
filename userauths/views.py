@@ -3,6 +3,8 @@ from django.contrib import messages
 from userauths.models import Citizen, Investigator
 from django.contrib.sessions.models import Session
 from Citizen.views import register_case
+import time
+from django.urls import reverse
 
 from django.http import JsonResponse
 # from ReportEaseApp.views import HomePage
@@ -62,7 +64,7 @@ def LoginPage(request):
 
 def RegisterPage(request):
     if request.method=='POST':
-        if request.POST.get('register_user_form') == 'register_user_form':
+        
             user_type = request.POST.get('registerAs')
             fname = request.POST.get('fname')
             lname = request.POST.get('lname')
@@ -99,12 +101,7 @@ def RegisterPage(request):
                 return JsonResponse({"status": "success"})
             else:
                 return JsonResponse({"status": "error", "message": "Registration Failed"})
-        elif request.POST.get('register_crime_form') == 'register_crime_form':
-            if register_case(request):
-                messages.success(request, "Case registered successfully.")
-                return JsonResponse({"status": "success"})
-            else:
-                return JsonResponse({"status": "error", "message": "Registration Failed"})
+        
         
     return render(request, 'RegisterPage.html')
 

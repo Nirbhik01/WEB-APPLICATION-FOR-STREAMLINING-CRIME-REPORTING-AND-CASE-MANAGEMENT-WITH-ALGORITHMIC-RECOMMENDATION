@@ -16,6 +16,7 @@
         <div class="md:flex md:flex-row-reverse justify-between gap-10 block">
             <form action="" method="post" id="filter-form"
                 class="text-black h-auto self-start bg-light-gray md:w-1/3 mt-10 md:mt-0 w-full rounded-lg p-5 transform duration-500">
+                {% csrf_token %}
                 <h3 class="text-xl font-semibold">Filters</h3>
                 <div class="md:grid-cols-1 mt-5 sm:gri-cols-1 grid-cols-3 gap-5">
                     <div class=" gap-5 ">
@@ -31,13 +32,13 @@
                     <div class="mt-5 ">
                         <label for="to" class="">Type of Crime : </label><br>
                         <div class="flex gap-5 sm:flex-col sm:gap-0 mt-2">
-                            <select name="crime_type" type="text" required class="rounded-lg h-10 border-0 "
+                            <select name="crime_type" type="text" class="rounded-lg h-10 border-0 "
                                 placeholder="Enter name">
                                 <option value="" disabled selected value>choose an option</option>
-                                <option value="ANTISOCIAL">Antisocial Behaviour</option>
+                                <option value="ANTI_SOCIAL">Antisocial Behaviour</option>
                                 <option value="BURGLARY">Burglary</option>
                                 <option value="CRIMINAL_DAMAGE">Criminal Damage</option>
-                                <option value="CYBERCRIME">CyberCrime</option>
+                                <option value="CYBER_CRIME">CyberCrime</option>
                                 <option value="FRAUD">Fraud</option>
                                 <option value="HATE_CRIME">Hate Crime</option>
                                 <option value="ROBBERY">Robbery</option>
@@ -62,15 +63,14 @@
         const search_input = document.getElementById('search-input').value;
         const filter_form = document.getElementById('filter-form');
         const filter_button = document.getElementById('filter-button');
-       
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('q');
+        let fetchUrl = '/case/getcases/';
+        if (searchQuery) {
+            fetchUrl = `/case/searchcases/?q=${encodeURIComponent(searchQuery)}`;
+        }
         document.addEventListener("DOMContentLoaded", function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('q');
-        
-            let fetchUrl = '/case/getcases/';
-            if (searchQuery) {
-                fetchUrl = `/case/searchcases/?q=${encodeURIComponent(searchQuery)}`;
-            }
+            // Fetch cases when the page loads
             fetch(fetchUrl)
                 .then(response => response.json())
                 .then(data => {
@@ -79,19 +79,22 @@
                         display_cases_block.innerHTML = '';
             
                         data.forEach(caseData => {
+                        console.log(caseData);
                         let url = `/reviewfir/${caseData.case_id}/`;
                         let display_cases_block_child = document.createElement('a');
-                        display_cases_block_child.className = "flex w-full shadow-lg rounded-lg mb-10 border border-gray duration-500 hover:-translate-y-1";
+                        display_cases_block_child.className = " w-full shadow-lg rounded-lg mb-10 border border-gray duration-500 hover:-translate-y-1";
+                        display_cases_block_child.style.display = "flex";
+                        display_cases_block_child.id = `case-${caseData.case_id}`;
                         display_cases_block_child.href = url;
         
                         display_cases_block_child.innerHTML = `
                             <img class="aspect-1 border-r bg-light-gray border-gray object-contain md:w-40 sm:w-32 w-[6.5rem] rounded-l-lg"
                                 src="/media/${caseData.reporter__user_profile_picture}" alt="">
                             <div class="w-full p-5">
-                                <h1 class="text-xl font-semibold">${caseData.case_title}</h1>
+                                <h1 class="text-xl font-semibold" id="title">${caseData.case_title.replace("_"," ")}</h1>
                                 <p class="text-base mt-2 leading-relaxed">${caseData.crime_description}</p>
                                 <p class="text-sm mt-2 leading-relaxed">Reporter: ${caseData.reporter__user_name}</p>
-                                <p class="float-end text-sm mt-2 leading-relaxed">Uploaded on: ${caseData.upload_date.split("T")[0]}</p>
+                                <p class="float-end text-sm mt-2 leading-relaxed" id="upload_date">Uploaded on: ${caseData.upload_date.split("T")[0]}</p>
                             </div>
                         `;
                         display_cases_block.appendChild(display_cases_block_child);
@@ -110,7 +113,118 @@
                     console.error('Error fetching cases:', error);
                 });
         });
+        if (fetchUrl == '/case/getcases/'){
+            filter_form.addEventListener("submit",function(event){
+                event.preventDefault(); // Prevent the default form submission
+
+                const formData = new FormData(filter_form);
+                
+                if (((formData.get('startDate') == "") || (formData.get('startDate') == null)) && ((formData.get('endDate') == "") || (formData.get('endDate') == null)) && ((formData.get('crime_type') == "") || (formData.get('crime_type') == null))){
+                    return;
+                }
+                fetch('/case/filtercases/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token for security
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const display_cases_block = document.getElementById('display-cases');
+                    display_cases_block.innerHTML = '';
+
+                    if(!(data.length === 0)) {
+                        data.forEach(caseData => {
+                            let url = `/reviewfir/${caseData.case_id}/`;
+                            let display_cases_block_child = document.createElement('a');
+                            display_cases_block_child.className = " w-full shadow-lg rounded-lg mb-10 border border-gray duration-500 hover:-translate-y-1";
+                            display_cases_block_child.style.display = "flex";
+                            display_cases_block_child.href = url;
+                
+                            display_cases_block_child.innerHTML = `
+                                <img class="aspect-1 border-r bg-light-gray border-gray object-contain md:w-40 sm:w-32 w-[6.5rem] rounded-l-lg"
+                                    src="/media/${caseData.reporter__user_profile_picture}" alt="">
+                                <div class="w-full p-5">
+                                    <h1 class="text-xl font-semibold" id="title">${caseData.case_title.replace("_"," ")}</h1>
+                                    <p class="text-base mt-2 leading-relaxed">${caseData.crime_description}</p>
+                                    <p class="text-sm mt-2 leading-relaxed">Reporter: ${caseData.reporter__user_name}</p>
+                                    <p class="float-end text-sm mt-2 leading-relaxed" id="upload_date">Uploaded on: ${caseData.upload_date.split("T")[0]}</p>
+                                </div>
+                            `;
+                            display_cases_block.appendChild(display_cases_block_child);
+                        });
+                        }
+                        else{
+                            const display_cases_block = document.getElementById('display-cases');
+                            display_cases_block.innerHTML = `
+                                <div class="flex h-full">
+                                    <h1 class="text-2xl font-semibold">No Cases Found</h1>
+                                </div>
+                            `;
+                        }
+                        
+                    })
+                    .catch(error => {
+                        console.error('Error fetching cases:', error);
+                    });
+            });  
+        }  
+        else{
+            filter_form.addEventListener("submit",function(event){
+                //if there's search query then use javascript to just show and hide the elements in the page
+                event.preventDefault(); // Prevent the default form submission
+                //get elements that has id that starts with case- and get the value of the id 
+                const case_elements = document.querySelectorAll('[id^="case-"]');
+                
+                const formData = new FormData(filter_form);
+                let startDate = formData.get('startDate');
+                let endDate = formData.get('endDate');
+                let crimeType = formData.get('crime_type');
+                //create a list of elements to be displayed
+                let display_blocks={};
+                index=0;
+
+                function formatDateToYYYYMMDD(date) {
+                    if (!date) return null;
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                }
+
+                case_elements.forEach(case_element => {
+                    
+                    let showCase = true;
+
+                    // Extract and format case data
+                    let caseDateEl = case_element.querySelector("#upload_date");
+                    let caseTitleEl = case_element.querySelector("#title");
         
+                    let caseDate = caseDateEl ? caseDateEl.innerText.split(" ")[2] : null;
+                    if (caseDate) {
+                        caseDate = formatDateToYYYYMMDD(new Date(caseDate));
+                    }
+        
+                    let caseCrimeType = caseTitleEl ? caseTitleEl.innerText.toLowerCase().trim() : null;
+        
+                    // Apply filters
+                    if (startDate && caseDate && caseDate < startDate) {
+                        showCase = false;
+                    }
+                    if (endDate && caseDate && caseDate > endDate) {
+                        showCase = false;
+                    }
+                    if (crimeType && caseCrimeType && caseCrimeType !== crimeType) {
+                        showCase = false;
+                    }
+        
+                    // Show or hide based on the filter match
+                    case_element.style.display = showCase ? "flex" : "none";
+                    
+                });
+            });
+        }    
     </script>
     {%endblock%}
 </body>

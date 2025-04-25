@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.utils.dateparse import parse_date
+from django.utils.timezone import make_aware
+from datetime import datetime, time
 
 from django.http import JsonResponse
 from .models import *
@@ -27,13 +30,55 @@ def fetch_cases(request):
 
 def search_cases(request):
     query = request.GET.get('q', '')
-    cases = None
+    # make a list of words in the query separated by spaces
+    query = query.split()
+    cases = []
+    seen_case_ids = set() 
     if query:
-        # Search logic (case-insensitive)
-        cases = Case.objects.filter(case_title__icontains=query).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name')
-    # Fetch the list of cases from the database and also the reporters profile pic path
-    return JsonResponse(list(cases), safe=False)
+        for search_term in query:
+            matched_cases = list(Case.objects.filter(
+                case_title__icontains=search_term
+            ).values(
+                'case_title', 'upload_date', 'crime_description',
+                'case_id', 'reporter__user_profile_picture', 'reporter__user_name'
+            ))  
+            
+            for case in matched_cases:
+                if case['case_id'] not in seen_case_ids:
+                    seen_case_ids.add(case['case_id'])
+                    cases.append(case)
+            
+    return JsonResponse(cases, safe=False)
 
 def filter_cases(request):
-    pass
+    if request.method=="POST":  
+        from_date_str=request.POST.get('startDate') if request.POST.get('startDate') else None
+        to_date_str=request.POST.get('endDate') if request.POST.get('endDate') else None
+        crime_type = request.POST.get('crime_type') if request.POST.get('crime_type') else None
+        
+        from_date = None
+        to_date = None
+        
+        if from_date_str:
+            from_date = parse_date(from_date_str)
+
+        if to_date_str:
+            to_date = parse_date(to_date_str)
+            
+        case_list = Case.objects.all()
+
+        if from_date:
+            case_list = case_list.filter(upload_date__date__gte=from_date)
+        if to_date:
+            case_list = case_list.filter(upload_date__date__lte=to_date)
+        if crime_type:
+            case_list = case_list.filter(case_title=crime_type)
+
+        case_list = case_list.values(
+            'case_title', 'upload_date', 'crime_description', 'case_id',
+            'reporter__user_profile_picture', 'reporter__user_name'
+        )
+            
+        return JsonResponse(list(case_list), safe=False)
+                
 # Create your views here.

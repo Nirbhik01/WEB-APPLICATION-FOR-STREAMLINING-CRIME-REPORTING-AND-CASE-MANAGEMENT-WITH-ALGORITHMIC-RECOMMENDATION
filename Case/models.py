@@ -15,10 +15,10 @@ case_status_choices=[("FIR_Registration","FIR Registration"),("FIR_Verification"
                      ("Investigation_Termination","Investigation Termination")]
 
 CRIME_CATEGORIES = [
-    ('ANTISOCIAL', 'Antisocial Behaviour'),
+    ('ANTI_SOCIAL', 'Antisocial Behaviour'),
     ('BURGLARY', 'Burglary'),
     ('CRIMINAL_DAMAGE', 'Criminal Damage'),
-    ('CYBERCRIME', 'CyberCrime'),
+    ('CYBER_CRIME', 'CyberCrime'),
     ('FRAUD', 'Fraud'),
     ('HATE_CRIME', 'Hate Crime'),
     ('ROBBERY', 'Robbery'),
@@ -49,7 +49,6 @@ class Case(models.Model):
     crime_time= models.TimeField(null=True, blank=True) # time of crime
     crime_link = models.CharField(null=True, blank=True,max_length=300) #google map link of crime location
     is_registered = models.BooleanField(default=False) # true if FIR is registered
-    
     
     def __str__(self):
         return f"Case {self.case_id} - {self.case_title} - {self.status} - {self.upload_date}"
