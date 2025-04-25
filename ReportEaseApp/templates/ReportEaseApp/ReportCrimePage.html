@@ -132,7 +132,7 @@
                     <canvas id="canvas" style="display:none;"></canvas>
                     <img name="recent_photo" src="" id="img" style="display:none;" requierd
                         class="  selection:bg-black w-28 h-28 text-sm text-gray-800 rounded-lg focus:ring-0 focus:border-black outline-none transition-all/" />
-                    <input type="hidden" name="recent_photo_dataurl" id="recent_photo_dataurl">
+                    <input type="hidden" type="file" name="recent_photo_dataurl" id="recent_photo_dataurl">
 
 
                 </div>
@@ -149,6 +149,10 @@
         </form>
     </div>
     <script>
+
+        
+    
+        
         
             const open = document.getElementById('open');
             const video = document.getElementById('video');
@@ -180,19 +184,20 @@
                 canvas.height = video.videoHeight;
                 const context = canvas.getContext('2d');
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const dataURL = canvas.toDataURL('image/png');
+                const dataURL = canvas.toDataURL('image/png',0.6);
                 document.getElementById('recent_photo_dataurl').value = dataURL;
                 img.src = canvas.toDataURL('image/png');
                 img.style.display = 'block';
 
+                formData.append("recent_photo_dataurl", dataURL);
+                //document.getElementById('recent_photo_dataurl').value = dataURL;
 
-                document.getElementById('recent_photo_dataurl').value = dataURL;
-
+                
                 let stream = video.srcObject;
                 let tracks = stream.getTracks();
                 tracks.forEach(track => track.stop());
                 video.srcObject = null;
-                console.log(img.src);
+                //console.log(img.src);
             });
 
             close_button.addEventListener('click', () => {
@@ -205,12 +210,33 @@
 
             });
 
-
             const form = document.querySelector('form');
-            submitbtn = document.getElementById("submit");
+            const submitbtn = document.getElementById("submit");
+            const formData = new FormData();
+
+            const citizenship = document.querySelector('input[name="citizenship"]');
+            
+
+            citizenship.addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+              
+                const compressedBlob = await compressImage(file, 0.6, 800); // quality: 0.6, max width: 800px
+              
+                // Now you can send `compressedBlob` via fetch or FormData
+                
+                formData.append('citizenship', compressedBlob, 'compressed_citizenship.jpg');
+                console.log(formData.get('citizenship'));
+            });
+
+
+            
 
             form.addEventListener('submit', function (event) {
+                
                 // Prevent form submission for validation
+
+                event.preventDefault();
                 const crime_type = document.querySelector('select[name="crime_type"]');
                 const crime_date = document.querySelector('input[name="crime_date"]');
                 const crime_time = document.querySelector('input[name="crime_time"]');
@@ -218,28 +244,43 @@
                 const crime_location_link = document.querySelector('input[name="crime_location_link"]');
                 const crime_evidence = document.querySelector('input[name="crime_evidence"]');
                 const crime_description = document.querySelector('textarea[name="crime_description"]');
-                const citizenship = document.querySelector('input[name="citizenship"]');
-                const recent_photo = document.getElementById("recent_photo_dataurl");
+                const user_citizenship = document.querySelector('input[name="citizenship"]');
+                const user_recent_photo = document.getElementById("recent_photo_dataurl");
                 const yes_no = document.querySelector('input[name="yes_no"]');
-                const inputs = [crime_type.value, crime_date.value, crime_time.value, crime_location.value, crime_location_link.value, crime_evidence.value, crime_description.value, citizenship.value, recent_photo.value, yes_no.checked];
+                const inputs = [crime_type.value, crime_date.value, crime_time.value, crime_location.value, crime_location_link.value, crime_evidence.value, crime_description.value, user_citizenship.value, user_recent_photo.value, yes_no.checked];
+
+
 
                 // Check if any of the required fields are empty
                 let isValid = true;
                 // Prevent form submission for validation
                 inputs.forEach(input => {
-                    if (input === '' || input === undefined || input === null || input === 'null') {
-
-                        event.preventDefault();
-                        invalid = document.getElementById("invalid");
-
-                        invalid.innerHTML = "Please fill all the fields";
-                        return;
-
-                    } else {
-
-                        isValid = true;
+                    if (!input || input === 'null') {
+                        isValid = false;
                     }
                 });
+                if (!isValid) {
+                    event.preventDefault();
+                    document.getElementById("invalid").innerText = "Please fill all the fields";
+                    return;
+                }
+
+                //compress the citizenship image and recent photo image before sending to server
+                
+                
+                //create a form data
+                
+
+                formData.append("crime_type", crime_type.value);
+                formData.append("crime_date", crime_date.value);
+                formData.append("crime_time", crime_time.value);
+                formData.append("crime_location", crime_location.value);
+                formData.append("crime_location_link", crime_location_link.value);
+                formData.append("crime_description", crime_description.value);
+                formData.append("yes_no", yes_no.checked ? "yes" : "no");
+                formData.append("crime_evidence", crime_evidence.files[0]);
+
+
                 fetch("/citizen/registercase/", {
                     method: "POST",
                     //include csrf_token
@@ -247,25 +288,54 @@
 
                         "X-CSRFToken": "{{ csrf_token }}",
                     },
-                    body: new FormData(document.getElementById("register_form")),
+                    body: formData,
+                   
                 })
                     .then(response => response.json()).then(data => {
-                        console.log("response received", data);
+                        //console.log("response received", data);
                         if (data.status === "error") {
                             document.getElementById("invalid").innerText = data.message;
                         }
                         else if (data.status === "success") {
                             //wait for 1 second to redirect due to broken pipe error
-                            setTimeout(() => {
                             window.location.href = "/home/";
-                            },1000);
-
                         }
                         else {
                             document.getElementById("invalid").innerText = "An unexpected error occurred. Please try again.";
                         }
                     });
             });
+
+            //compress image
+            function compressImage(file, quality = 0.7, maxWidth = 1000) {
+                return new Promise((resolve, reject) => {
+                  const img = new Image();
+                  const reader = new FileReader();
+              
+                  reader.readAsDataURL(file);
+                  reader.onload = (e) => {
+                    img.src = e.target.result;
+                  };
+              
+                  img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const scale = Math.min(maxWidth / img.width, 1);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+              
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              
+                    canvas.toBlob((blob) => {
+                      resolve(blob);
+                    }, 'image/jpeg', quality);
+                  };
+              
+                  img.onerror = reject;
+                  reader.onerror = reject;
+                });
+            }
+
     </script>
     {% endblock %}
 
