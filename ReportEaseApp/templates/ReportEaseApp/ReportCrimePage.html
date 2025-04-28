@@ -50,6 +50,7 @@
         </div>
         <form action="" method="post" id="register_form" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
             <div class="grid sm:grid-cols-2 gap-6 transform duration-500">
                 <div>
                     <input type="hidden" name="register_crime_form" id="register_crime_form" value="register_crime_form">
@@ -97,7 +98,7 @@
                 <div>
                     <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
 
-                    <input type="file" name="crime_evidence" accept="image/*,video/*" required
+                    <input type="file" name="crime_evidence" accept="image/*,video/*" multiple
                         class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
                 </div>
                 <div>
@@ -109,7 +110,7 @@
 
                 <div class="">
                     <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
-                    <input type="file" name="citizenship" required
+                    <input type="file" name="citizenship" required multiple
                         class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
                         accept="image/*">
                 </div>
@@ -148,12 +149,7 @@
             </div>
         </form>
     </div>
-    <script>
-
-        
-    
-        
-        
+    <script>        
             const open = document.getElementById('open');
             const video = document.getElementById('video');
             const capturebtn = document.getElementById('capturebtn');
@@ -218,15 +214,21 @@
             
 
             citizenship.addEventListener('change', async (event) => {
-                const file = event.target.files[0];
-                if (!file) return;
-              
-                const compressedBlob = await compressImage(file, 0.6, 800); // quality: 0.6, max width: 800px
-              
-                // Now you can send `compressedBlob` via fetch or FormData
+                const files = event.target.files;
+                let index = 0;
+                Object.values(files).forEach(async file => {
+
                 
-                formData.append('citizenship', compressedBlob, 'compressed_citizenship.jpg');
-                console.log(formData.get('citizenship'));
+                    if (!file) return;
+                
+                    const compressedBlob = await compressImage(file, 0.6, 800); // quality: 0.6, max width: 800px
+                
+                    // Now you can send `compressedBlob` via fetch or FormData
+                    
+                    formData.append(`citizenship`, compressedBlob, `compressed_citizenship_${index+1}.jpg`);
+                    index++;
+                    console.log(formData.get('citizenship'));
+                });
             });
 
 
@@ -243,6 +245,7 @@
                 const crime_location = document.querySelector('input[name="crime_location"]');
                 const crime_location_link = document.querySelector('input[name="crime_location_link"]');
                 const crime_evidence = document.querySelector('input[name="crime_evidence"]');
+                console.log(crime_evidence.files);
                 const crime_description = document.querySelector('textarea[name="crime_description"]');
                 const user_citizenship = document.querySelector('input[name="citizenship"]');
                 const user_recent_photo = document.getElementById("recent_photo_dataurl");
@@ -278,15 +281,16 @@
                 formData.append("crime_location_link", crime_location_link.value);
                 formData.append("crime_description", crime_description.value);
                 formData.append("yes_no", yes_no.checked ? "yes" : "no");
-                formData.append("crime_evidence", crime_evidence.files[0]);
+                for (let i = 0; i < crime_evidence.files.length; i++) {
+                    formData.append('crime_evidence', crime_evidence.files[i]);
+                }
 
-
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                 fetch("/citizen/registercase/", {
                     method: "POST",
                     //include csrf_token
                     headers: {
-
-                        "X-CSRFToken": "{{ csrf_token }}",
+                        "X-CSRFToken": csrftoken,
                     },
                     body: formData,
                    

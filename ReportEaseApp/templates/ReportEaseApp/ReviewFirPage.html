@@ -18,87 +18,83 @@
             <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start transform duration-500"
                 onload="getelementdetail(this)">
                 <h1 class="text-2xl font-semibold mb-5">Evidences: </h1>
-                <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}"
-                    style="display: block;" alt="Product"
+                <img src=""
+                    style="display: none;" alt="Product"
                     class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
                     id="mainImage">
 
                 <video preload="metadata" src="" autoplay controls
-                    class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo">Profile</video>
-                <p id="imagelabel" class="self-center my-5 font-medium text-center">Profile</p>
-                <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden" id="imagelist transform duration-500">
-                    <div onclick="getinfo(this)">
-                        <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}" alt="Thumbnail 2"
-                            class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                            id="">
-                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Profile</p>
-                    </div>
-                    <div onclick="getinfo(this)">
-                        <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                            alt="Thumbnail 2"
-                            class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                            onclick="" id="">
-                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence</p>
-                    </div>
-                    <div onclick="getinfo(this)">
-                        <img src="https://images.unsplash.com/photo-1496957961599-e35b69ef5d7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw4fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                            alt="Thumbnail 3"
-                            class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                            onclick="" id="">
-                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence1</p>
-                    </div>
-                    <div onclick="getinfo(this)">
-                        <img src="https://images.unsplash.com/photo-1528148343865-51218c4a13e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwzfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                            alt="Thumbnail 4"
-                            class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                            onclick="" id="">
-                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence2</p>
-                    </div>
-                    <div onclick="getinfo(this)">
+                    class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo"></video>
+                <p id="filelabel" class="self-center my-5 font-medium text-center"></p>
+                <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden transform duration-500" id="imagelist">
+                    
+                    {% comment %} <div onclick="getinfo(this)">
                         <video src="{{ MEDIA_URL }}ReportEaseApp/Evidence/Video/vid.mp4" alt="evidence"
                             onclick="changeVideo(this.src)" preload="metadata"
                             class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300">play</video>
-                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence3</p>
-                    </div>
+                        <p id="imagelabels" class="hidden self-center my-5 font-medium text-center"></p>
+                    </div> {% endcomment %}
                 </div>
             </div>
 
             <!-- Fir report Details -->
             <div class="w-full mt-10 md:my-0 md:pl-5 transform duration-500">
                 <div class=" rounded-lg p-5 bg-light-gray transform duration-500">
-                    <h2 class="text-2xl font-semibold mb-2">Home Robbery</h2>
-                    <p class="mb-10 text-sm">Uploaded on : 2025/02/14</p>
-                    <div class="flex mb-5 items-center gap-5">
-                        <button><img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
-                                src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Rounded avatar"></button>
-                        <span class="text-lg mr-2">Sharmila Katwal
-                            <p class="text-xs">Not the Victim</p>
-                        </span>
+                    <h2 class="text-2xl font-semibold mb-2" id="title"></h2>
+                    <p class="mb-7 text-sm" id="upload_date"></p>
+                    <div class="flex mb-5 items-center gap-5 ">
+                        <button>
+                            <img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover" id="reporter_image"
+                                src="" alt="Rounded avatar">
+                        </button>
+                        <div>
+                            <p class="text-lg mr-2" id="reporter"></p>
+                            <p class="text-xs" id="is_victim"></p>
+                        </div>
                     </div>
 
-                    <p class="text-gray-700 mb-6">I was just laying there on my couch and three guys with black masks
-                        came
-                        raiding in my house.
-                        they tied me up kept me tied in a chair until they cleared out the valuable stuff worth $4000000
-                        dollars.
-                    </p>
+                    <p class="text-gray-700 mb-7" id="description"></p>
 
                     <div>
                         <div class="flex gap-2">
-                            <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p>15 / 12 / 2025</p>
+                            <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p id="crime_date"></p>
                         </div>
                         <div class="flex gap-2">
-                            <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p>12 : 53 PM</p>
+                            <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p id="crime_time">12 : 53 PM</p>
                         </div>
                         <div class="flex gap-2">
-                            <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p>Durbarmarg, Kathmandu</p> <a href="https://www.facebook.com"> <u class="text-cool-gray">click for exact location</u></a>
+                            <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p id="crime_location"></p> <a href="" id="crime_link" target=”_blank”> <u class="text-cool-gray" >click for exact location</u></a>
                         </div>
                         
                     </div>
                     <div class="md:flex mt-10 md:gap-5 transform duration-500">
-                        <button class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As registered</button>
-                        <button class="rounded-lg px-12 py-3 bg-dark-red hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium md:mt-0 mt-5">Mark As Failed</button>
+                        <button type='button' id="register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As registered</button>
+                        <button type='button' id="dont_register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-red hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium md:mt-0 mt-5">Mark As Failed</button>
                     </div>
+                    <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteModal" tabindex="-1" aria-hidden="true" class="hidden bg-black bg-opacity-70 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-md h-full bg-opacity-70 md:h-auto">
+            <!-- Modal content -->
+            <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <button type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <p id="are_you_sure" class="mb-4 text-gray-500 dark:text-gray-300">Are you sure ?
+                    
+                </p>
+                <div class="flex justify-center items-center space-x-4">
+                    <button id="no_button" data-modal-toggle="deleteModal" type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white text-cool-gray rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-0 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                        No, cancel
+                    </button>
+                    <button id="yes_button" type="submit" class="py-2 px-3 text-sm font-medium text-center text-white bg-cool-gray rounded-lg hover:bg-red-700 focus:ring-0 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                        Yes, I'm sure
+                    </button>
                 </div>
             </div>
         </div>
@@ -109,6 +105,8 @@
 
 
     <!-- end carousel -->
+
+    {% comment %} js for switching image and text in thhe carousel {% endcomment %}
     <script>
         function callboth() {
             changeImage(src);
@@ -148,6 +146,152 @@
 
             changetext(textContent);
         }
+    </script>
+
+    {% comment %} for fetching the data and making backend request calls {% endcomment %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event){
+            //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
+            const pathParts = window.location.pathname.split('/');
+            const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
+            //console.log(firId); // Use this to fetch your data
+
+            fetch(`/casedetails/${firId}/`).then(response => {
+                if (response.ok) {
+                    
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            }).then(data => {
+                //console.log(data); // Check the data structure in the console
+                document.getElementById('title').innerText = data.case_data.case_title;
+                document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
+                document.getElementById('reporter').innerText = data.case_data.reporter;
+                document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
+                document.getElementById('description').innerText = data.case_data.crime_description;
+                document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
+
+                let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
+                // i want in hh:ss am/pm format
+                time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
+                document.getElementById('crime_time').innerText = time; // Format the date as needed
+                document.getElementById('crime_location').innerText = data.case_data.crime_location;
+                document.getElementById('crime_link').href = data.case_data.crime_link;
+                document.getElementById('reporter_image').src = data.case_data.reporter_pic; // Format the date as needed
+
+                //for displaying evidence images and videos
+                const evidenceList = data.evidence;
+                const imagelist = document.getElementById('imagelist');
+                imagelist.innerHTML = ""; // Clear existing content
+                let index=0;
+                Object.values(evidenceList).forEach(evidence => {
+                    if(index==0){
+                        //display the first evidence
+                        if (evidence.evidence_type === 'image') {
+                            const img_disp = document.getElementById("mainImage");
+                            img_disp.style.display="block";
+                            img_disp.src = evidence.evidence_pic_file
+                        }
+                        else if (evidence.evidence_type === 'video') {
+                            const vid_disp = document.getElementById("mainVideo");
+                            vid_disp.style.display="block";
+                            vid_disp.src = evidence.evidence_vid_file
+                        }
+
+                    }
+                    const div = document.createElement('div');
+                    div.onclick = function() { getinfo(this); };
+                    if (evidence.evidence_type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = evidence.evidence_pic_file;
+                        img.alt = "Evidence Image";
+                        img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                        div.appendChild(img);
+                    } else if (evidence.evidence_type === 'video') {
+                        const video = document.createElement('video');
+                        video.src = evidence.evidence_vid_file;
+                        video.alt = "Evidence Video";
+                        video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                        div.appendChild(video);
+                    }
+                    
+                    imagelist.appendChild(div);
+                    index += 1;
+                });
+
+                //for recent photo of reporter
+                if(data.recent_photo){
+                    const div = document.createElement('div');
+                    div.onclick = function() { getinfo(this); };
+                    const img = document.createElement('img');
+                    img.src = data['recent_photo'].recent_photo;
+                        img.alt = "Recent Photo";
+                        img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                        div.appendChild(img);
+                        imagelist.appendChild(div);
+                }
+
+            }).catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }); 
+    </script>
+
+    <script>
+        const register_button = document.getElementById('register');
+        const dont_register_button = document.getElementById('dont_register');
+
+        register_button.addEventListener('click', () => {
+                const p_tag = document.getElementById('are_you_sure');
+                p_tag.innerHTML="Do you want to mark this case as registered?"; 
+
+                const yes_button = document.getElementById('yes_button');
+                if(yes_button){
+                    yes_button.addEventListener('click',()=>{
+                        const pathParts = window.location.pathname.split('/');
+                        const firId = parseInt(pathParts[pathParts.length - 2]); 
+                        // markregistered/<int:id>/
+                        fetch(`/investigator/markregistered/${firId}/`).then(response => response.json()).then(data =>{
+                            if(data.status == 'success'){
+                                window.location.href = '/caselist/';
+                            }
+                            else{
+                                const invalid = document.getElementById('invalid');
+                                invalid.innerText = data.message;
+                            }
+                        });
+
+                    });
+                }     
+
+        });
+        dont_register_button.addEventListener('click', () => {
+            const p_tag = document.getElementById('are_you_sure');
+            p_tag.innerHTML="Do you want to mark this case as failed?"; 
+
+            const yes_button = document.getElementById('yes_button');
+            if (yes_button){ 
+                yes_button.addEventListener('click',()=>{
+                    const pathParts = window.location.pathname.split('/');
+                    const firId = parseInt(pathParts[pathParts.length - 2]); 
+                    // marknotregistered/<int:id>/
+
+                    fetch(`/investigator/marknotregistered/${firId}/`).then(response => response.json()).then(data =>{
+                        if(data.status =='success'){
+                            window.location.href = '/caselist/';
+                        }
+                        else{
+                            const invalid = document.getElementById('invalid');
+                            invalid.innerText = data.message;
+                        }
+                    });
+                    
+                }); 
+            }
+        });
+
     </script>
 
     {%endblock%}

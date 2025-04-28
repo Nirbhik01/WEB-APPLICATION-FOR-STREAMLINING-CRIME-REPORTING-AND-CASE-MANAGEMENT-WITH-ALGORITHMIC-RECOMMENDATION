@@ -1,5 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.http import JsonResponse
+from Case.models import Case,Evidence 
+from userauths.models import Citizen as Ct
+
 # from userauths.views import get_current_user
 from Case.views import get_wanted_list
 def LandingPage(request):
@@ -11,7 +15,7 @@ def HomePage(request):
         return login_check
     
     wanted_data = get_wanted_list()
-    return render(request, 'HomePage.html',{'wanted_list': wanted_data,"data2": 2})
+    return render(request, 'HomePage.html',{'wanted_list': wanted_data})
 
 def UploadWantedPage(request):
     login_check = check_for_login(request)
@@ -63,8 +67,58 @@ def check_for_login(request):
         
         messages.warning(request,"You must be logged in to view that page")
         return redirect('userauths:LoginPage')
+    
+    
+def case_details(request,id):
+    try:
+        data=dict()
+        case = Case.objects.get(case_id=id)
+        case_data = {
+            'case_id': case.case_id,
+            'case_title': case.case_title,
+            'reporter': str(case.reporter.user_name), 
+            "reporter_pic":str(case.reporter.user_profile_picture.url),# convert ForeignKey to string or ID
+            'upload_date': case.upload_date,
+            'is_reporter_the_victim': case.is_reporter_the_victim,
+            'crime_date': case.crime_date,
+            'crime_location': case.crime_location,
+            'crime_description': case.crime_description,
+            'crime_time': case.crime_time,
+            'crime_link': case.crime_link,
+        }
+        data['case_data']=(case_data)
+        
 
-# Create your views here.
+        evidences = Evidence.objects.filter(case=case)
+        evidence_Data=dict()
+        
+        
+        
+        for evidence in evidences:
+        #    append into the evidence_Date dictionary
+            evidence_Data[evidence.id] = {
+                'evidence_id': evidence.id,
+                'evidence_type': evidence.evidence_type,
+                'evidence_pic_file': str(evidence.evidence_pic_file.url) if evidence.evidence_pic_file else None,
+                'evidence_vid_file': str(evidence.evidence_vid_file.url) if evidence.evidence_vid_file else None, 
+            }
+        
+        
+        
+        data['evidence']=(evidence_Data)
+        
+        reporter_recent_photo = case.reporter.user_recent_photo.url if case.reporter.user_recent_photo else None
+        
+        data['recent_photo'] = {
+            'recent_photo': reporter_recent_photo
+        }
+            
+        return JsonResponse(data, safe=False)
+    
+    
+    except Case.DoesNotExist:
+        return JsonResponse({"error": "Case not found"}, status=404)
+
 
 
 

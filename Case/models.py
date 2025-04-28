@@ -47,7 +47,7 @@ class Case(models.Model):
     crime_location= models.CharField(max_length=100, null=True, blank=True) # location of crime
     crime_description= models.TextField(null=True, blank=True) # description of crime
     crime_time= models.TimeField(null=True, blank=True) # time of crime
-    crime_link = models.CharField(null=True, blank=True,max_length=300) #google map link of crime location
+    crime_link = models.CharField(null=True, blank=True,max_length=1000) #google map link of crime location
     is_registered = models.BooleanField(default=False) # true if FIR is registered
     
     def __str__(self):
@@ -68,13 +68,16 @@ class Activity_log(models.Model):
 def Evidence_pic_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
     id_slug = slugify(instance.case.case_id)  # Sanitize email
-    new_filename = f"{id_slug}.{ext}"  # Create new filename
+    length = Evidence.objects.filter(case=instance.case).count()
+    new_filename = f"{id_slug}-{length+1}.{ext}"   # Create new filename
     return os.path.join('ReportEaseApp/Evidence/Photo', new_filename)
 
 def Evidence_vid_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
     id_slug = slugify(instance.case.case_id)  # Sanitize email
-    new_filename = f"{id_slug}.{ext}"  # Create new filename
+    # check for the number of files that exist with the case
+    length = Evidence.objects.filter(case=instance.case).count()
+    new_filename = f"{id_slug}-{length+1}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/Evidence/Video', new_filename)
     
 class Evidence(models.Model):

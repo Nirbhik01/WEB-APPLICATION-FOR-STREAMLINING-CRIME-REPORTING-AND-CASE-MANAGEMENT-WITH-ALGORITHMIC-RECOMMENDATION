@@ -19,7 +19,7 @@ def get_wanted_list():
 
 def fetch_cases(request):
     
-    case_list = Case.objects.all().values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name')
+    case_list = Case.objects.filter(is_registered=False).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name')
     
     # case_list = case_list.order_by('-crime_date')
     
@@ -37,7 +37,7 @@ def search_cases(request):
     if query:
         for search_term in query:
             matched_cases = list(Case.objects.filter(
-                case_title__icontains=search_term
+                case_title__icontains=search_term,is_registered=False
             ).values(
                 'case_title', 'upload_date', 'crime_description',
                 'case_id', 'reporter__user_profile_picture', 'reporter__user_name'
@@ -65,7 +65,7 @@ def filter_cases(request):
         if to_date_str:
             to_date = parse_date(to_date_str)
             
-        case_list = Case.objects.all()
+        case_list = Case.objects.filter(is_registered=False)
 
         if from_date:
             case_list = case_list.filter(upload_date__date__gte=from_date)

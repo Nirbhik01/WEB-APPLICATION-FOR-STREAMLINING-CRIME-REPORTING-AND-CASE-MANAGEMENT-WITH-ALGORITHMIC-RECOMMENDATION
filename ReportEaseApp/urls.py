@@ -19,6 +19,8 @@ urlpatterns = [
     path('reviewfir/<int:id>/',ReviewFirPage,name='ReviewFirPage'),
     path('casepage/' , CasePage , name='CasePage'),
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
+    path('casedetails/<int:id>/',case_details, name='get_case_details'),
+    
     # path('case/',include('Case.urls')),
     
     # path('logout/' , LogoutPage , name='LogoutPage'),

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from userauths.models import Citizen as Ct
+from userauths.models import Citizenship_photo as Cp
 from Case.models import Case, Evidence
 # import messages
 from django.contrib import messages
@@ -29,9 +30,9 @@ def register_case(request):
         crime_time= request.POST.get('crime_time')
         crime_location= request.POST.get('crime_location')
         crime_location_link= request.POST.get('crime_location_link')
-        crime_evidence= request.FILES['crime_evidence']
+        crime_evidence = request.FILES.getlist ('crime_evidence')
         crime_description= request.POST.get('crime_description')
-        citizenship = request.FILES['citizenship']
+        citizenship = request.FILES.getlist ('citizenship')
         yes_no= True if request.POST.get('yes_no') else False
         # recent_photo = request.FILES.get('recent_photo')
         image_data_url = request.POST.get('recent_photo_dataurl')
@@ -58,27 +59,37 @@ def register_case(request):
         )
         case.save()
         # check evidence type and create evidence instance accordingly
-        file_type = is_image_or_video(crime_evidence.name)
-
-        if file_type == 'image':
-            evidence = Evidence(case = case,
-                            evidence_type = file_type,
-                            evidence_pic_file = crime_evidence,
-                            )
-            evidence.save()
-        elif file_type == 'video':
-            evidence = Evidence(case = case,
-                            evidence_type = file_type,
-                            evidence_vid_file = crime_evidence,
-                            )
-            evidence.save()
-        else:
-            pass 
+        for file in crime_evidence:
+            print("entered in evidence")
+            file_type = is_image_or_video(file.name)
+            if file_type == 'image':
+                print("entered in image")
+                evidence = Evidence(case = case,
+                                evidence_type = file_type,
+                                evidence_pic_file = file,
+                                )
+                print("evidence created")
+                evidence.save()
+            elif file_type == 'video':
+                print("entered in video")
+                evidence = Evidence(case = case,
+                                evidence_type = file_type,
+                                evidence_vid_file = file,
+                                )
+                print("evidence created")
+                evidence.save()
+            else:
+                pass 
         
         user_photo = Ct.objects.get(user_id=user_id)
         user_photo.user_recent_photo = image_file
-        user_photo.user_citizenship = citizenship
         user_photo.save()
+        
+        for file in citizenship:
+            # create an project and save
+            citizenship_photo = Cp(user=user, citizenship_photo=file)
+            citizenship_photo.save()
+
         
         messages.success(request, "Case registered successfully.")
         return JsonResponse({"status": "success", "message": "Case registered successfully."})

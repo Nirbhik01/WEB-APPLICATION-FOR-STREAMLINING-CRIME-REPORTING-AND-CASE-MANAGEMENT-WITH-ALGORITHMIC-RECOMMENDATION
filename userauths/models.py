@@ -13,8 +13,9 @@ def citizen_profile_pic_path(instance, filename): #instance represents the curre
 
 def citizen_citizenship_pic_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
-    email_slug = slugify(instance.user_email.split('.')[0])  # Sanitize email
-    new_filename = f"{email_slug}.{ext}"  # Create new filename
+    email_slug = slugify(instance.user.user_email.split('.')[0])  # Sanitize email
+    length = Citizenship_photo.objects.filter(user=instance.user).count()
+    new_filename = f"{email_slug}-{length+1}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/Documents', new_filename)
 
 def citizen_recent_pic_path(instance, filename): #instance represents the current class object being used
@@ -23,11 +24,6 @@ def citizen_recent_pic_path(instance, filename): #instance represents the curren
     new_filename = f"{email_slug}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/Recent_Photo', new_filename)
 
-def Investigator_profile_pic_path(instance, filename): #instance represents the current class object being used
-    ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
-    email_slug = slugify(instance.user_email.split('.')[0])  # Sanitize email
-    new_filename = f"{email_slug}.{ext}"  # Create new filename
-    return os.path.join('ReportEaseApp/ProfilePics/Investigator', new_filename)
 
 class Citizen(models.Model):
     user_id = models.BigAutoField(primary_key=True)
@@ -38,7 +34,6 @@ class Citizen(models.Model):
     user_phone_number = models.IntegerField()
     user_profile_picture = models.ImageField(upload_to = citizen_profile_pic_path,null=True, blank=True)
     user_type=models.CharField(max_length=15,default="Citizen")
-    user_citizenship = models.ImageField(upload_to = citizen_citizenship_pic_path,null=True, blank=True)
     user_recent_photo = models.ImageField(upload_to = citizen_recent_pic_path,null=True, blank=True)
     def save(self, *args, **kwargs):
         if not self.user_password.startswith('pbkdf2_sha256$'):
@@ -51,6 +46,16 @@ class Citizen(models.Model):
     
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"
+
+class Citizenship_photo(models.Model):
+    user = models.ForeignKey(Citizen, on_delete=models.CASCADE)
+    citizenship_photo = models.ImageField(upload_to=citizen_citizenship_pic_path,null=True, blank=True)
+
+def Investigator_profile_pic_path(instance, filename): #instance represents the current class object being used
+    ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
+    email_slug = slugify(instance.user_email.split('.')[0])  # Sanitize email
+    new_filename = f"{email_slug}.{ext}"  # Create new filename
+    return os.path.join('ReportEaseApp/ProfilePics/Investigator', new_filename)
 
 class Investigator(models.Model):
     user_id = models.BigAutoField(primary_key=True)
