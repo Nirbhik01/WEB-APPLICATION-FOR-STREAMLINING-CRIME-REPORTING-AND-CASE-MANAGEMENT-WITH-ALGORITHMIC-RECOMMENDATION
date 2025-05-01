@@ -1,21 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.utils.dateparse import parse_date
 from django.utils.timezone import make_aware
 from datetime import datetime, time
+from userauths.models import Citizen as Ct, Investigator as Iv
+
 
 from django.http import JsonResponse
 from .models import *
-
-def get_wanted_list():
-    # Fetch the list of wanted individuals from the database 
-    wanted_list = Wanted.objects.all().values('wanted_name', 'wanted_reason', 'wanted_pic','upload_date')
-    # sort wanted list by upload_date so that recent date comes first
-    wanted_list = wanted_list.order_by('-upload_date')
-    
-    # Convert the queryset to a list of dictionaries
-    wanted_list = list(wanted_list)
-    
-    return list(wanted_list)
 
 def fetch_cases(request):
     
@@ -80,5 +71,25 @@ def filter_cases(request):
         )
             
         return JsonResponse(list(case_list), safe=False)
-                
+          
+def display_cases(request):
+    print("entered diaplay cases")
+    user_id = request.session.get('user_id')
+    user_type = request.session.get('user_type')
+    
+    if user_type == 'Citizen':
+        print("entered citizen")
+        user = Ct.objects.get(user_id=user_id)
+        print(user)
+        cases = Case.objects.filter(reporter=user).values('case_id','case_title','investigator','status')
+        print(list(cases))
+        return JsonResponse(list(cases), safe=False)
+    
+    elif user_type == 'Investigator':
+        print("entered investigator")
+        user = Iv.objects.get(user_id=user_id)
+        cases = Case.objects.filter(investigator=user,is_registered=True).values('case_id','case_title','reporter','status')
+        return JsonResponse(list(cases), safe=False)
+    
+    return JsonResponse({"status": "error", "message": "An error Occured"})      
 # Create your views here.

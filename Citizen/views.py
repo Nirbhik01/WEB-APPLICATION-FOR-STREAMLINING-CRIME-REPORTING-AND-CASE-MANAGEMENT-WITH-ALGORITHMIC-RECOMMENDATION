@@ -9,6 +9,7 @@ from django.http import JsonResponse
 import base64
 from django.core.files.base import ContentFile
 import os
+from datetime import date, timedelta
 
 def is_image_or_video(file_name):
     image_exts = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp']
@@ -58,6 +59,8 @@ def register_case(request):
             crime_link=crime_location_link
         )
         case.save()
+        case.status = "FIR_Verification"
+        case.save()
         # check evidence type and create evidence instance accordingly
         for file in crime_evidence:
             print("entered in evidence")
@@ -82,15 +85,22 @@ def register_case(request):
                 pass 
         
         user_photo = Ct.objects.get(user_id=user_id)
-        user_photo.user_recent_photo = image_file
-        user_photo.save()
-        
+
+        if (not user_photo.user_recent_photo):
+            user_photo.user_recent_photo = image_file
+            user_photo.save()
+            
+        if (user_photo.user_recent_photo and ((date.today() - user_photo.recent_photo_upload_date) >= timedelta(days=60))) :
+            user_photo.user_recent_photo.delete()
+            user_photo.user_recent_photo = image_file
+            user_photo.recent_photo_upload_date = date.today()
+            user_photo.save()
+
         for file in citizenship:
             # create an project and save
             citizenship_photo = Cp(user=user, citizenship_photo=file)
             citizenship_photo.save()
 
-        
         messages.success(request, "Case registered successfully.")
         return JsonResponse({"status": "success", "message": "Case registered successfully."})
 

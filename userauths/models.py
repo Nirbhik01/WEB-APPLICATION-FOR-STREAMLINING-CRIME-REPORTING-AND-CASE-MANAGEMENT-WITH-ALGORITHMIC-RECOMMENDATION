@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils.text import slugify
 from django.core.files.storage import default_storage
-import os
+import os,datetime
 
 def citizen_profile_pic_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
@@ -26,15 +26,18 @@ def citizen_recent_pic_path(instance, filename): #instance represents the curren
 
 
 class Citizen(models.Model):
-    user_id = models.BigAutoField(primary_key=True)
-    user_name = models.CharField(max_length=200)
-    user_password = models.CharField(max_length=200)
-    user_address = models.CharField(max_length=400)
+    user_id = models.BigAutoField(primary_key = True)
+    user_name = models.CharField(max_length = 200)
+    user_password = models.CharField(max_length = 200)
+    user_address = models.CharField(max_length = 400)
     user_email = models.EmailField()
     user_phone_number = models.IntegerField()
-    user_profile_picture = models.ImageField(upload_to = citizen_profile_pic_path,null=True, blank=True)
-    user_type=models.CharField(max_length=15,default="Citizen")
-    user_recent_photo = models.ImageField(upload_to = citizen_recent_pic_path,null=True, blank=True)
+    user_profile_picture = models.ImageField(upload_to = citizen_profile_pic_path, null = True, blank = True)
+    user_type=models.CharField(max_length = 15, default="Citizen")
+    user_recent_photo = models.ImageField(upload_to = citizen_recent_pic_path,null = True, blank = True)
+    recent_photo_upload_date = models.DateField(default = None, null = True, blank = True)
+    joined_on = models.DateField(auto_now_add=True)
+    
     def save(self, *args, **kwargs):
         if not self.user_password.startswith('pbkdf2_sha256$'):
             self.user_password = make_password(self.user_password)
@@ -67,7 +70,7 @@ class Investigator(models.Model):
     user_type=models.CharField(max_length=15,default="Investigator")
     user_profile_picture = models.ImageField(upload_to = Investigator_profile_pic_path,null=True, blank=True)
     user_district=models.CharField(max_length=200,default=None)
-    
+    joined_on = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"

@@ -36,6 +36,7 @@ def mark_case_registered(request,id):
     try:
         case = Case.objects.get(case_id=id)
         case.is_registered = True
+        case.status = "Investigator_Assigning"
         case.save()
         messages.success(request,"Case marked as Registered")
         return JsonResponse({"status": "success"})

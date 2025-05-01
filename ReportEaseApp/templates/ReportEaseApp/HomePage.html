@@ -236,6 +236,53 @@
                         toastSuccess.remove();
                     }, 3000); // Remove the toast after 3 seconds
                 }
+
+                fetch(`/case/displaycases/`).then(response => response.json()).then(data => {
+                    if(data.status){
+                        const cases = document.getElementById("cases");
+                        cases.innerHTML = "";
+                        cases.innerHTML=`
+                            <p class="text-xl text-dark-red">Error occured while fetching cases</p>
+                        `
+                    }
+                    else if (data.length > 0){
+                        const cases = document.getElementById("case_content");
+                        console.log(data)
+                        cases.innerHTML="";
+                        data.forEach(element => {
+                            const anchor = document.createElement('a');
+                            anchor.className = 'items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg';
+                            anchor.href=`/casepage/${element.case_id}/`;
+                            if(element.investigator==null){
+                                anchor.innerHTML = `
+                                    <div class="text-gray-600 ">
+                                        <div class="text-base font-normal">${element.case_title} - Investigator Not Assigned </div>
+                                        <div class="text-sm font-normal">${element.status.replace("_"," ")}</div>
+                                    </div>
+                                `;
+                                cases.appendChild(anchor);
+                            }
+                            else{
+                                anchor.innerHTML = `
+                                    <div class="text-gray-600 ">
+                                        <div class="text-base font-normal">${element.case_title} - ${element.investigator}</div>
+                                        <div class="text-sm font-normal">${element.status.replace("_"," ")}</div>
+                                    </div>
+                                `;
+                                cases.appendChild(anchor);
+                            }
+                        });
+
+
+                    }
+                    else{
+                        const cases = document.getElementById("cases");
+                        cases.innerHTML = "";
+                        cases.innerHTML=`
+                            <p class="text-2xl">No cases</p>
+                        `
+                    }
+                });
             });
 
             function matchHeight(element1, element2) {
@@ -261,6 +308,10 @@
             const element1 = document.getElementById("NewsArticle"); // Element to adjust
             const element2 = document.getElementById("CasesAndWanted"); // Element to match
             matchHeight(element1, element2);
+
+
+
+
         </script>
         <script>
             

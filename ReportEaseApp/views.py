@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.http import JsonResponse
-from Case.models import Case,Evidence 
+from Case.models import Case,Evidence,Wanted
 from userauths.models import Citizen as Ct
-
+from Case.views import display_cases
 # from userauths.views import get_current_user
-from Case.views import get_wanted_list
+
 def LandingPage(request):
     return render(request, 'LandingPage.html')
 
@@ -15,7 +15,7 @@ def HomePage(request):
         return login_check
     
     wanted_data = get_wanted_list()
-    return render(request, 'HomePage.html',{'wanted_list': wanted_data})
+    return render(request, 'HomePage.html',{'wanted_list': wanted_data,})
 
 def UploadWantedPage(request):
     login_check = check_for_login(request)
@@ -35,7 +35,7 @@ def CaseListPage(request):
         return login_check
     return render(request, 'CaseListPage.html')
 
-def CasePage(request):
+def CasePage(request,id):
     login_check = check_for_login(request)
     if login_check:
         return login_check
@@ -119,7 +119,16 @@ def case_details(request,id):
     except Case.DoesNotExist:
         return JsonResponse({"error": "Case not found"}, status=404)
 
-
+def get_wanted_list():
+    # Fetch the list of wanted individuals from the database 
+    wanted_list = Wanted.objects.all().values('wanted_name', 'wanted_reason', 'wanted_pic','upload_date')
+    # sort wanted list by upload_date so that recent date comes first
+    wanted_list = wanted_list.order_by('-upload_date')
+    
+    # Convert the queryset to a list of dictionaries
+    wanted_list = list(wanted_list)
+    
+    return (wanted_list)
 
 
 

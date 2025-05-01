@@ -1,9 +1,7 @@
 from userauths.models import Citizen, Investigator
 from django.shortcuts import render,redirect
 
-
 def user_context(request):
-   
     user_id=None
     user_type=None
     try:
