@@ -78,7 +78,7 @@
             </div>
 
             <div class="md:flex relative space-x-0 md:space-x-7 ">
-                {%if logged_in_user.user_type == 'Investigator'%}
+                {%if user_type == 'Investigator' or user_type == 'Admin' %}
                 <div class="max-w-md md:w-[100%] w-3/4 float-right md:float-none ring-0 border-0">
                     <div class="relative justify-between ">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

@@ -72,7 +72,7 @@ def register_case(request):
         if (not user_photo.user_recent_photo):
             user_photo.user_recent_photo = image_file
             user_photo.save() 
-        elif (user_photo.user_recent_photo and ((date.today() - user_photo.recent_photo_upload_date) >= timedelta(days=60))) :
+        elif (user_photo.user_recent_photo) :
             user_photo.user_recent_photo.delete()
             user_photo.user_recent_photo = image_file
             user_photo.recent_photo_upload_date = date.today()
@@ -90,31 +90,31 @@ def register_case(request):
 
 def save_evidence(crime_evidence,case):        
     for file in crime_evidence:
-        print("entered in evidence")
+        # print("entered in evidence")
         file_type = is_image_or_video(file.name)
         if file_type == 'image':
-            print("entered in image")
+            # print("entered in image")
             evidence = Evidence(case = case,
                             evidence_type = file_type,
                             evidence_pic_file = file,
                             )
-            print("evidence created")
+            # print("evidence created")
             evidence.save()
         elif file_type == 'video':
-            print("entered in video")
+            # print("entered in video")
             evidence = Evidence(case = case,
                             evidence_type = file_type,
                             evidence_vid_file = file,
                             )
-            print("evidence created")
+            # print("evidence created")
             evidence.save()
         elif file_type == 'audio':
-            print("entered in audio")
+            # print("entered in audio")
             evidence = Evidence(case = case,
                             evidence_type = file_type,
                             evidence_audio_file = file,
                             )
-            print("evidence created")
+            # print("evidence created")
             evidence.save()
         else:
             pass 

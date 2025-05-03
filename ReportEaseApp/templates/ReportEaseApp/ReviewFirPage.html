@@ -56,7 +56,7 @@
 
                     <p class="text-gray-700 mb-7" id="description"></p>
 
-                    <div>
+                    <div class="mb-7">
                         <div class="flex gap-2">
                             <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p id="crime_date"></p>
                         </div>
@@ -68,11 +68,36 @@
                         </div>
                         
                     </div>
-                    <div class="md:flex mt-10 md:gap-5 transform duration-500">
-                        <button type='button' id="register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As registered</button>
-                        <button type='button' id="dont_register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-red hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium md:mt-0 mt-5">Mark As Failed</button>
-                    </div>
+                    {%if user_type == "Investigator"%}
+                        <div class="md:flex mt-10 md:gap-5 transform duration-500">
+                            <button type='button' id="register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As registered</button>
+                            <button type='button' id="dont_register" id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="rounded-lg px-12 py-3 bg-dark-red hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium md:mt-0 mt-5">Mark As Failed</button>
+                        </div>
+                    {%endif%}
+                    {%if user_type == "Admin"%}
+                        <form action="" method="POST" enctype="multipart/form-data" id="assign_investigator_form">
+                            {%csrf_token%}
+                            <input type="hidden" name="" id="csrftoken" value="{{ csrftoken }}">
+                            <div class="flex mb-5 items-center gap-5 ">
+                                <button>
+                                    <img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover" id="investigator_image"
+                                        src="" alt="Rounded avatar">
+                                </button>
+                                <div>
+                                    <p class="text-base mr-2">Registered By:</p>
+                                    <p class="text-xs" id="investigator_name"></p>
+                                </div>
+                            </div>
+                            <div class="md:flex mt-10 md:gap-5 transform duration-500">
+                                <select name="investigators_list" id="investigators_list" class="rounded-lg px-12 py-3 bg-dark-blue  text-white font-medium focus:ring-0">
+                                    <option value="" disabled selected value>-- choose an option --</option>
+                                </select>
+                                <button type='submit' id="save_investigator" id="deleteButton"  class="rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Save</button>
+                            </div>
+                        </form>
+                    {%endif%}
                     <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
+                    <input type="hidden" name="user_type" value="{{ user_type }}" id="user_type">
                 </div>
             </div>
         </div>
@@ -160,11 +185,11 @@
     {% comment %} for fetching the data and making backend request calls {% endcomment %}
 
     <script>
-        
+         //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
+         const pathParts = window.location.pathname.split('/');
+         const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
         document.addEventListener("DOMContentLoaded", function (event){
-            //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
-            const pathParts = window.location.pathname.split('/');
-            const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
+           
             //console.log(firId); // Use this to fetch your data
 
             fetch(`/casedetails/${firId}/`).then(response => {
@@ -263,29 +288,102 @@
                     imagelist.appendChild(div);
                 });
 
+                user_type = document.getElementById('user_type').value;
+                if (user_type == "Admin"){
+                    let investigator_image = document.getElementById('investigator_image');
+                    investigator_image.src = data.case_data.registered_by_pic;
+
+                    let investigator_name = document.getElementById('investigator_name');
+                    investigator_name.innerText = data.case_data.registered_by;
+
+                    let investigators_list = document.getElementById('investigators_list');
+                    Object.values(data.available_investigators).forEach(investigator => {
+                        let option = document.createElement('option');
+                        option.value = investigator.user_email;
+                        option.innerText = `${investigator.user_name}-${investigator.user_email}`;
+                        investigators_list.appendChild(option);
+                    });
+                        
+
+                }
+
+
             }).catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
         }); 
-    
+        
+        const assign_investigator_form = document.getElementById('assign_investigator_form');
+        if(assign_investigator_form){
+            assign_investigator_form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const formData = new FormData(assign_investigator_form);
+                fetch(`/assigninvestigator/${firId}/`,{
+                    method: 'POST',
+                    headers:{
+                        'X-CSRFToken': document.getElementById('csrftoken').value,
+                    },
+                    body: formData,
+                }).then(response => response.json()).then(data =>{
+                    if(data.status == "success"){
+                        window.location.href = '/caselist/';
+                    }
+                    if(data.status == "error" || data.status == "request"){
+                        document.getElementById('invalid').innerText = data.message;
+                    }
+                })
+                
+            });
+        }
+
     </script>
 
     <script>
         const register_button = document.getElementById('register');
         const dont_register_button = document.getElementById('dont_register');
+        if(register_button){
+                
+            register_button.addEventListener('click', () => {
+                    const p_tag = document.getElementById('are_you_sure');
+                    p_tag.innerHTML="Do you want to mark this case as registered?"; 
 
-        register_button.addEventListener('click', () => {
+                    const yes_button = document.getElementById('yes_button');
+                    if(yes_button){
+                        yes_button.addEventListener('click',()=>{
+                            const pathParts = window.location.pathname.split('/');
+                            const firId = parseInt(pathParts[pathParts.length - 2]); 
+                            // markregistered/<int:id>/
+                            fetch(`/investigator/markregistered/${firId}/`).then(response => response.json()).then(data =>{
+                                if(data.status == 'success'){
+                                    window.location.href = '/caselist/';
+                                }
+                                else{
+                                    const invalid = document.getElementById('invalid');
+                                    invalid.innerText = data.message;
+                                }
+                            });
+
+                        });
+                    }     
+
+            });
+            
+        }
+        if(dont_register_button){
+                
+            dont_register_button.addEventListener('click', () => {
                 const p_tag = document.getElementById('are_you_sure');
-                p_tag.innerHTML="Do you want to mark this case as registered?"; 
+                p_tag.innerHTML="Do you want to mark this case as failed?"; 
 
                 const yes_button = document.getElementById('yes_button');
-                if(yes_button){
+                if (yes_button){ 
                     yes_button.addEventListener('click',()=>{
                         const pathParts = window.location.pathname.split('/');
                         const firId = parseInt(pathParts[pathParts.length - 2]); 
-                        // markregistered/<int:id>/
-                        fetch(`/investigator/markregistered/${firId}/`).then(response => response.json()).then(data =>{
-                            if(data.status == 'success'){
+                        // marknotregistered/<int:id>/
+
+                        fetch(`/investigator/marknotregistered/${firId}/`).then(response => response.json()).then(data =>{
+                            if(data.status =='success'){
                                 window.location.href = '/caselist/';
                             }
                             else{
@@ -293,36 +391,12 @@
                                 invalid.innerText = data.message;
                             }
                         });
-
-                    });
-                }     
-
-        });
-        dont_register_button.addEventListener('click', () => {
-            const p_tag = document.getElementById('are_you_sure');
-            p_tag.innerHTML="Do you want to mark this case as failed?"; 
-
-            const yes_button = document.getElementById('yes_button');
-            if (yes_button){ 
-                yes_button.addEventListener('click',()=>{
-                    const pathParts = window.location.pathname.split('/');
-                    const firId = parseInt(pathParts[pathParts.length - 2]); 
-                    // marknotregistered/<int:id>/
-
-                    fetch(`/investigator/marknotregistered/${firId}/`).then(response => response.json()).then(data =>{
-                        if(data.status =='success'){
-                            window.location.href = '/caselist/';
-                        }
-                        else{
-                            const invalid = document.getElementById('invalid');
-                            invalid.innerText = data.message;
-                        }
-                    });
-                    
-                }); 
-            }
-        });
-
+                        
+                    }); 
+                }
+            });
+            
+        }
     </script>
 
     {%endblock%}

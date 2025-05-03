@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from userauths.models import Citizen, Investigator
 import random
+from django.contrib.auth import authenticate, login
 
 from django.http import JsonResponse
 
@@ -17,7 +18,7 @@ def LoginPage(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user_type = request.POST.get('user_type')  # "Citizen" or "Investigator"
+        user_type = request.POST.get('user_type')  # "Citizen" or "Investigator" or "Admin"
 
         if not email or not password or not user_type:
             messages.error(request, "All fields are required.")
@@ -49,7 +50,19 @@ def LoginPage(request):
             except Investigator.DoesNotExist:
                 messages.error(request, "Investigator account with this email does not exist.")
                 return redirect('userauths:LoginPage')
-        
+            
+        elif user_type == "Admin":
+            try:
+                user = authenticate(request, username=email, password=password)
+                if user is not None and user.is_superuser:
+                    login(request, user)  # logs in using Django session
+                    request.session['user_id'] = user.id
+                    request.session['user_type'] = 'Admin'
+                else:
+                    messages.error(request, "Error logging in with admin credentials.")
+                    return redirect('userauths:LoginPage')
+            except:
+                pass
         else:
             messages.error(request, "Invalid user type selected.")
             return redirect('userauths:LoginPage')
@@ -94,6 +107,7 @@ def RegisterPage(request):
                 messages.success(request, "Investigator registered successfully.")
                 # return redirect('userauths:LoginPage')
                 return JsonResponse({"status": "success"})
+            
             else:
                 return JsonResponse({"status": "error", "message": "Registration Failed"})
     

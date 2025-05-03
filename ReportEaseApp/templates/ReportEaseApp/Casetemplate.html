@@ -7,7 +7,7 @@
 </head>
 <body>
     {%block case_section%}
-        <div id="cases" class="w-full p-5 rounded-lg bg-light-gray transform duration-500">
+        <div id="cases" class="w-full p-5 rounded-lg mb-10 bg-light-gray transform duration-500">
             <h1 class="text-3xl font-medium text-gray-900 transform duration-500">Your Cases</h1>
             <ol id="case_content"
                 class="mt-5  md:grid md:grid-cols-2 md:space-y-0 md:gap-4 divide-opacity-5 space-y-4 max-h-60 md:max-h-none overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500"> 
@@ -34,7 +34,7 @@
                     }
                     else if (data.length > 0){
                         const cases = document.getElementById("case_content");
-                        console.log(data)
+                        console.log(data);
                         cases.innerHTML="";
                         data.forEach(element => {
                             const anchor = document.createElement('a');
@@ -42,8 +42,8 @@
                             anchor.href=`/casepage/${element.case_id}/`;
 
                             
-                            if('investigator' in element){
-                                if(element.investigator==null){
+                            if('investigator__user_name' in element){
+                                if(element.investigator__user_name == null){
                                     anchor.innerHTML = `
                                         <div class="text-gray-600 ">
                                             <div class="text-base font-normal">${element.case_title.replace("_"," ")} - Investigator Not Assigned </div>
@@ -55,17 +55,17 @@
                                 else{
                                     anchor.innerHTML = `
                                         <div class="text-gray-600 ">
-                                            <div class="text-base font-normal">${element.case_title} - ${element.investigator}</div>
+                                            <div class="text-base font-normal">${element.case_title} - ${element.investigator__user_name}</div>
                                             <div class="text-sm font-normal">${element.status.replace("_"," ")}</div>
                                         </div>
                                     `;
                                     cases.appendChild(anchor);
                                 }
                             }
-                            else if ('reporter' in element){
+                            else if ("reporter__user_name" in element){
                                 anchor.innerHTML = `
                                         <div class="text-gray-600 ">
-                                            <div class="text-base font-normal">${element.case_title.replace("_"," ")} - ${reporter__user_name} </div>
+                                            <div class="text-base font-normal">${element.case_title.replace("_"," ")} - ${element.reporter__user_name} </div>
                                             <div class="text-sm font-normal">${element.status.replace("_"," ")}</div>
                                         </div>
                                     `;
@@ -73,12 +73,16 @@
                             }
                         });
                     }
-                    else{
+                    else if (data.length == 0){
                         const cases = document.getElementById("cases");
                         cases.innerHTML = "";
                         cases.innerHTML=`
                             <p class="text-2xl">No cases</p>
                         `
+                    }
+                    else{
+                        document.getElementById("cases").style.display = "none";
+
                     }
                 });
             });

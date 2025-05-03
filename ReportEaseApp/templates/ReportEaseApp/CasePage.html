@@ -180,9 +180,6 @@
                                     ago</time></p>
                         </div>
                     </li> {% endcomment %}
-
-
-                    
                 </ul>
             </div>
         </div>
@@ -212,9 +209,9 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <form class="p-4 md:p-5">
+                    <form class="p-4 md:p-5" action="" method="POST" enctype="multipart/form-data">
                         {%csrf_token%}
-                        <input type="hidden" name="name=csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
                                 <label for="name" class="block mb-2 text-sm font-medium  ">Activity Topic</label>
@@ -248,7 +245,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- component -->
@@ -380,7 +376,7 @@
 
     </script>
 
-    <script>
+    <!-- <script>
         add_button = document.getElementById("add_activity_button");
         add_button.addEventListener("click",function(event){
             submitbtn = document.getElementById("activity_form_submit");
@@ -391,11 +387,12 @@
                     const pathParts = window.location.pathname.split('/');
                     const firId = parseInt(pathParts[pathParts.length - 2]);
                     const formData = new FormData(form);
-                    formData.append('activity_name', document.getElementById('activity_name').value);
-                    formData.append('activity_description', document.getElementById('activity_description').value);
-                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                    activity_files= document.querySelector('input[name="activity_file"]');                    
-                    formData.append('activity_file', activity_files.files);
+                    //formData.append('activity_name', document.getElementById('activity_name').value);
+                    //formData.append('activity_description', document.getElementById('activity_description').value);
+                    const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                    activity_files= document.querySelector('input[name="activity_file"]');   
+                    console.log(activity_files)                 
+                    //formData.append('activity_file', activity_files.files);
                     fetch(`/activitylog/${firId}/`,
                     {
                         method: 'POST',
@@ -417,8 +414,46 @@
                 
             }
         });
-    </script>
+    </script> -->
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('#crud-modal form');
+        
+            if (form) {
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();
+        
+                    const pathParts = window.location.pathname.split('/');
+                    const firId = parseInt(pathParts[pathParts.length - 2]);
+                    const formData = new FormData(form);
+                    const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        
+                    fetch(`/activitylog/${firId}/`, {
+                        method: 'POST',
+                        headers: {
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "success") {
+                            location.reload();  // or dynamically add the new activity to #activity_list
+                        } else {
+                            alert("Something went wrong while adding the activity.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+                });
+            } else {
+                console.warn("Activity form not found!");
+            }
+        });
+        </script>
+        
     <script>
             
         function changeImage(src) {
@@ -584,7 +619,7 @@
         
         fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
             let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
-            console.log(arr.includes(data.status));
+            //console.log(arr.includes(data.status));
             //check if data.status is in the array
             if(data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")){
                 if(arr.includes(data.status)){
@@ -632,9 +667,7 @@
                         document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
                     }
                 }
-            }
-            
-                
+            }   
         });
 
         fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{

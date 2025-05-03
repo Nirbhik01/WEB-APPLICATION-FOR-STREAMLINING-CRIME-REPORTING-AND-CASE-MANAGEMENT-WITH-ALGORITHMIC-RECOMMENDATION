@@ -33,8 +33,6 @@ class Case(models.Model):
     # contains only surface level details
     # like FIR number, reporter, investigator, status, upload date
     # and solved date
-    
-    
     case_id = models.AutoField(primary_key=True) # FIR number
     case_title= models.CharField(max_length=100,choices=CRIME_CATEGORIES) # FIR title
     reporter = models.ForeignKey(Ct,on_delete=models.SET_NULL, null=True)  
@@ -49,6 +47,7 @@ class Case(models.Model):
     crime_time= models.TimeField(null=True, blank=True) # time of crime
     crime_link = models.CharField(null=True, blank=True,max_length=1000) #google map link of crime location
     is_registered = models.BooleanField(default=False) # true if FIR is registered
+    registered_by = models.ForeignKey(It, on_delete=models.SET_NULL,null=True,blank=True,related_name="registered_by")
     was_successful = models.BooleanField(default=False) # true if investigation was successful
     
     

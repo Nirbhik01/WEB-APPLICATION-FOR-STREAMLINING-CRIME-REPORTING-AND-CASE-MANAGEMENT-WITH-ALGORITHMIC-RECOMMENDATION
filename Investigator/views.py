@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Wanted as Wt
 from Case.models import Case, Evidence
+from userauths.models import Investigator as Iv
+
 
 
 # Create your views here.
@@ -30,13 +32,15 @@ def UploadWanted(request):
     
     return JsonResponse({"status":"error","message":"An error occured"})  # Render the upload form template
 
-
-    
 def mark_case_registered(request,id):
     try:
         case = Case.objects.get(case_id=id)
         case.is_registered = True
+        user=None 
+        if request.session.get('user_type') == 'Investigator':
+            user = Iv.objects.get(user_id=request.session.get('user_id'))
         case.status = "Investigator_Assigning"
+        case.registered_by = user
         case.save()
         messages.success(request,"Case marked as Registered")
         return JsonResponse({"status": "success"})
@@ -56,9 +60,7 @@ def mark_case_not_registered(request,id):
                 evidence.evidence_pic_file.delete()
             if evidence.evidence_vid_file:
                 evidence.evidence_vid_file.delete()
-        
         case.delete()
-        
         messages.success(request,"Case Removed Successfully")
         return JsonResponse({"status": "success"})
     

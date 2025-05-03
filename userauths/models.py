@@ -36,7 +36,9 @@ class Citizen(models.Model):
     user_type=models.CharField(max_length = 15, default="Citizen")
     user_recent_photo = models.ImageField(upload_to = citizen_recent_pic_path,null = True, blank = True)
     recent_photo_upload_date = models.DateField(default = None, null = True, blank = True)
+    # auto now add is set only during creation of the object 
     joined_on = models.DateField(auto_now_add=True)
+    # auto now sets everytime an object is saved
     updated_on = models.DateTimeField(auto_now=True)
 
     

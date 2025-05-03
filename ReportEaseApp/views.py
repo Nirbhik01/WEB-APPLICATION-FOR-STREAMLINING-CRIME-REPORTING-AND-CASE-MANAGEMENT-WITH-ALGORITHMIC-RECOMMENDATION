@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
 from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
-from Case.views import display_cases
+from django.db.models import Count
+# from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence,is_image_or_video
 # from userauths.views import get_current_user
 
@@ -75,7 +76,6 @@ def check_for_login(request):
 def case_details(request,id):
     try:
         user_type = request.session.get('user_type')
-        
         data = dict()
         case = Case.objects.get(case_id=id)
         case_data = None
@@ -111,6 +111,30 @@ def case_details(request,id):
             if case.investigator:
                 case_data['investigator'] = str(case.investigator.user_name)
            
+        elif user_type == 'Admin':
+            # get all investigators who are involved in 4 cases or less
+            available_investigators = Iv.objects.annotate(num_cases=Count('case')).filter(num_cases__lt=4)  
+            # print(available_investigators.count())
+            available_investigators_data = list(available_investigators.values('user_id', 'user_name','user_email'))
+            data['available_investigators'] = available_investigators_data
+            # print(data['available_investigators'])
+                        
+            case_data = {
+                'case_id': case.case_id,
+                'case_title': case.case_title,
+                'reporter': str(case.reporter.user_name), 
+                "reporter_pic":str(case.reporter.user_profile_picture.url),# convert ForeignKey to string or ID
+                'upload_date': case.upload_date,
+                'is_reporter_the_victim': case.is_reporter_the_victim,
+                'crime_date': case.crime_date,
+                'crime_location': case.crime_location,
+                'crime_description': case.crime_description,
+                'crime_time': case.crime_time,
+                'crime_link': case.crime_link,
+                "registered_by":str(case.registered_by.user_name), #
+                "registered_by_pic":str(case.registered_by.user_profile_picture.url), #
+                "available_investigators":available_investigators_data, #
+            }
         data['case_data']=(case_data)
         
         evidences = Evidence.objects.filter(case=case)
@@ -182,7 +206,7 @@ def activity_log(request,id):
         
         case = Case.objects.get(case_id = id)
         
-        print(case,activity_name,activity_description,activity_file)
+        print(f"activity log - {case,activity_name,activity_description,activity_file}")
         activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description)
         activity_log.save()
         
@@ -244,4 +268,19 @@ def save_edited_user_details(request):
     else:
         return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)    
     
+def assign_investigator(request,id):
+    if request.method == 'POST':
+        try:
+            investigators_list = request.POST.get("investigators_list")
+            investigator = Iv.objects.get(user_email=investigators_list)
+            case = Case.objects.get(case_id=id)
+            case.investigator = investigator
+            case.status="Investigation_Ongoing"
+            case.save()
+            messages.success(request, "Investigator assigned successfully.")
+            return JsonResponse({"status":"success"})
+        except:
+            return JsonResponse({"status":"error","message":"Error Assigning Investigator."})
+    
+    return JsonResponse({"status":"request","message":"Invalid request method."})
     

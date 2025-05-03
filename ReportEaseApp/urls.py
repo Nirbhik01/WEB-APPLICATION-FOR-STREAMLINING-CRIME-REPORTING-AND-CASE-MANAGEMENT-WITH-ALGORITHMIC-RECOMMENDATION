@@ -27,6 +27,7 @@ urlpatterns = [
     path('fetchuserdetails/', fetch_user_details , name='FetchUserDetails'),
     path('profile/' , ProfilePage , name='ProfilePage'),
     path('updateprofile/',save_edited_user_details, name='SaveEditedUserDetails'),
+    path('assigninvestigator/<int:id>/', assign_investigator, name='AssignInvestigator'),
     
 ]
 

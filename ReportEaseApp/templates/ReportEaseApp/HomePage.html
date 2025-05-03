@@ -53,6 +53,10 @@
                             <a  href="{%url 'ReportEaseApp:CaseListPage'%}"
                             class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-12 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Review Fir</a>
                         {%endif%}
+                        {%if user_type == 'Admin'%}
+                            <a  href="{%url 'ReportEaseApp:CaseListPage'%}"
+                            class="text-white bg-dark-blue focus:outline-none font-semibold rounded-md text-xl md:px-16 px-10 py-3 hover:scale-[1.02] duration-[.15s] hover:shadow-lg">Assign Investigators</a>
+                        {%endif%}
                     </div>
                 </div>
             </section>
@@ -69,7 +73,7 @@
 
                         <!-- wanted -->
                         {%block wanted%}
-                        <div class=" p-5 mt-10  bg-light-gray rounded-lg">
+                        <div class=" p-5  bg-light-gray rounded-lg">
                             <div class="flex justify-between items-start">
                                 <p class="text-3xl font-medium">Wanted</p>
                                 
