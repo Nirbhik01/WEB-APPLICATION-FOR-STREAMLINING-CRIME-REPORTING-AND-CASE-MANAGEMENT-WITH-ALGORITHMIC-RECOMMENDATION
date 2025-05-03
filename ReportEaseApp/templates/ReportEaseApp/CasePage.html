@@ -111,16 +111,15 @@
                         <h2 class="text-2xl font-semibold mb-2" id="title"></h2>
                         <p class="mb-7 text-sm" id="upload_date"></p>
                         <div class="flex mb-5 items-center gap-5 ">
-                                <button>
-                                    
-                                    <img  id="reporter_image"
-                                        src="">
-                                </button>
-                                <div>
-                                    <p class="text-lg mr-2" id="reporter"></p>
-                                    <p class="text-xs" id="is_victim"></p>
-                                </div>
+                            <button>
+                                <img  id="reporter_image"
+                                    src="">
+                            </button>
+                            <div>
+                                <p class="text-lg mr-2" id="reporter"></p>
+                                <p class="text-xs" id="is_victim"></p>
                             </div>
+                        </div>
                         <p class="text-lg font-medium " id="">Description : </p>
                         <p class="text-gray-700 mb-7" id="description"></p>
     
@@ -136,6 +135,11 @@
                             </div>
                             
                         </div>
+                        {%if user_type == "Investigator"%}
+                            <div class="md:flex mt-10 md:gap-5 transform duration-500">
+                                <button type='button' id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="block rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As Terminated</button>
+                            </div>
+                        {%endif%}
                         
                         <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
                     </div>
@@ -157,7 +161,7 @@
 
                     <!-- true if the user is police -->
                     
-                    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" id="add_activity_button"
+                    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" id="add_activity_button" 
                         class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
                         type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -188,7 +192,6 @@
         <div id="crud-modal" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full md:inset-0  max-h-full bg-black bg-opacity-60 transform duration-500">
             <div class="relative p-4 w-full max-w-md max-h-full transform duration-500">
-                
                 <!-- Modal content -->
                 <div class="relative bg-gray  rounded-lg shadow-sm dark:bg-gray-700 transform duration-500">
                     <!-- Modal header -->
@@ -198,7 +201,7 @@
                             Add Activity
                         </h3>
                         <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover: rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600"
+                            class="text-gray-400  bg-transparent hover:bg-gray-200 hover:rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600"
                             data-modal-toggle="crud-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 14 14">
@@ -248,7 +251,7 @@
     </div>
 
     <!-- component -->
-    <div class=" group fixed flex bottom-0 right-0 mb-10 md:mr-10 items-center mr-5" id="chat_container">
+    <div id="chat_container_logo" class="flex group fixed bottom-0 right-0 mb-10 md:mr-10 items-center mr-5">
         <div
             class="  hidden group-hover:flex border border-gray h-10 rounded-lg px-2 items-center text-sm mr-3 bg-light-gray  font-medium  ">
             <p> chat with your investigator</p>
@@ -308,6 +311,31 @@
             </div>
         </div>
     </div>
+
+    <div id="deleteModal" tabindex="-1" aria-hidden="true" class="hidden bg-black bg-opacity-70 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full md:h-full">
+        <div class="relative p-4 w-full max-w-md h-full bg-opacity-70 md:h-auto">
+            <!-- Modal content -->
+            <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <button type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <p id="are_you_sure" class="mb-4 text-gray-500 dark:text-gray-300">Are you sure ?
+                    
+                </p>
+                <div class="flex justify-center items-center space-x-4">
+                    <button id="no_button"  type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-dark-red text-white rounded-lg focus:ring-0 focus:outline-none focus:z-10">
+                        Mark Unsuccessful
+                    </button>
+                    <button id="yes_button" type="submit" class="py-2 px-3 text-sm font-medium text-center text-white bg-cool-gray rounded-lg focus:ring-0 focus:outline-none focus:z-10">
+                        Mark Successful
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         const chatbox = document.getElementById("chatbox");
         const chatContainer = document.getElementById("chat-container");
@@ -316,6 +344,9 @@
         const sendButton = document.getElementById("send-button");
         const openChatButton = document.getElementById("open-chat");
         const closeChatButton = document.getElementById("close-chat");
+
+        const pathParts = window.location.pathname.split('/');
+        const firId = parseInt(pathParts[pathParts.length - 2]);
 
         let isChatboxOpen = true; // Set the initial state to open
 
@@ -374,49 +405,7 @@
             }, 500);
         }
 
-    </script>
-
-    <!-- <script>
-        add_button = document.getElementById("add_activity_button");
-        add_button.addEventListener("click",function(event){
-            submitbtn = document.getElementById("activity_form_submit");
-            form = document.querySelector('form');
-            if(form){
-                form.addEventListener("submit", function(event){
-                    event.preventDefault();
-                    const pathParts = window.location.pathname.split('/');
-                    const firId = parseInt(pathParts[pathParts.length - 2]);
-                    const formData = new FormData(form);
-                    //formData.append('activity_name', document.getElementById('activity_name').value);
-                    //formData.append('activity_description', document.getElementById('activity_description').value);
-                    const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-                    activity_files= document.querySelector('input[name="activity_file"]');   
-                    console.log(activity_files)                 
-                    //formData.append('activity_file', activity_files.files);
-                    fetch(`/activitylog/${firId}/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            "X-CSRFToken": csrftoken,
-                        },
-                        body : formData,
-                    })
-                    .then(response=>response.json())
-                    .then(data =>{
-                        if(data.status == "success"){
-                            // reload the page
-                            location.reload();
-                        }
-
-                    });
-          
-                }); 
-                
-            }
-        });
-    </script> -->
-
-    <script>
+    
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector('#crud-modal form');
         
@@ -424,8 +413,7 @@
                 form.addEventListener("submit", function (event) {
                     event.preventDefault();
         
-                    const pathParts = window.location.pathname.split('/');
-                    const firId = parseInt(pathParts[pathParts.length - 2]);
+                    
                     const formData = new FormData(form);
                     const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
         
@@ -452,9 +440,7 @@
                 console.warn("Activity form not found!");
             }
         });
-        </script>
-        
-    <script>
+    
             
         function changeImage(src) {
             const video = document.getElementById('mainVideo');
@@ -501,208 +487,271 @@
             
         }
 
-            
-    document.addEventListener("DOMContentLoaded", function (event){
-        //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
-        const pathParts = window.location.pathname.split('/');
-        const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
-        //console.log(firId); // Use this to fetch your data
-
-        fetch(`/casedetails/${firId}/`).then(response => {
-            if (response.ok) {
                 
-                return response.json();
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        })
-        .then(data => {
-            //console.log(data); // Check the data structure in the console
-            document.getElementById('title').innerText = data.case_data.case_title;
-            document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
-            if(data.case_data.reporter){
-                document.getElementById('reporter').innerText = data.case_data.reporter;
-            }
-            if(data.case_data.is_reporter_the_victim){
-                document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
-            }
-            document.getElementById('description').innerText = data.case_data.crime_description;
-            document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
+        document.addEventListener("DOMContentLoaded", function (event){
+            //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
+            //const pathParts = window.location.pathname.split('/');
+            //const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
+            //console.log(firId); // Use this to fetch your data
 
-            let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
-            // i want in hh:ss am/pm format
-            time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
-            document.getElementById('crime_time').innerText = time; // Format the date as needed
-            document.getElementById('crime_location').innerText = data.case_data.crime_location;
-            document.getElementById('crime_link').href = data.case_data.crime_link;
-            if(data.case_data.reporter_pic){
-                document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
-                document.getElementById('reporter_image').src = data.case_data.reporter_pic;
-                //class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
-            } // Format the date as needed
-
-            //for displaying evidence images and videos
-            const evidenceList = data.evidence;
-            const imagelist = document.getElementById('imagelist');
-            imagelist.innerHTML = ""; // Clear existing content
-            let index=0;
-            Object.values(evidenceList).forEach(evidence => {
-                if(index==0){
-                    //display the first evidence
-                    if (evidence.evidence_type === 'image') {
-                        const img_disp = document.getElementById("mainImage");
-                        img_disp.style.display="block";
-                        img_disp.src = evidence.evidence_pic_file
-                    }
-                    else if (evidence.evidence_type === 'video') {
-                        const vid_disp = document.getElementById("mainVideo");
-                        vid_disp.style.display="block";
-                        vid_disp.src = evidence.evidence_vid_file
-                    }
-                    const filelabel = document.getElementById('filelabel');
-                    filelabel.innerText = `Evidence`;
-
+            fetch(`/casedetails/${firId}/`).then(response => {
+                if (response.ok) {
+                    
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok');
                 }
-                const div = document.createElement('div');
-                div.id = 'evidence_div';
-                div.onclick = function() { getinfo(this); };
-                if (evidence.evidence_type === 'image') {
+            })
+            .then(data => {
+                //console.log(data); // Check the data structure in the console
+                document.getElementById('title').innerText = data.case_data.case_title;
+                document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
+                if(data.case_data.reporter){
+                    document.getElementById('reporter').innerText = data.case_data.reporter;
+                }
+                else if(data.case_data.investigator){
+                    document.getElementById('reporter').innerText = data.case_data.investigator;
+                }
+                if(data.case_data.is_reporter_the_victim){
+                    document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
+                }
+                else if(data.case_data.investigator_email){
+                    document.getElementById('is_victim').innerText = data.case_data.investigator_email;
+                }
+                document.getElementById('description').innerText = data.case_data.crime_description;
+                document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
+
+                let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
+                // i want in hh:ss am/pm format
+                time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
+                document.getElementById('crime_time').innerText = time; // Format the date as needed
+                document.getElementById('crime_location').innerText = data.case_data.crime_location;
+                document.getElementById('crime_link').href = data.case_data.crime_link;
+                if(data.case_data.reporter_pic){
+                    document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
+                    document.getElementById('reporter_image').src = data.case_data.reporter_pic;
+                    //class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
+                } // Format the date as needed
+                else if(data.case_data.investigator_pic){
+                    document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
+                    document.getElementById('reporter_image').src = data.case_data.investigator_pic;
+                }
+
+                //for displaying evidence images and videos
+                const evidenceList = data.evidence;
+                const imagelist = document.getElementById('imagelist');
+                imagelist.innerHTML = ""; // Clear existing content
+                let index=0;
+                Object.values(evidenceList).forEach(evidence => {
+                    if(index==0){
+                        //display the first evidence
+                        if (evidence.evidence_type === 'image') {
+                            const img_disp = document.getElementById("mainImage");
+                            img_disp.style.display="block";
+                            img_disp.src = evidence.evidence_pic_file
+                        }
+                        else if (evidence.evidence_type === 'video') {
+                            const vid_disp = document.getElementById("mainVideo");
+                            vid_disp.style.display="block";
+                            vid_disp.src = evidence.evidence_vid_file
+                        }
+                        const filelabel = document.getElementById('filelabel');
+                        filelabel.innerText = `Evidence`;
+
+                    }
+                    const div = document.createElement('div');
+                    div.id = 'evidence_div';
+                    div.onclick = function() { getinfo(this); };
+                    if (evidence.evidence_type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = evidence.evidence_pic_file;
+                        img.alt = "Evidence Image";
+                        img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                        div.appendChild(img);
+                    } else if (evidence.evidence_type === 'video') {
+                        const video = document.createElement('video');
+                        video.src = evidence.evidence_vid_file;
+                        video.alt = "Evidence Video";
+                        video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                        div.appendChild(video);
+                    }
+                    
+                    imagelist.appendChild(div);
+                    index += 1;
+                });
+
+
+                //for recent photo of reporter
+                if(data.recent_photo){
+                    const div = document.createElement('div');
+                    div.id = 'recent_photo_div';
+                    div.onclick = function() { getinfo(this); };
                     const img = document.createElement('img');
-                    img.src = evidence.evidence_pic_file;
-                    img.alt = "Evidence Image";
+                    img.src = data['recent_photo'].recent_photo;
+                    img.alt = "Recent Photo";
                     img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
                     div.appendChild(img);
-                } else if (evidence.evidence_type === 'video') {
-                    const video = document.createElement('video');
-                    video.src = evidence.evidence_vid_file;
-                    video.alt = "Evidence Video";
-                    video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                    div.appendChild(video);
+                    //const filelabel = document.getElementById('filelabel');
+                    //filelabel.innerText = `recent`;
+                    imagelist.appendChild(div);
                 }
-                
-                imagelist.appendChild(div);
-                index += 1;
-            });
 
-
-            //for recent photo of reporter
-            if(data.recent_photo){
-                const div = document.createElement('div');
-                div.id = 'recent_photo_div';
-                div.onclick = function() { getinfo(this); };
-                const img = document.createElement('img');
-                img.src = data['recent_photo'].recent_photo;
-                img.alt = "Recent Photo";
-                img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                div.appendChild(img);
-                //const filelabel = document.getElementById('filelabel');
-                //filelabel.innerText = `recent`;
-                imagelist.appendChild(div);
-            }
-
-            const citizenshipList = data.citizenship;
-            Object.values(citizenshipList).forEach(citizenship => {
-                const div = document.createElement('div');
-                div.id = 'Citizenship';
-                div.onclick = function() { getinfo(this); };
-                const img = document.createElement('img');
-                img.src = citizenship.citizenship_photo;
-                img.alt = "Citizenship Image";
-                img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                div.appendChild(img);
-                imagelist.appendChild(div);
-            });
-
-        }).catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-        
-        fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
-            let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
-            //console.log(arr.includes(data.status));
-            //check if data.status is in the array
-            if(data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")){
-                if(arr.includes(data.status)){
-                    let index = arr.indexOf(data.status); // 1 for FIR_Verification
-                    for (let i = 0; i < index; i++) {
-                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
-                    }
-                    blink_element = document.getElementById(data.status);
-                    
-                    let splitted = data.status.split("_");
-                    blink_element.innerHTML=`
-                        <span
-                            class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
-                            <span
-                                class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-cool-gray ring-4 ring-white">
-                            </span>
-                        </span>
-                        <div class="mx-9 md:mx-0 ">
-                            <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
-                                ${splitted[0]}<span class="hidden md:inline"><br></span>${splitted[1]}</h3>
-                        </div> 
-                    `;
-                    
-                }
-                if(data.status != 'Investigation_Ongoing'){
-                    document.getElementById('activity_log').style.display='none';
-                    document.getElementById('chat_container').style.display='none';
-                }
-            }
-            else if (data.status && data.status=="solved"){
-                arr.forEach(data=>{
-                    document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
-                    document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
+                const citizenshipList = data.citizenship;
+                Object.values(citizenshipList).forEach(citizenship => {
+                    const div = document.createElement('div');
+                    div.id = 'Citizenship';
+                    div.onclick = function() { getinfo(this); };
+                    const img = document.createElement('img');
+                    img.src = citizenship.citizenship_photo;
+                    img.alt = "Citizenship Image";
+                    img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                    div.appendChild(img);
+                    imagelist.appendChild(div);
                 });
-            }
-            else if (data.status && data.status=="terminated_but_unsolved"){
-                for (let i = 0 ; i < 5 ; i++){
-                    if (i<=2){
-                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+
+            }).catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+            
+            fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
+                let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
+                //console.log(arr.includes(data.status));
+                //check if data.status is in the array
+                if(data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")){
+                    if(arr.includes(data.status)){
+                        let index = arr.indexOf(data.status); // 1 for FIR_Verification
+                        for (let i = 0; i < index; i++) {
+                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                        }
+                        blink_element = document.getElementById(data.status);
+                        
+                        let splitted = data.status.split("_");
+                        blink_element.innerHTML=`
+                            <span
+                                class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
+                                <span
+                                    class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-cool-gray ring-4 ring-white">
+                                </span>
+                            </span>
+                            <div class="mx-9 md:mx-0 ">
+                                <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
+                                    ${splitted[0]}<span class="hidden md:inline"><br></span>${splitted[1]}</h3>
+                            </div> 
+                        `;
+                        
                     }
-                    else{
-                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
+                    if(data.status != 'Investigation_Ongoing'){
+                        document.getElementById('activity_log').style.display='none';
+                        document.getElementById('chat_container').style.display='none';
+                        document.getElementById('mark_terminated').style.display='none';
+                        
                     }
                 }
-            }   
-        });
-
-        fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{
-            console.log(data);
-            const list = document.getElementById('activity_list');
-            data.forEach(activity => {
-                const li = document.createElement('li');
-                li.classList.add('flex', 'justify-between', 'gap-x-6', 'py-5');
-                let date = activity.activity_date.replace("T"," ").replace(".", "");
-                date = date.split(" ");
-                date1 = date[0];
-                time = date[1];
-                time = time.split(":");
-                time = `${time[0]} : ${time[1]} `;
-                li.innerHTML=`
-                    <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">${activity.activity_title}</p>
-                                <p class="mt-1 text-sm">${activity.activity_description}</p>
-                            </div>
-                    </div>
-                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <p class=" text-xs/5 "> ${date1}/${time} </p>
-                    </div>
-                `;
-                list.appendChild(li);
+                else if (data.status && (data.status == "solved")){
+                    console.log("solved");
+                    arr.forEach(data=>{
+                        document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
+                        document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
+                    });
+                    document.getElementById("chat_container_logo").classList.remove("flex");
+                    document.getElementById("chat_container_logo").classList.add("hidden");
+                    document.getElementById("add_activity_button").classList.remove("block");
+                    document.getElementById("add_activity_button").classList.add("hidden");
+                    document.getElementById("deleteButton").classList.remove("block");
+                    document.getElementById("deleteButton").classList.add("hidden");
+                }
+                else if (data.status && (data.status=="terminated_but_unsolved")){
+                    console.log("terminated_but_unsolved");
+                    for (let i = 0 ; i < 5 ; i++){
+                        if (i<=2){
+                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                        }
+                        else{
+                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
+                        }
+                    }
+                    document.getElementById("chat_container_logo").classList.remove("flex");
+                    document.getElementById("chat_container_logo").classList.add("hidden");
+                    document.getElementById("add_activity_button").classList.remove("block");
+                    document.getElementById("add_activity_button").classList.add("hidden");
+                    document.getElementById("deleteButton").classList.remove("block");
+                    document.getElementById("deleteButton").classList.add("hidden");
+                }   
             });
-                
 
-        });
-    }); 
+            fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{
+                console.log(data);
+                const list = document.getElementById('activity_list');
+                data.forEach(activity => {
+                    const li = document.createElement('li');
+                    li.classList.add('flex', 'justify-between', 'gap-x-6', 'py-5');
+                    let date = activity.activity_date.replace("T"," ").replace(".", "");
+                    date = date.split(" ");
+                    date1 = date[0];
+                    time = date[1];
+                    time = time.split(":");
+                    time = `${time[0]} : ${time[1]} `;
+                    if(activity.uploaded_by_citizen__user_name == null){
+                        li.innerHTML=`
+                            <div class="flex min-w-0 gap-x-4">
+                                    <div class="min-w-0 flex-auto">
+                                        <p class="text-base font-semibold ">${activity.activity_title} - ${activity.uploaded_by_investigator__user_name}</p>
+                                        <p class="mt-1 text-sm">${activity.activity_description}</p>
+                                    </div>
+                            </div>
+                            <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                                <p class=" text-xs/5 "> ${date1}/${time} </p>
+                            </div>
+                        `;
+                    }
+                    else if(activity.uploaded_by_investigator__user_name == null){
+                        li.innerHTML=`
+                            <div class="flex min-w-0 gap-x-4">
+                                    <div class="min-w-0 flex-auto">
+                                        <p class="text-base font-semibold ">${activity.activity_title} - ${activity.uploaded_by_citizen__user_name}</p>
+                                        <p class="mt-1 text-sm">${activity.activity_description}</p>
+                                    </div>
+                            </div>
+                            <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                                <p class=" text-xs/5 "> ${date1}/${time} </p>
+                            </div>
+                        `;
+                    }
+
+                    list.appendChild(li);
+                });
+                    
+
+            });
+        
+        }); 
+      
+        const yes_button = document.getElementById('yes_button');
+        const no_button = document.getElementById('no_button');
+        if(yes_button){
+            yes_button.addEventListener('click', function(event) {
+                fetch(`/successfullyterminated/${firId}/`).then(response => response.json()).then(data =>{
+                    if (data.status == "success"){
+                        location.reload();
+                    }
+                });
+            });
+        }
+        if(no_button){
+            no_button.addEventListener('click', function(event) {
+                fetch(`/unsuccessfullyterminated/${firId}/`).then(response => response.json()).then(data =>{
+                    if (data.status == "success"){
+                        location.reload();
+                    }
+                });
+            });
+        }
+
 
     </script>
     {%endblock%}
-
 </body>
-
 </html>

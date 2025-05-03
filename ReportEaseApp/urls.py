@@ -11,8 +11,6 @@ app_name='ReportEaseApp'
 
 urlpatterns = [
     path('' , LandingPage , name='LandingPage'),
-    
-    
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
     path('uploadwanted/' , UploadWantedPage , name='UploadWantedPage'),
@@ -28,6 +26,8 @@ urlpatterns = [
     path('profile/' , ProfilePage , name='ProfilePage'),
     path('updateprofile/',save_edited_user_details, name='SaveEditedUserDetails'),
     path('assigninvestigator/<int:id>/', assign_investigator, name='AssignInvestigator'),
+    path('successfullyterminated/<int:id>/', mark_case_successfully_terminated, name = 'SuccessfullyTerminated'),
+    path('unsuccessfullyterminated/<int:id>/', mark_case_unsuccessfully_terminated, name = 'UnsuccessfullyTerminated'),
     
 ]
 

@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
 from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
 from django.db.models import Count
+from datetime import datetime, timedelta
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence,is_image_or_video
 # from userauths.views import get_current_user
@@ -98,8 +99,8 @@ def case_details(request,id):
             case_data = {
                 'case_id': case.case_id,
                 'case_title': case.case_title,
-                # 'reporter': str(case.reporter.user_name), 
-                # "reporter_pic":str(case.reporter.user_profile_picture.url),# convert ForeignKey to string or ID
+                # 'investigator': str(case.investigator.user_name), 
+                # "investigator_pic":str(case.investigator.user_profile_picture.url),# convert ForeignKey to string or ID
                 'upload_date': case.upload_date,
                 # 'is_reporter_the_victim': case.is_reporter_the_victim,
                 'crime_date': case.crime_date,
@@ -110,6 +111,8 @@ def case_details(request,id):
             }
             if case.investigator:
                 case_data['investigator'] = str(case.investigator.user_name)
+                case_data["investigator_pic"] = str(case.investigator.user_profile_picture.url)
+                case_data["investigator_email"] = str(case.investigator.user_email)
            
         elif user_type == 'Admin':
             # get all investigators who are involved in 4 cases or less
@@ -204,11 +207,23 @@ def activity_log(request,id):
         activity_description = request.POST.get("activity_description")
         activity_file = request.FILES.getlist("activity_file")
         
+        user = None
+        user_id = request.session.get('user_id')
+        user_type = request.session.get('user_type')
+        if user_type == 'Citizen':
+            user = Ct.objects.get(user_id=user_id)
+        elif user_type=="Investigator":
+            user = Iv.objects.get(user_id=user_id)
+        
         case = Case.objects.get(case_id = id)
         
         print(f"activity log - {case,activity_name,activity_description,activity_file}")
-        activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description)
-        activity_log.save()
+        if user_type == 'Citizen':
+            activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_citizen=user)
+            activity_log.save()
+        elif user_type == 'Investigator':
+            activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_investigator=user)
+            activity_log.save()
         
         if activity_file:
             save_evidence(activity_file,case) # Imported from Citizen.Views
@@ -217,7 +232,7 @@ def activity_log(request,id):
  
 def fetch_activity_log(request,id):
     case = Case.objects.get(case_id = id)
-    activity_log = Activity_log.objects.filter(case=case).values('activity_title','activity_description','activity_date')
+    activity_log = Activity_log.objects.filter(case=case).values('activity_title','activity_description','activity_date',"uploaded_by_citizen__user_name","uploaded_by_investigator__user_name").order_by('-activity_date')
     activity_log = list(activity_log)      
     return JsonResponse(activity_log, safe=False)
     
@@ -283,4 +298,25 @@ def assign_investigator(request,id):
             return JsonResponse({"status":"error","message":"Error Assigning Investigator."})
     
     return JsonResponse({"status":"request","message":"Invalid request method."})
+ 
+def mark_case_successfully_terminated(request,id):
+    case = Case.objects.get(case_id=id)
+    case.status="Investigation_Termination"
+
+    # insert today's date time and decrease 5.75 hours
+    case.terminated_date = datetime.now() - timedelta(hours=5, minutes=45)
     
+    case.was_successful=True
+    case.save()
+    return JsonResponse({"status":"success"}) 
+
+def mark_case_unsuccessfully_terminated(request,id):
+    case = Case.objects.get(case_id=id)
+    case.status="Investigation_Termination"
+    
+    # insert today's date time and decrease 5.75 hours
+    case.terminated_date = datetime.now() - timedelta(hours=5, minutes=45)
+    
+    case.was_successful=False
+    case.save()
+    return JsonResponse({"status":"success"})    

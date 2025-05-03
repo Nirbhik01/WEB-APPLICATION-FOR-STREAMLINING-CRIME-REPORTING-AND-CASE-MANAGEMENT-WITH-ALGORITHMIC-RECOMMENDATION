@@ -62,7 +62,10 @@ class Activity_log(models.Model):
     activity_title = models.CharField(max_length=500,default=None) # title of activity
     activity_description = models.TextField(max_length=2000,default=None) # description of activity
     activity_date = models.DateTimeField(auto_now_add=True)
-    
+    uploaded_by_citizen = models.ForeignKey(Ct, on_delete=models.SET_NULL, null=True, blank=True, related_name='citizen_activities')
+    uploaded_by_investigator = models.ForeignKey(It, on_delete=models.SET_NULL, null=True, blank=True, related_name='investigator_activities')
+    # add a field uploaded by which could include either of investigator or citizen
+     
     def __str__(self):
         return f"Activity Log for {self.case.case_id} - {self.activity_title} - {self.activity_date}"
 
