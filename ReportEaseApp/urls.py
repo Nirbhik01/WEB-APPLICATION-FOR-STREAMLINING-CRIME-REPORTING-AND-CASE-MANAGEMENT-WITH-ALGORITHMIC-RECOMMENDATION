@@ -16,19 +16,18 @@ urlpatterns = [
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
     path('uploadwanted/' , UploadWantedPage , name='UploadWantedPage'),
-    path('reviewfir/<int:id>/',ReviewFirPage,name='ReviewFirPage'),
+    path('reviewfir/<int:id>/' , ReviewFirPage , name='ReviewFirPage'),
     path('casepage/<int:id>/' , CasePage , name='CasePage'),
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
-    path('casedetails/<int:id>/',case_details, name='CaseDetails'),
-    path('casestatus/<int:id>/',case_status, name='CaseStatus'),
-    path('activitylog/<int:id>/', activity_log , name='ActivityLog'),
-    path('fetchactivitylog/<int:id>/',fetch_activity_log,name="FetchActivityLog"),
-    # path('case/',include('Case.urls')),
-    
-    # path('logout/' , LogoutPage , name='LogoutPage'),
+    path('casedetails/<int:id>/' , case_details , name='CaseDetails'),
+    path('casestatus/<int:id>/' , case_status , name='CaseStatus'),
+    path('activitylog/<int:id>/' , activity_log , name='ActivityLog'),
+    path('fetchactivitylog/<int:id>/', fetch_activity_log,name="FetchActivityLog"),
+    path('editprofiledetails/' , EditProfilePage , name='EditProfilePage'),
+    path('fetchuserdetails/', fetch_user_details , name='FetchUserDetails'),
     path('profile/' , ProfilePage , name='ProfilePage'),
-    # path('settings/' , SettingsPage , name='SettingsPage'),
-    # path('account/' , AccountPage , name='AccountPage'),
+    path('updateprofile/',save_edited_user_details, name='SaveEditedUserDetails'),
+    
 ]
 
 # if settings.DEBUG:  # Serve media files only in development

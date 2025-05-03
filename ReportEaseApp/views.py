@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
-from userauths.models import Citizen as Ct, Citizenship_photo as Cp
+from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
 from Case.views import display_cases
 from Citizen.views import save_evidence,is_image_or_video
 # from userauths.views import get_current_user
@@ -55,6 +55,9 @@ def ProfilePage(request):
     if login_check:
         return login_check
     return render(request, 'ProfilePage.html')
+
+def EditProfilePage(request):
+    return render(request,'EditProfilePage.html')
 
 def check_for_login(request):
     try:
@@ -194,6 +197,51 @@ def fetch_activity_log(request,id):
     activity_log = list(activity_log)      
     return JsonResponse(activity_log, safe=False)
     
-        
-    
+def fetch_user_details(request):
+    user_id = request.session.get("user_id")
+    user_type = request.session.get("user_type")
+    user = None
+    if user_type == 'Citizen':
+        user = Ct.objects.filter(user_id=user_id).values('user_name','user_email','user_phone_number', 'user_password','user_address','user_profile_picture')
+    elif user_type == 'Investigator':
+        user = Iv.objects.filter(user_id=user_id).values('user_name','user_email','user_phone_number', 'user_password','user_address','user_profile_picture')
+    return JsonResponse(list(user),safe=False)
 
+def save_edited_user_details(request):
+    if request.method == "POST":
+        fname = request.POST.get('fname', '')
+        lname = request.POST.get('lname', '')
+        email = request.POST.get('email', '')
+        number = request.POST.get('number', '')
+        address = request.POST.get('address', '')
+        password = request.POST.get('password', '')
+        profile_pic = request.FILES.getlist('profile_pic')
+
+        user_id = request.session.get("user_id")
+        user_type = request.session.get("user_type")
+        user = None
+        if user_type == 'Citizen':
+            user = Ct.objects.get(user_id=user_id)
+        elif user_type == 'Investigator':
+            user = Iv.objects.get(user_id=user_id)
+        
+        # Update basic user fields
+        user.user_name = fname+" "+lname 
+        user.user_email = email
+        if password:
+            user.user_password=password
+        user.user_phone_number = number
+        user.user_address = address
+        if profile_pic:
+            #delete current profile pic from the db and also the device
+            if user.user_profile_picture and user.user_profile_picture.name:
+                user.user_profile_picture.delete(save=False)
+            user.user_profile_picture = profile_pic[0]
+        user.save()
+        messages.success(request, "Profile Updated successfully.")
+        # Update additional details
+        return JsonResponse({"status": "success", "message": "Profile updated successfully."})
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)    
+    
+    

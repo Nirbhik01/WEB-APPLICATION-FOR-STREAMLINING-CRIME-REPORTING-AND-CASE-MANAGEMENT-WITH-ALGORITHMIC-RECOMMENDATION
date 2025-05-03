@@ -37,6 +37,8 @@ class Citizen(models.Model):
     user_recent_photo = models.ImageField(upload_to = citizen_recent_pic_path,null = True, blank = True)
     recent_photo_upload_date = models.DateField(default = None, null = True, blank = True)
     joined_on = models.DateField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
     
     def save(self, *args, **kwargs):
         if not self.user_password.startswith('pbkdf2_sha256$'):
@@ -49,6 +51,7 @@ class Citizen(models.Model):
     
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"
+
 
 class Citizenship_photo(models.Model):
     user = models.ForeignKey(Citizen, on_delete=models.SET_NULL,null=True)

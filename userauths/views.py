@@ -1,12 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from userauths.models import Citizen, Investigator
-from django.contrib.sessions.models import Session
-from Citizen.views import register_case
-import time
-from django.urls import reverse
 import random
-from django.core.mail import send_mail
 
 from django.http import JsonResponse
 
@@ -59,8 +54,6 @@ def LoginPage(request):
             messages.error(request, "Invalid user type selected.")
             return redirect('userauths:LoginPage')
 
-        
-
         return redirect('ReportEaseApp:HomePage')
 
     return render(request, 'LoginPage.html')
@@ -79,7 +72,6 @@ def RegisterPage(request):
             profile_pic = request.FILES['profile_pic']
             
             # check if email already exists
-            
             
             if user_type == 'Citizen':
                 check_email =  (Citizen.objects.filter(user_email=email).exists() or Investigator.objects.filter(user_email=email).exists())
@@ -104,8 +96,7 @@ def RegisterPage(request):
                 return JsonResponse({"status": "success"})
             else:
                 return JsonResponse({"status": "error", "message": "Registration Failed"})
-        
-        
+    
     return render(request, 'RegisterPage.html')
 
 def ForgotPasswordPage(request):
@@ -115,9 +106,6 @@ def LogoutPage(request):
     request.session.clear()
     return redirect('/user/login/')
 
-
-
-  # You can skip this if CSRF token is used correctly
 def send_otp(request):
     if request.method=='POST':
         email = request.POST.get('email')
@@ -174,7 +162,6 @@ def send_otp(request):
             return JsonResponse({'status': 'fail', 'message': 'There was a problem sending email'}, status=404)
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
-
 def verify_otp(request):
     if request.method == 'POST':
         otp_input = request.POST.get('otp')
@@ -185,7 +172,6 @@ def verify_otp(request):
             return JsonResponse({'status': 'success'})
         return JsonResponse({'status': 'fail', 'message': 'Invalid OTP'})
     return JsonResponse({"status": "fail", "message": "Invalid request Method"},status=400)
-
 
 def change_password(request):
     if not request.session.get('otp_verified'):
