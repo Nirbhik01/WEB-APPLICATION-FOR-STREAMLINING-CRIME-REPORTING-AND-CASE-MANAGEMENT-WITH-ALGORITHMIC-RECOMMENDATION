@@ -14,6 +14,7 @@ from datetime import date, timedelta
 def is_image_or_video(file_name):
     image_exts = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp']
     video_exts = ['.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.webm']
+    audio_exts = ['.mp3', '.wav', '.aac', '.ogg', '.flac', '.m4a', '.wma', '.alac', '.aiff', '.amr']
 
     ext = os.path.splitext(file_name)[1].lower()
     
@@ -21,6 +22,8 @@ def is_image_or_video(file_name):
         return 'image'
     elif ext in video_exts:
         return 'video'
+    elif ext in audio_exts:
+        return 'audio'
     else:
         return 'unknown'
 
@@ -62,35 +65,14 @@ def register_case(request):
         case.status = "FIR_Verification"
         case.save()
         # check evidence type and create evidence instance accordingly
-        for file in crime_evidence:
-            print("entered in evidence")
-            file_type = is_image_or_video(file.name)
-            if file_type == 'image':
-                print("entered in image")
-                evidence = Evidence(case = case,
-                                evidence_type = file_type,
-                                evidence_pic_file = file,
-                                )
-                print("evidence created")
-                evidence.save()
-            elif file_type == 'video':
-                print("entered in video")
-                evidence = Evidence(case = case,
-                                evidence_type = file_type,
-                                evidence_vid_file = file,
-                                )
-                print("evidence created")
-                evidence.save()
-            else:
-                pass 
-        
+        save_evidence(crime_evidence,case)
+
         user_photo = Ct.objects.get(user_id=user_id)
 
         if (not user_photo.user_recent_photo):
             user_photo.user_recent_photo = image_file
-            user_photo.save()
-            
-        if (user_photo.user_recent_photo and ((date.today() - user_photo.recent_photo_upload_date) >= timedelta(days=60))) :
+            user_photo.save() 
+        elif (user_photo.user_recent_photo and ((date.today() - user_photo.recent_photo_upload_date) >= timedelta(days=60))) :
             user_photo.user_recent_photo.delete()
             user_photo.user_recent_photo = image_file
             user_photo.recent_photo_upload_date = date.today()
@@ -106,4 +88,35 @@ def register_case(request):
 
     return JsonResponse({"status": "error", "message": "Invalid request."})
 
+def save_evidence(crime_evidence,case):        
+    for file in crime_evidence:
+        print("entered in evidence")
+        file_type = is_image_or_video(file.name)
+        if file_type == 'image':
+            print("entered in image")
+            evidence = Evidence(case = case,
+                            evidence_type = file_type,
+                            evidence_pic_file = file,
+                            )
+            print("evidence created")
+            evidence.save()
+        elif file_type == 'video':
+            print("entered in video")
+            evidence = Evidence(case = case,
+                            evidence_type = file_type,
+                            evidence_vid_file = file,
+                            )
+            print("evidence created")
+            evidence.save()
+        elif file_type == 'audio':
+            print("entered in audio")
+            evidence = Evidence(case = case,
+                            evidence_type = file_type,
+                            evidence_audio_file = file,
+                            )
+            print("evidence created")
+            evidence.save()
+        else:
+            pass 
+        
 # Create your views here.

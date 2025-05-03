@@ -18,7 +18,7 @@
         <div class="px-5 md:px-0 md:mx-7 md:border-t ">
             <ol
                 class="relative border-s border-gray-200 -mt-4 dark:border-gray-700 md:text-center dark: md:flex md:border-s-0 md:justify-between ">
-                <li class="flex items-center bg-white -ml-3  mb-10 md:mb-0 md:ml-0 md:block ">
+                <li class="flex items-center bg-white -ml-3  mb-10 md:mb-0 md:ml-0 md:block " id="FIR_Registration">
                     <span
                         class=" bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8 bg-green-200 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900 md:mx-auto">
                     </span>
@@ -27,7 +27,7 @@
                                 class="hidden md:inline"><br></span> Registration</h3>
                     </div>
                 </li>
-                <li class="flex items-center bg-white mb-10 -ml-3  md:mb-0 md:ml-0 md:block">
+                <li class="flex items-center bg-white mb-10 -ml-3  md:mb-0 md:ml-0 md:block" id="FIR_Verification">
                     <span
                         class="bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
                     </span>
@@ -36,10 +36,7 @@
                                 class="hidden md:inline"><br></span> Verification</h3>
                     </div>
                 </li>
-
-                <!-- Add from the middle not from top or bottom -->
-
-                <li class="flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block">
+                <li class="flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block" id="Investigator_Assigning">
                     <span
                         class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
                     </span>
@@ -48,26 +45,30 @@
                                 class="hidden md:inline"><br></span> Assigning</h3>
                     </div>
                 </li>
-                <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block ">
+                <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block " id="Investigation_Ongoing">
 
                     <span
+                        class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                    </span>
+                    <div class="mx-3 md:mx-0">
+                        <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
+                                class="hidden md:inline"><br></span> Ongoing</h3>
+                    </div>
+                    <!-- <span
                         class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
-                        <!-- <span class="animate-scale  z-0 md:h-8 md:w-8 w-6 h-6 rounded-full "></span>  -->
                         <span
                             class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-cool-gray ring-4 ring-white"></span>
                     </span>
-                    <!-- <span
-                                class="   bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
-                            </span> -->
                     <div class="mx-9 md:mx-0 ">
                         <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
                             Investigation<span class="hidden md:inline"><br></span> Ongoing</h3>
-                    </div>
+                    </div> -->
 
                 </li>
-                <li class="items-center flex -ml-3 md:ml-0 bg-white md:block">
+                <li class="items-center flex -ml-3 md:ml-0 bg-white md:block" id="Investigation_Termination">
                     <span
                         class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
+                        
                     </span>
                     <div class="mx-3 md:mx-0">
                         <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
@@ -84,86 +85,59 @@
                 <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start transform duration-500"
                     onload="getelementdetail(this)">
                     <h1 class="text-2xl font-semibold mb-5">Evidences: </h1>
-                    <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}"
-                        style="display: block;" alt="Product"
+                    <img src=""
+                        style="display: none;" alt="Product"
                         class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
                         id="mainImage">
     
                     <video preload="metadata" src="" autoplay controls
-                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo">Profile</video>
-                    <p id="imagelabel" class="self-center my-5 font-medium text-center">Profile</p>
-                    <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden" id="imagelist transform duration-500">
-                        <div onclick="getinfo(this)">
-                            <img src="{% static 'ReportEaseApp/Homepage/criminal1.jpg' %}" alt="Thumbnail 2"
-                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                id="">
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Profile</p>
-                        </div>
-                        <div onclick="getinfo(this)">
-                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw0fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                                alt="Thumbnail 2"
-                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                onclick="" id="">
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence</p>
-                        </div>
-                        <div onclick="getinfo(this)">
-                            <img src="https://images.unsplash.com/photo-1496957961599-e35b69ef5d7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw4fHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                                alt="Thumbnail 3"
-                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                onclick="" id="">
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence1</p>
-                        </div>
-                        <div onclick="getinfo(this)">
-                            <img src="https://images.unsplash.com/photo-1528148343865-51218c4a13e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwzfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
-                                alt="Thumbnail 4"
-                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                onclick="" id="">
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence2</p>
-                        </div>
+                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo"></video>
+                    <p id="filelabel" class="self-center my-5 font-medium text-center"></p>
+                    <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden transform duration-500" id="imagelist">
+                        {% comment %} 
                         <div onclick="getinfo(this)">
                             <video src="{{ MEDIA_URL }}ReportEaseApp/Evidence/Video/vid.mp4" alt="evidence"
                                 onclick="changeVideo(this.src)" preload="metadata"
                                 class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300">play</video>
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center">Evidence3</p>
+                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center"></p>
                         </div>
+                         {% endcomment %}
                     </div>
                 </div>
     
                 <!-- Fir report Details -->
                 <div class="w-full mt-10 md:my-0 md:pl-5 transform duration-500">
                     <div class=" rounded-lg p-5 bg-light-gray transform duration-500">
-                        <h2 class="text-2xl font-semibold mb-2">Home Robbery</h2>
-                        <p class="mb-10 text-sm">Uploaded on : 2025/02/14</p>
-                        {%if user_type == "Investigator"%}
-                            <div class="flex mb-5 items-center gap-5">
-                                <button><img class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
-                                        src="{%static 'ReportEaseApp/Homepage/criminal1.jpg'%}" alt="Rounded avatar"></button>
-                                <span class="text-lg mr-2">Sharmila Katwal
-                                    <p class="text-xs">Not the Victim</p>
-                                </span>
+                        <h2 class="text-2xl font-semibold mb-2" id="title"></h2>
+                        <p class="mb-7 text-sm" id="upload_date"></p>
+                        <div class="flex mb-5 items-center gap-5 ">
+                                <button>
+                                    
+                                    <img  id="reporter_image"
+                                        src="">
+                                </button>
+                                <div>
+                                    <p class="text-lg mr-2" id="reporter"></p>
+                                    <p class="text-xs" id="is_victim"></p>
+                                </div>
                             </div>
-                        {%endif%}
-    
-                        <p class="text-gray-700 mb-6">I was just laying there on my couch and three guys with black masks
-                            came
-                            raiding in my house.
-                            they tied me up kept me tied in a chair until they cleared out the valuable stuff worth $4000000
-                            dollars.
-                        </p>
+                        <p class="text-lg font-medium " id="">Description : </p>
+                        <p class="text-gray-700 mb-7" id="description"></p>
     
                         <div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p>15 / 12 / 2025</p>
+                                <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p id="crime_date"></p>
                             </div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p>12 : 53 PM</p>
+                                <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p id="crime_time">12 : 53 PM</p>
                             </div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p>Durbarmarg, Kathmandu</p> <a href="https://www.facebook.com"> <u class="text-cool-gray">click for exact location</u></a>
+                                <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p id="crime_location"></p> <a href="" id="crime_link" target=”_blank”> <u class="text-cool-gray" >click for exact location</u></a>
                             </div>
                             
                         </div>
                         
+                        <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
                     </div>
                 </div>
             </div>
@@ -174,132 +148,41 @@
     
     
         <!-- end carousel -->
-        <script>
-            function callboth() {
-                changeImage(src);
-                changetext(content);
-            }
-            function changeImage(src) {
-                const video = document.getElementById('mainVideo');
-                video.style.display = 'none';
-                video.pause();
-                const image = document.getElementById('mainImage');
-                image.style.display = 'block';
-                document.getElementById('mainImage').src = src;
-            }
-            function changeVideo(src) {
-                const image = document.getElementById('mainImage');
-                image.style.display = 'none';
-                const video = document.getElementById('mainVideo');
-                video.style.display = 'block';
-                video.src = src;
-            }
-            function changetext(content) {
-                document.getElementById('imagelabel').innerHTML = content;
-            }
-            function getinfo(element) {
-                try {
-                    var imgSource = element.querySelector("img");
-                    const imgSrc = imgSource.src;
-                    changeImage(imgSrc);
-                }
-                catch {
-                    var imgSource = element.querySelector("video");
-                    const imgSrc = imgSource.src;
-                    changeVideo(imgSrc);
-                }
-    
-                const textContent = element.querySelector("p").textContent;
-    
-                changetext(textContent);
-            }
-        </script>
 
-        <div id="activity_log"
+        <div id="activity_log" style="display: block;"
             class=" mx-0 md:mx-5 my-10 bg-light-gray p-5 rounded-xl max-h-screen overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500">
             <div id="log">
                 <div class="flex justify-between transform duration-500">
                     <h1 class="text-2xl font-medium">Activity Log</h1>
 
                     <!-- true if the user is police -->
-
-                    {%if True%}
-                        <button data-modal-target="crud-modal" data-modal-toggle="crud-modal"
-                            class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
-                            type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" class="size-6 text-cool-gray transform duration-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                        </button>
-                    {%endif%}
+                    
+                    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" id="add_activity_button"
+                        class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
+                        type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="size-6 text-cool-gray transform duration-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </button>
+                    
                 </div>
-                <ul role="list" class="divide-y mt-3 divide-gray-100 transform duration-500">
-                    <li class="flex justify-between gap-x-6 py-5">
+                <ul id="activity_list" role="list" class="divide-y mt-3 divide-gray-100 transform duration-500">
+                    {% comment %} <li class="flex justify-between gap-x-6 py-5">
                         <div class="flex min-w-0 gap-x-4">
                             <div class="min-w-0 flex-auto">
                                 <p class="text-base font-semibold ">Suspect Investigation</p>
-                                <p class="mt-1 text-sm ">Your suspect "hari godar" was investigated about the issue</p>
+                                <p class="mt-1 text-sm">Your suspect "hari godar" was investigated about the issue</p>
                             </div>
                         </div>
                         <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
                             <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">13h
                                     ago</time></p>
                         </div>
-                    </li>
+                    </li> {% endcomment %}
 
-                    <!-- Add Items Here -->
 
-                    <li class="flex justify-between gap-x-6 py-5">
-                        <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">Evidence Collection</p>
-                                <p class="mt-1  text-sm ">An artifact regarding </p>
-                            </div>
-                        </div>
-                        <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">3h
-                                    ago</time></p>
-                        </div>
-                    </li>
-                    <li class="flex justify-between gap-x-6 py-5">
-                        <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">Dries Vincent</p>
-                                <p class="mt-1  text-sm ">dries.vincent@example.com</p>
-                            </div>
-                        </div>
-                        <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <div class="flex items-center gap-x-1.5">
-                                <p class="text-xs/5 ">Updated 1h ago</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="flex justify-between gap-x-6 py-5">
-                        <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">Dries Vincent</p>
-                                <p class="mt-1  text-sm ">dries.vincent@example.com</p>
-                            </div>
-                        </div>
-                        <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <div class="flex items-center gap-x-1.5">
-                                <p class="text-xs/5 ">Updated 1h ago</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="flex justify-between gap-x-6 pt-5">
-                        <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">Lindsay Walton</p>
-                                <p class="mt-1  text-sm ">lindsay.walton@example.com</p>
-                            </div>
-                        </div>
-                        <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">10h
-                                    ago</time></p>
-                        </div>
-                    </li>
+                    
                 </ul>
             </div>
         </div>
@@ -330,10 +213,12 @@
                     </div>
                     <!-- Modal body -->
                     <form class="p-4 md:p-5">
+                        {%csrf_token%}
+                        <input type="hidden" name="name=csrfmiddlewaretoken" value="{{ csrf_token }}">
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
                                 <label for="name" class="block mb-2 text-sm font-medium  ">Activity Topic</label>
-                                <input type="text" name="name" id="name"
+                                <input type="text" name="activity_name" id="activity_name"
                                     class="bg-gray-50 border   text-sm rounded-lg 0 block w-full p-2.5 focus:ring-0  focus:border-black"
                                     placeholder="for eg:- Evidence Collection" required="">
                             </div>
@@ -341,15 +226,23 @@
                             <div class="col-span-2">
                                 <label for="description" class="block mb-2 text-sm font-medium  ">Activity
                                     Description</label>
-                                <textarea id="description" rows="4"
+                                <textarea id="activity_description" rows="4" name="activity_description"
                                     class="block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border focus:border-black focus:ring-0 "
                                     placeholder="for eg:- cctv footage of location was collected and was inconclusive"></textarea>
                             </div>
-                        </div>
-                        <button type="submit"
-                            class="w-full text-white  items-center bg-cool-gray focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
 
-                            Add new product
+                            <div class="col-span-2">
+                                <label for="description" class="block mb-2 text-sm font-medium  ">File
+                                    </label>
+                                <input id="activity_file" rows="4" type="file" name="activity_file" multiple
+                                    class="block p-2.5 w-full text-sm  bg-white rounded-lg border focus:border-black focus:ring-0 "
+                                    placeholder="for eg:- cctv footage of location was collected and was inconclusive"/>
+                            </div>
+
+                        </div>
+                        <button type="submit" id="activity_form_submit" data-modal-toggle="crud-modal"
+                            class="w-full text-white  items-center bg-cool-gray focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                            Add Activity
                         </button>
                     </form>
                 </div>
@@ -359,7 +252,7 @@
     </div>
 
     <!-- component -->
-    <div class=" group fixed flex bottom-0 right-0 mb-10 md:mr-10 items-center mr-5">
+    <div class=" group fixed flex bottom-0 right-0 mb-10 md:mr-10 items-center mr-5" id="chat_container">
         <div
             class="  hidden group-hover:flex border border-gray h-10 rounded-lg px-2 items-center text-sm mr-3 bg-light-gray  font-medium  ">
             <p> chat with your investigator</p>
@@ -485,10 +378,294 @@
             }, 500);
         }
 
+    </script>
 
-        //for modal
+    <script>
+        add_button = document.getElementById("add_activity_button");
+        add_button.addEventListener("click",function(event){
+            submitbtn = document.getElementById("activity_form_submit");
+            form = document.querySelector('form');
+            if(form){
+                form.addEventListener("submit", function(event){
+                    event.preventDefault();
+                    const pathParts = window.location.pathname.split('/');
+                    const firId = parseInt(pathParts[pathParts.length - 2]);
+                    const formData = new FormData(form);
+                    formData.append('activity_name', document.getElementById('activity_name').value);
+                    formData.append('activity_description', document.getElementById('activity_description').value);
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    activity_files= document.querySelector('input[name="activity_file"]');                    
+                    formData.append('activity_file', activity_files.files);
+                    fetch(`/activitylog/${firId}/`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body : formData,
+                    })
+                    .then(response=>response.json())
+                    .then(data =>{
+                        if(data.status == "success"){
+                            // reload the page
+                            location.reload();
+                        }
 
+                    });
+          
+                }); 
+                
+            }
+        });
+    </script>
+
+    <script>
+            
+        function changeImage(src) {
+            const video = document.getElementById('mainVideo');
+            video.style.display = 'none';
+            video.pause();
+            const image = document.getElementById('mainImage');
+            image.style.display = 'block';
+            document.getElementById('mainImage').src = src;
+        }
+        function changeVideo(src) {
+            const image = document.getElementById('mainImage');
+            image.style.display = 'none';
+            const video = document.getElementById('mainVideo');
+            video.style.display = 'block';
+            video.src = src;
+        }
+        function changetext(content) {
+            document.getElementById('filelabel').innerHTML = content;
+        }
+        function getinfo(element) {
+            try {
+                var imgSource = element.querySelector("img");
+                const imgSrc = imgSource.src;
+                changeImage(imgSrc);
+            }
+            catch {
+                var imgSource = element.querySelector("video");
+                const imgSrc = imgSource.src;
+                changeVideo(imgSrc);
+            }
+            if (element.id == 'evidence_div'){
+                const textContent = 'Evidence';
+                changetext(textContent);
+            }
+            else if (element.id == 'recent_photo_div'){
+                const textContent = 'Recent Photo';
+                changetext(textContent);
+            }
+            else if (element.id == 'Citizenship'){
+                const textContent = 'Citizenship';
+                changetext(textContent);
+            }
+
+            
+        }
+
+            
+    document.addEventListener("DOMContentLoaded", function (event){
+        //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
+        const pathParts = window.location.pathname.split('/');
+        const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
+        //console.log(firId); // Use this to fetch your data
+
+        fetch(`/casedetails/${firId}/`).then(response => {
+            if (response.ok) {
+                
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .then(data => {
+            //console.log(data); // Check the data structure in the console
+            document.getElementById('title').innerText = data.case_data.case_title;
+            document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
+            if(data.case_data.reporter){
+                document.getElementById('reporter').innerText = data.case_data.reporter;
+            }
+            if(data.case_data.is_reporter_the_victim){
+                document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
+            }
+            document.getElementById('description').innerText = data.case_data.crime_description;
+            document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
+
+            let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
+            // i want in hh:ss am/pm format
+            time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
+            document.getElementById('crime_time').innerText = time; // Format the date as needed
+            document.getElementById('crime_location').innerText = data.case_data.crime_location;
+            document.getElementById('crime_link').href = data.case_data.crime_link;
+            if(data.case_data.reporter_pic){
+                document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
+                document.getElementById('reporter_image').src = data.case_data.reporter_pic;
+                //class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
+            } // Format the date as needed
+
+            //for displaying evidence images and videos
+            const evidenceList = data.evidence;
+            const imagelist = document.getElementById('imagelist');
+            imagelist.innerHTML = ""; // Clear existing content
+            let index=0;
+            Object.values(evidenceList).forEach(evidence => {
+                if(index==0){
+                    //display the first evidence
+                    if (evidence.evidence_type === 'image') {
+                        const img_disp = document.getElementById("mainImage");
+                        img_disp.style.display="block";
+                        img_disp.src = evidence.evidence_pic_file
+                    }
+                    else if (evidence.evidence_type === 'video') {
+                        const vid_disp = document.getElementById("mainVideo");
+                        vid_disp.style.display="block";
+                        vid_disp.src = evidence.evidence_vid_file
+                    }
+                    const filelabel = document.getElementById('filelabel');
+                    filelabel.innerText = `Evidence`;
+
+                }
+                const div = document.createElement('div');
+                div.id = 'evidence_div';
+                div.onclick = function() { getinfo(this); };
+                if (evidence.evidence_type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = evidence.evidence_pic_file;
+                    img.alt = "Evidence Image";
+                    img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                    div.appendChild(img);
+                } else if (evidence.evidence_type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = evidence.evidence_vid_file;
+                    video.alt = "Evidence Video";
+                    video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                    div.appendChild(video);
+                }
+                
+                imagelist.appendChild(div);
+                index += 1;
+            });
+
+
+            //for recent photo of reporter
+            if(data.recent_photo){
+                const div = document.createElement('div');
+                div.id = 'recent_photo_div';
+                div.onclick = function() { getinfo(this); };
+                const img = document.createElement('img');
+                img.src = data['recent_photo'].recent_photo;
+                img.alt = "Recent Photo";
+                img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                div.appendChild(img);
+                //const filelabel = document.getElementById('filelabel');
+                //filelabel.innerText = `recent`;
+                imagelist.appendChild(div);
+            }
+
+            const citizenshipList = data.citizenship;
+            Object.values(citizenshipList).forEach(citizenship => {
+                const div = document.createElement('div');
+                div.id = 'Citizenship';
+                div.onclick = function() { getinfo(this); };
+                const img = document.createElement('img');
+                img.src = citizenship.citizenship_photo;
+                img.alt = "Citizenship Image";
+                img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                div.appendChild(img);
+                imagelist.appendChild(div);
+            });
+
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
         
+        fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
+            let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
+            console.log(arr.includes(data.status));
+            //check if data.status is in the array
+            if(data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")){
+                if(arr.includes(data.status)){
+                    let index = arr.indexOf(data.status); // 1 for FIR_Verification
+                    for (let i = 0; i < index; i++) {
+                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                    }
+                    blink_element = document.getElementById(data.status);
+                    
+                    let splitted = data.status.split("_");
+                    blink_element.innerHTML=`
+                        <span
+                            class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
+                            <span
+                                class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-cool-gray ring-4 ring-white">
+                            </span>
+                        </span>
+                        <div class="mx-9 md:mx-0 ">
+                            <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
+                                ${splitted[0]}<span class="hidden md:inline"><br></span>${splitted[1]}</h3>
+                        </div> 
+                    `;
+                    
+                }
+                if(data.status != 'Investigation_Ongoing'){
+                    document.getElementById('activity_log').style.display='none';
+                    document.getElementById('chat_container').style.display='none';
+                }
+            }
+            else if (data.status && data.status=="solved"){
+                arr.forEach(data=>{
+                    document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
+                    document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
+                });
+            }
+            else if (data.status && data.status=="terminated_but_unsolved"){
+                for (let i = 0 ; i < 5 ; i++){
+                    if (i<=2){
+                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                    }
+                    else{
+                        document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                        document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
+                    }
+                }
+            }
+            
+                
+        });
+
+        fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{
+            console.log(data);
+            const list = document.getElementById('activity_list');
+            data.forEach(activity => {
+                const li = document.createElement('li');
+                li.classList.add('flex', 'justify-between', 'gap-x-6', 'py-5');
+                let date = activity.activity_date.replace("T"," ").replace(".", "");
+                date = date.split(" ");
+                date1 = date[0];
+                time = date[1];
+                time = time.split(":");
+                time = `${time[0]} : ${time[1]} `;
+                li.innerHTML=`
+                    <div class="flex min-w-0 gap-x-4">
+                            <div class="min-w-0 flex-auto">
+                                <p class="text-base font-semibold ">${activity.activity_title}</p>
+                                <p class="mt-1 text-sm">${activity.activity_description}</p>
+                            </div>
+                    </div>
+                    <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <p class=" text-xs/5 "> ${date1}/${time} </p>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+                
+
+        });
+    }); 
 
     </script>
     {%endblock%}

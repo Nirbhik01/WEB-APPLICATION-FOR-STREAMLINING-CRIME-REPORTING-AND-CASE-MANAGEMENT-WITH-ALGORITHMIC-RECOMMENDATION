@@ -10,7 +10,7 @@ from .models import *
 
 def fetch_cases(request):
     
-    case_list = Case.objects.filter(is_registered=False).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name')
+    case_list = Case.objects.filter(is_registered=False).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name','is_registered')
     
     # case_list = case_list.order_by('-crime_date')
     
@@ -81,15 +81,19 @@ def display_cases(request):
         print("entered citizen")
         user = Ct.objects.get(user_id=user_id)
         print(user)
-        cases = Case.objects.filter(reporter=user).values('case_id','case_title','investigator','status')
+        cases = Case.objects.filter(reporter=user, is_reporter_the_victim = True).exclude(
+                                            status='Investigation_Termination').values('case_id','case_title','investigator','status')
         print(list(cases))
         return JsonResponse(list(cases), safe=False)
     
     elif user_type == 'Investigator':
         print("entered investigator")
         user = Iv.objects.get(user_id=user_id)
-        cases = Case.objects.filter(investigator=user,is_registered=True).values('case_id','case_title','reporter','status')
+        cases = Case.objects.filter(investigator=user,is_registered=True).exclude(
+                                            status='Investigation_Termination').values('case_id','case_title','reporter','status')
         return JsonResponse(list(cases), safe=False)
     
-    return JsonResponse({"status": "error", "message": "An error Occured"})      
+    return JsonResponse({"status": "error", "message": "An error Occured"})    
+
+  
 # Create your views here.
