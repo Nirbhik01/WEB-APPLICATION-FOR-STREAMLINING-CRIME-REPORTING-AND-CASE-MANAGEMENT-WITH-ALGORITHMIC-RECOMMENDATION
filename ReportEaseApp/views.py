@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 from django.http import HttpResponse, Http404
 from ReportEase.encryption import decrypt_file
-from .models import Evidence
+from Case.models import Evidence
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -27,7 +27,7 @@ def HomePage(request):
     wanted_data = get_wanted_list()
     return render(request, 'HomePage.html',{'wanted_list': wanted_data,
                                             # uncomment for presentation
-                                            # 'news_articles':get_news(request),
+                                            #  'news_articles':get_news(request),
                                             })
 
 def UploadWantedPage(request):
