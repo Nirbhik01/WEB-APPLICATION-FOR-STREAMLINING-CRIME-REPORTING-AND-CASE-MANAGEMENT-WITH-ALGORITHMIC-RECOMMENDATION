@@ -6,19 +6,24 @@ from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigato
 from django.db.models import Count
 from datetime import datetime, timedelta
 # from Case.views import display_cases_for_homepage
-from Citizen.views import save_evidence,is_image_or_video
-# from userauths.views import get_current_user
+from Citizen.views import save_evidence
+
+from django.conf import settings
 
 def LandingPage(request):
     return render(request, 'LandingPage.html')
 
+# enable get_news(request) during presentation
 def HomePage(request):
     login_check = check_for_login(request)
     if login_check:
         return login_check
     
     wanted_data = get_wanted_list()
-    return render(request, 'HomePage.html',{'wanted_list': wanted_data,})
+    return render(request, 'HomePage.html',{'wanted_list': wanted_data,
+                                            # uncomment for presentation
+                                            # 'news_articles':get_news(request),
+                                            })
 
 def UploadWantedPage(request):
     login_check = check_for_login(request)
@@ -319,4 +324,38 @@ def mark_case_unsuccessfully_terminated(request,id):
     
     case.was_successful=False
     case.save()
-    return JsonResponse({"status":"success"})    
+    return JsonResponse({"status":"success"}) 
+
+def get_news(request):
+    from eventregistry import EventRegistry,QueryArticlesIter
+    # allowUseOfArchive=False will allow us to search only over the last month of data
+    er = EventRegistry(apiKey = settings.NEWS_AI_API_KEY, allowUseOfArchive=False)
+    usUri = er.getLocationUri("USA") 
+    # get the URIs for the companies and the category
+    crimeUri = er.getCategoryUri("crime")
+
+    q = QueryArticlesIter(
+        categoryUri = crimeUri)
+
+    simplified_articles = []
+    seen_titles = set()
+
+    # Limit to 8 simplified, unique articles
+    for art in q.execQuery(er, sortBy="date", maxItems=30):  # fetch more in case of duplicates
+        title = art.get('title')
+        if title and title not in seen_titles:
+            seen_titles.add(title)
+            simplified_articles.append({
+                'title': title,
+                'link': art.get('url'),
+                'description': art.get('body'),
+                'image_url': art.get('image'),
+                'source_name': art.get('source', {}).get('title'),
+                'pubDate': art.get('dateTimePub'),
+            })
+
+        if len(simplified_articles) == 8:
+            break
+
+    return simplified_articles
+        
