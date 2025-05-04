@@ -175,19 +175,20 @@ def case_details(request,id):
         for citizen in citizenship:
             citizenship_Data[citizen.id] = {
                 'citizenship_id': citizen.id,
-                'citizenship_photo': str(citizen.citizenship_photo.url) if citizen.citizenship_photo else None,
+                'citizenship_photo': request.build_absolute_uri(
+                                            reverse("ReportEaseApp:serve_decrypted_citizenship_photo", args=[citizen.id])
+                                        ) if citizen.citizenship_photo else None,
             }
 
         data['citizenship'] = citizenship_Data
         
-        reporter_recent_photo = case.reporter.user_recent_photo.url if case.reporter.user_recent_photo else None
-        
         data['recent_photo'] = {
-            'recent_photo' : reporter_recent_photo
+            'recent_photo': request.build_absolute_uri(
+                                reverse("ReportEaseApp:serve_decrypted_recent_photo", args=[case.reporter.user_id])
+                            ) if case.reporter.user_recent_photo else None
         }
  
         return JsonResponse(data, safe=False)
-    
     
     except Case.DoesNotExist:
         return JsonResponse({"error": "Case not found"}, status=404)
@@ -405,5 +406,32 @@ def serve_decrypted_evidence(request, evidence_id, media_type):
         return HttpResponse(decrypted_content, content_type=content_type)
 
     except Evidence.DoesNotExist:
-        raise Http404("Evidence not found")   
+        raise Http404("Evidence not found") 
+    
+def serve_decrypted_citizenship_photo(request, citizenship_id):
+    try:
+        
+        photo = Cp.objects.get(pk=citizenship_id)
+        file_field = photo.citizenship_photo
+        if not file_field:
+            raise Http404("Photo not found")
+
+        decrypted_content = decrypt_file(file_field.path)
+        return HttpResponse(decrypted_content, content_type='image/jpeg')
+
+    except Cp.DoesNotExist:
+        raise Http404("Photo not found")
+
+def serve_decrypted_recent_photo(request, user_id):
+    try:
+        citizen = Ct.objects.get(user_id=user_id)
+        file_field = citizen.user_recent_photo
+        if not file_field:
+            raise Http404("Photo not found")
+
+        decrypted_content = decrypt_file(file_field.path)
+        return HttpResponse(decrypted_content, content_type='image/jpeg')
+
+    except Ct.DoesNotExist:
+        raise Http404("User not found")
 

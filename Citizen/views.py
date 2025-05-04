@@ -72,21 +72,9 @@ def register_case(request):
         # check evidence type and create evidence instance accordingly
         save_evidence(crime_evidence,case)
 
-        user_photo = Ct.objects.get(user_id=user_id)
+        save_recent_photo(user_id, image_file)
 
-        if (not user_photo.user_recent_photo):
-            user_photo.user_recent_photo = image_file
-            user_photo.save() 
-        elif (user_photo.user_recent_photo) :
-            user_photo.user_recent_photo.delete()
-            user_photo.user_recent_photo = image_file
-            user_photo.recent_photo_upload_date = date.today()
-            user_photo.save()
-
-        for file in citizenship:
-            # create an project and save
-            citizenship_photo = Cp(user=user, citizenship_photo=file)
-            citizenship_photo.save()
+        save_citizenship(citizenship,user)
 
         messages.success(request, "Case registered successfully.")
         return JsonResponse({"status": "success", "message": "Case registered successfully."})
@@ -110,7 +98,28 @@ def save_evidence(crime_evidence,case):
 
         evidence.save()
         
+def save_citizenship(citizenship,user):
+    for file in citizenship:
+        citizenship_photo = Cp(user=user)
+        encrypted_content = encrypt_file(file)
+        encrypted_file = ContentFile(encrypted_content)
+        # create an project and save
+        citizenship_photo.citizenship_photo.save(file.name, encrypted_file)
+        citizenship_photo.save()
 
-        
+def save_recent_photo(user_id, image_file):
+    user_photo = Ct.objects.get(user_id=user_id)
 
+    # Encrypt the uploaded file
+    encrypted_image = encrypt_file(image_file)
+    encrypted_file = ContentFile(encrypted_image, name=image_file.name)
+
+    # Replace the old photo if it exists
+    if user_photo.user_recent_photo:
+        user_photo.user_recent_photo.delete()
+
+    # Save the new encrypted photo
+    user_photo.user_recent_photo = encrypted_file
+    user_photo.recent_photo_upload_date = date.today()
+    user_photo.save()
 # Create your views here.
