@@ -27,8 +27,9 @@ MESSAGE_TAGS = {
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-NEWS_AI_API_KEY = ""
-
+from decouple import config
+NEWS_AI_API_KEY = config('NEWS_AI_API_KEY')
+FERNET_KEY = config('FERNET_KEY', default='default_value_here').encode()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
