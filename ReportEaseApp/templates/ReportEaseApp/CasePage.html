@@ -643,7 +643,8 @@
                     }
                     if(data.status != 'Investigation_Ongoing'){
                         document.getElementById('activity_log').style.display='none';
-                        document.getElementById('chat_container').style.display='none';
+                        document.getElementById("chat_container_logo").classList.remove("flex");
+                        document.getElementById("chat_container_logo").classList.add("hidden");
                         document.getElementById('mark_terminated').style.display='none';
                         
                     }

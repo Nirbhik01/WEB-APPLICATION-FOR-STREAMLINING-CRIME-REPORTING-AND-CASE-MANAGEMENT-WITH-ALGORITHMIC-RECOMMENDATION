@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 from django.http import HttpResponse, Http404
 from ReportEase.encryption import decrypt_file
-from Case.models import Evidence
+
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -163,8 +163,8 @@ def case_details(request,id):
             evidence_Data[evidence.id] = {
                 'evidence_id': evidence.id,
                 'evidence_type': evidence.evidence_type,
-                'evidence_pic_file': request.build_absolute_uri(reverse("serve_decrypted_evidence", args=[evidence.id, 'pic'])) if evidence.evidence_pic_file else None,
-                'evidence_vid_file': request.build_absolute_uri(reverse("serve_decrypted_evidence", args=[evidence.id, 'vid'])) if evidence.evidence_vid_file else None,
+                'evidence_pic_file': request.build_absolute_uri(reverse("ReportEaseApp:serve_decrypted_evidence", args=[evidence.id, 'pic'])) if evidence.evidence_pic_file else None,
+                'evidence_vid_file': request.build_absolute_uri(reverse("ReportEaseApp:serve_decrypted_evidence", args=[evidence.id, 'vid'])) if evidence.evidence_vid_file else None,
                 # 'evidence_vid_file': str(evidence.evidence_vid_file.url) if evidence.evidence_vid_file else None, 
             }
             
@@ -406,3 +406,4 @@ def serve_decrypted_evidence(request, evidence_id, media_type):
 
     except Evidence.DoesNotExist:
         raise Http404("Evidence not found")   
+

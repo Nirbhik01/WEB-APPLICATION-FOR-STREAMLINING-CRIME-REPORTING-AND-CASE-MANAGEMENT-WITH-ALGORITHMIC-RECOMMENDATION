@@ -29,7 +29,7 @@ urlpatterns = [
     path('assigninvestigator/<int:id>/', assign_investigator, name='AssignInvestigator'),
     path('successfullyterminated/<int:id>/', mark_case_successfully_terminated, name = 'SuccessfullyTerminated'),
     path('unsuccessfullyterminated/<int:id>/', mark_case_unsuccessfully_terminated, name = 'UnsuccessfullyTerminated'),
-    path("evidence/<int:evidence_id>/<str:media_type>/", serve_decrypted_evidence, name="serve_decrypted_evidence")
+    path("evidence/<int:evidence_id>/<str:media_type>/", serve_decrypted_evidence, name= "serve_decrypted_evidence")
 ]
 
 # if settings.DEBUG:  # Serve media files only in development
