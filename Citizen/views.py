@@ -95,33 +95,20 @@ def register_case(request):
 
 def save_evidence(crime_evidence,case):        
     for file in crime_evidence:
-        # print("entered in evidence")
         file_type = is_image_or_video(file.name)
+        encrypted_content = encrypt_file(file)
+        encrypted_file = ContentFile(encrypted_content)
+
+        evidence = Evidence(case=case, evidence_type=file_type)
+
         if file_type == 'image':
-            # print("entered in image")
-            evidence = Evidence(case = case,
-                            evidence_type = file_type,
-                            evidence_pic_file = file,
-                            )
-            # print("evidence created")
-            evidence.save()
+            evidence.evidence_pic_file.save(file.name, encrypted_file)
         elif file_type == 'video':
-            # print("entered in video")
-            evidence = Evidence(case = case,
-                            evidence_type = file_type,
-                            evidence_vid_file = file,
-                            )
-            # print("evidence created")
-            evidence.save()
+            evidence.evidence_vid_file.save(file.name, encrypted_file)
         elif file_type == 'audio':
-            # print("entered in audio")
-            evidence = Evidence(case = case,
-                            evidence_type = file_type,
-                            evidence_audio_file = file,
-                            )
-            # print("evidence created")
-            evidence.save()
-        else:
-            pass 
+            evidence.evidence_audio_file.save(file.name, encrypted_file)
+
+        evidence.save()
         
+
 # Create your views here.

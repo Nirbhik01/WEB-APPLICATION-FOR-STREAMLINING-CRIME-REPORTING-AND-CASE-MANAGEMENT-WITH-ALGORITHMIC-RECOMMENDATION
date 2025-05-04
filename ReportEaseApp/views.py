@@ -1,10 +1,16 @@
 from django.shortcuts import render,redirect
+# import reverse
+from django.urls import reverse
 from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
 from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
 from django.db.models import Count,Q
 from datetime import datetime, timedelta
+
+from django.http import HttpResponse, Http404
+from ReportEase.encryption import decrypt_file
+from .models import Evidence
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -157,8 +163,9 @@ def case_details(request,id):
             evidence_Data[evidence.id] = {
                 'evidence_id': evidence.id,
                 'evidence_type': evidence.evidence_type,
-                'evidence_pic_file': str(evidence.evidence_pic_file.url) if evidence.evidence_pic_file else None,
-                'evidence_vid_file': str(evidence.evidence_vid_file.url) if evidence.evidence_vid_file else None, 
+                'evidence_pic_file': request.build_absolute_uri(reverse("serve_decrypted_evidence", args=[evidence.id, 'pic'])) if evidence.evidence_pic_file else None,
+                'evidence_vid_file': request.build_absolute_uri(reverse("serve_decrypted_evidence", args=[evidence.id, 'vid'])) if evidence.evidence_vid_file else None,
+                # 'evidence_vid_file': str(evidence.evidence_vid_file.url) if evidence.evidence_vid_file else None, 
             }
             
         data['evidence'] = evidence_Data
@@ -379,4 +386,23 @@ def get_news(request):
             break
 
     return simplified_articles
-        
+     
+def serve_decrypted_evidence(request, evidence_id, media_type):
+    try:
+        evidence = Evidence.objects.get(pk=evidence_id)
+        file_field = getattr(evidence, f"evidence_{media_type}_file")
+        if not file_field:
+            raise Http404("File not found")
+
+        decrypted_content = decrypt_file(file_field.path)
+
+        content_type = {
+            'pic': 'image/jpeg',
+            'vid': 'video/mp4',
+            'audio': 'audio/mpeg',
+        }.get(media_type, 'application/octet-stream')
+
+        return HttpResponse(decrypted_content, content_type=content_type)
+
+    except Evidence.DoesNotExist:
+        raise Http404("Evidence not found")   
