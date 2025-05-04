@@ -11,6 +11,11 @@ from django.core.files.base import ContentFile
 import os
 from datetime import date, timedelta
 
+
+from django.conf import settings
+from ReportEase.encryption import encrypt_file
+
+
 def is_image_or_video(file_name):
     image_exts = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp']
     video_exts = ['.mp4', '.mov', '.avi', '.mkv', '.flv', '.wmv', '.webm']

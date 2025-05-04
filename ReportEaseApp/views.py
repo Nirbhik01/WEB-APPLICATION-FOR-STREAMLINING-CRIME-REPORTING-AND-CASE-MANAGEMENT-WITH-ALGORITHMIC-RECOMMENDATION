@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
 from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
-from django.db.models import Count
+from django.db.models import Count,Q
 from datetime import datetime, timedelta
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
@@ -120,9 +120,14 @@ def case_details(request,id):
            
         elif user_type == 'Admin':
             # get all investigators who are involved in 4 cases or less
-            available_investigators = Iv.objects.annotate(num_cases=Count('case')).filter(num_cases__lt=4)  
-            # print(available_investigators.count())
-            available_investigators_data = list(available_investigators.values('user_id', 'user_name','user_email'))
+            available_investigators = Iv.objects.annotate(
+                active_case_count=Count('case', filter=~Q(case__status="Investigation_Termination"))
+            ).filter(active_case_count__lt=4)
+
+            available_investigators_data = list(
+                available_investigators.values('user_id', 'user_name', 'user_email')
+            )
+
             data['available_investigators'] = available_investigators_data
             # print(data['available_investigators'])
                         
@@ -249,6 +254,23 @@ def fetch_user_details(request):
     elif user_type == 'Investigator':
         user = Iv.objects.filter(user_id=user_id).values('user_name','user_email','user_phone_number', 'user_password','user_address','user_profile_picture')
     return JsonResponse(list(user),safe=False)
+
+def fetch_terminated_case_details(request):
+    logged_in_user_type = request.session.get("user_type")
+    user_id = request.session.get("user_id")
+    case = None
+    try:
+        if logged_in_user_type == 'Citizen':
+            user = Ct.objects.get(user_id=user_id)
+            case = Case.objects.filter(reporter = user,status='Investigation_Termination').values("case_id","case_title","investigator__user_name")
+            
+        elif logged_in_user_type == 'Investigator':
+            user = Iv.objects.get(user_id=user_id)
+            case = Case.objects.filter(investigator = user,status='Investigation_Termination').values("case_id","case_title","reporter__user_name")
+        
+        return JsonResponse(list(case),safe=False)
+    except:
+        return JsonResponse({"status":"error"})
 
 def save_edited_user_details(request):
     if request.method == "POST":

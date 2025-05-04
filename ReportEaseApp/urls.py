@@ -18,6 +18,7 @@ urlpatterns = [
     path('casepage/<int:id>/' , CasePage , name='CasePage'),
     path('reportcrime/' , ReportCrimePage , name='ReportCrimePage'),
     path('casedetails/<int:id>/' , case_details , name='CaseDetails'),
+    path('terminatedcasedetails/' , fetch_terminated_case_details , name='TerminatedCaseDetails'),
     path('casestatus/<int:id>/' , case_status , name='CaseStatus'),
     path('activitylog/<int:id>/' , activity_log , name='ActivityLog'),
     path('fetchactivitylog/<int:id>/', fetch_activity_log,name="FetchActivityLog"),

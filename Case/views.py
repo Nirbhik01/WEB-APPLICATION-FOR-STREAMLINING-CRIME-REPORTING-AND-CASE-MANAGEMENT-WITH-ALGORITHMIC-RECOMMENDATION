@@ -14,7 +14,7 @@ def fetch_cases(request):
     if user_type == 'Investigator':
         case_list = Case.objects.filter(is_registered=False).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name','is_registered')
     elif user_type == 'Admin':
-        case_list = Case.objects.filter(is_registered=True).values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name','is_registered')
+        case_list = Case.objects.filter(is_registered=True,status="Investigator_Assigning").values('case_title','upload_date', 'crime_description','case_id','reporter__user_profile_picture','reporter__user_name','is_registered')
     # case_list = case_list.order_by('-crime_date')
     
     # Convert the queryset to a list of dictionaries

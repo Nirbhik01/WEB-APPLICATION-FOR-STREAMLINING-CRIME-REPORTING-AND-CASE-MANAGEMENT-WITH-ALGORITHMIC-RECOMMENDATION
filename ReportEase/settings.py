@@ -29,6 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 from decouple import config
 NEWS_AI_API_KEY = config('NEWS_AI_API_KEY')
+
+MAIL_ID = config('MAIL_ID')
+MAIL_PWD = config('MAIL_PWD')
+
+# while storing key in .env
+# from cryptography.fernet import Fernet
+# FERNET_KEY = Fernet.generate_key().decode()
 FERNET_KEY = config('FERNET_KEY', default='default_value_here').encode()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/

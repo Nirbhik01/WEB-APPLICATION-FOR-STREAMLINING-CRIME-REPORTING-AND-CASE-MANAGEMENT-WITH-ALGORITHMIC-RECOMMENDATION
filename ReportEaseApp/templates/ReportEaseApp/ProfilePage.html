@@ -63,21 +63,21 @@
                         </li>
                     </ul>
                 </div>
-                <div
+                {% comment %} <div
                     class="w-full md:max-w-sm sm:max-w-sm mt-10 px-5 py-3 text-center rounded-lg bg-cool-gray text-white font-semibold text-xl box-border hover:shadow-md hover:scale-[1.01] hover:duration-[.2s] group">
                     <button type="button" class="group-hover:underline">
                         Need a Lawyer?
                     </button>
-                </div>
+                </div> {% endcomment %}
             </div>
             <div class="w-full h-auto self-start">
                 {%block cases%}
                 {%include 'CaseTemplate.html'%}
                 {%endblock%}
 
-                <div id="cases" class="w-full p-5 rounded-lg bg-light-gray mt-10 transform duration-500">
+                <div id="previous_cases" class="w-full p-5 rounded-lg bg-light-gray mt-10 transform duration-500">
                     <h1 class="text-3xl font-medium text-gray-900 ">Previous Cases</h1>
-                    <ol
+                    <ol id="previous_case_content"
                         class="mt-5  md:grid md:grid-cols-2 md:space-y-0 md:gap-4 divide-opacity-5 space-y-4 max-h-60 md:max-h-none overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500">
                         <a href="{%url 'ReportEaseApp:CasePage' 6%}"
                             class="items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg">
@@ -125,6 +125,49 @@
                     toastSuccess.remove();
                 }, 3000); // Remove the toast after 3 seconds
             }
+
+            fetch('/terminatedcasedetails/').then(response => response.json()).then(data => {
+                console.log(data);
+                if (data.status){
+                    document.getElementById("previous_case_content").innerHTML = "Error fetching Previous cases";
+                }
+                else if (data.length > 0){
+                    const cases = document.getElementById("previous_case_content");
+                    cases.innerHTML = "";
+                    Object.values(data).forEach(element => {
+                        console.log(element);
+                        const anchor = document.createElement('a');
+                        anchor.className = 'items-center block p-3 sm:flex hover:bg-white border border-gray rounded-lg';
+                        anchor.href=`/casepage/${element.case_id}/`;
+                        if ("investigator__user_name" in element){
+                            anchor.innerHTML = `
+                                <div class="text-gray-600 ">
+                                    <div class="text-base font-normal">${element.case_title.replace("_"," ")}  </div>
+                                    <div class="text-sm font-normal">   ${element.investigator__user_name}</div>
+                                </div>
+                            `;
+                            cases.appendChild(anchor);
+                        }
+                        else if ("reporter__user_name" in element){
+                            anchor.innerHTML = `
+                                <div class="text-gray-600 ">
+                                    <div class="text-base font-normal">${element.case_title.replace("_"," ")}  </div>
+                                    <div class="text-sm font-normal">   ${element.reporter__user_name}</div>
+                                </div>
+                            `;
+                            cases.appendChild(anchor);
+                        }
+
+                    });
+                }
+                else if (data.length == 0){
+                    const cases = document.getElementById("previous_case_content");
+                    cases.innerHTML = "No Previous Cases";
+
+                }
+                
+            });
+
         }); 
     </script>
 

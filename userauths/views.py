@@ -3,7 +3,7 @@ from django.contrib import messages
 from userauths.models import Citizen, Investigator
 import random
 from django.contrib.auth import authenticate, login
-
+from django.conf import settings
 from django.http import JsonResponse
 
 # for email
@@ -137,11 +137,12 @@ def send_otp(request):
             s = smtplib.SMTP('smtp.gmail.com', 587)
             s.starttls()
 
+            
             # Login using your Gmail app password
-            s.login("dhakaln76@gmail.com", "ttuc lfxu ruti zgxp")  # Replace with your App Password
+            s.login(f"{settings.MAIL_ID}", f"{settings.MAIL_PWD}")  # Replace with your App Password
             
             msg = MIMEMultipart("alternative")
-            msg['From'] = "dhakaln76@gmail.com"
+            msg['From'] = F"{settings.MAIL_ID}"
             msg['To'] = f"{request.session.get('reset_email')}"
             msg['Subject'] = f"OTP Verification"
 
@@ -172,7 +173,8 @@ def send_otp(request):
             # Quit the SMTP session
             s.quit()
             return JsonResponse({'status': 'success'})
-        except: 
+        except Exception as e:
+            print("ERROR:", str(e)) 
             return JsonResponse({'status': 'fail', 'message': 'There was a problem sending email'}, status=404)
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
