@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 from django.http import HttpResponse, Http404
 from ReportEase.encryption import decrypt_file
 
+from Investigator.views import send_case_notification_email
+
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -238,12 +240,35 @@ def activity_log(request,id):
         if user_type == 'Citizen':
             activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_citizen=user)
             activity_log.save()
+            investigator = case.investigator
+            subject_investigator = "Activity Log Updated"
+            html_message_investigator = f"""
+            <html>
+            <body>
+                <p>Activity lof of case <b>{case.case_title} </b> has been updated by {case.reporter.user_name}.</p>
+            </body>
+            </html>
+            """
+            send_case_notification_email(investigator.user_email, investigator.user_name, subject_investigator, html_message_investigator)
+            
         elif user_type == 'Investigator':
             activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_investigator=user)
             activity_log.save()
+            citizen = case.reporter
+            subject = "Investigator Assigned"
+            html_message = f"""
+            <html>
+            <body>
+                <p>Activity lof of case <b>{case.case_title} </b> has been updated by {case.investigator.user_name}.</p>
+            </body>
+            </html>
+            """
+            send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
         
         if activity_file:
-            save_evidence(activity_file,case) # Imported from Citizen.Views
+            for files in activity_file:
+                save_evidence(files,case) # Imported from Citizen.Views
+            
         return JsonResponse({"status":"success"})
         # print(activity_name,activity_description,activity_file)
  
@@ -326,6 +351,32 @@ def assign_investigator(request,id):
             case.investigator = investigator
             case.status="Investigation_Ongoing"
             case.save()
+            citizen = case.reporter
+            subject = "Investigator Assigned"
+            html_message = f"""
+            <html>
+            <body>
+                <h2 style="color:#2C3E50;">Hello {citizen.user_name},</h2>
+                <p>Investigator {case.investigator.user_name} has been assigned to your case.</p>
+                <p><b>{case.case_title}</b></p>
+            </body>
+            </html>
+            """
+            send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
+            # now send mail to the investigator
+            investigator = case.investigator
+            subject_investigator = "Case Assigned"
+            html_message_investigator = f"""
+            <html>
+            <body>
+                <h2 style="color:#2C3E50;">Hello {investigator.user_name},</h2>
+                <p>Case <b>{case.case_title} - {case.reporter.user_name}</b> has been assigned to you.</p>
+                
+            </body>
+            </html>
+            """
+            send_case_notification_email(investigator.user_email, investigator.user_name, subject_investigator, html_message_investigator)
+            
             messages.success(request, "Investigator assigned successfully.")
             return JsonResponse({"status":"success"})
         except:
@@ -342,6 +393,17 @@ def mark_case_successfully_terminated(request,id):
     
     case.was_successful=True
     case.save()
+    citizen = case.reporter
+    subject = "Investigation Terminated"
+    html_message = f"""
+    <html>
+    <body>
+        <h2 style="color:#2C3E50;">Hello {citizen.user_name},</h2>
+        <p>Your case titled <b>{case.case_title}</b> has been successfully terminated.</p>
+    </body>
+    </html>
+    """
+    send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
     return JsonResponse({"status":"success"}) 
 
 def mark_case_unsuccessfully_terminated(request,id):
@@ -353,6 +415,17 @@ def mark_case_unsuccessfully_terminated(request,id):
     
     case.was_successful=False
     case.save()
+    citizen = case.reporter
+    subject = "Investigation Terminated"
+    html_message = f"""
+    <html>
+    <body>
+        <h2 style="color:#2C3E50;">Hello {citizen.user_name},</h2>
+        <p>Investigation on your case titled <b>{case.case_title}</b> was unsuccessfull and has been terminated.</p>
+    </body>
+    </html>
+    """
+    send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
     return JsonResponse({"status":"success"}) 
 
 def get_news(request):
