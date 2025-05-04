@@ -18,7 +18,6 @@ def HomePage(request):
     login_check = check_for_login(request)
     if login_check:
         return login_check
-    
     wanted_data = get_wanted_list()
     return render(request, 'HomePage.html',{'wanted_list': wanted_data,
                                             # uncomment for presentation
@@ -351,7 +350,7 @@ def get_news(request):
                 'description': art.get('body'),
                 'image_url': art.get('image'),
                 'source_name': art.get('source', {}).get('title'),
-                'pubDate': art.get('dateTimePub'),
+                'pubDate': art.get('dateTimePub').split("T")[0],
             })
 
         if len(simplified_articles) == 8:

@@ -57,9 +57,7 @@ INSTALLED_APPS = [
     'ReportEaseAppTailwind',
     'django_browser_reload',
     'Citizen',
-    "Investigator",
-    # "newsapi",
-    
+    "Investigator",    
 ]
 
 MIDDLEWARE = [

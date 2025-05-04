@@ -114,7 +114,7 @@
                                     <div class="relative p-4 lg:p-[.75rem] transition-all duration-300 rounded-b-lg">
                                         <h4 class="md:text-sm lg:text-base text-xs">{{ article.title }}
                                         </h4>
-                                        <p class="md:text-xs lg:text-xs text-[10px] block mt-1">{{ article.pubDate }}</p>
+                                        <p class="md:text-xs lg:text-xs text-[10px] block mt-1" id="published_date">{{ article.pubDate }}</p>
 
                                     </div>
                                 </div>
@@ -242,7 +242,7 @@
                     setTimeout(() => {
                         toastSuccess.remove();
                     }, 3000); // Remove the toast after 3 seconds
-                }
+                } 
             }); 
 
             function matchHeight(element1, element2) {
