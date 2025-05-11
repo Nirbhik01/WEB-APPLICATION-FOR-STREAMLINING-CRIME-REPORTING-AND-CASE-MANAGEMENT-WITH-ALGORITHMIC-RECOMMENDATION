@@ -12,6 +12,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.conf import settings
 
+from ReportEaseApp.keyword_extraction import get_keywords
+
+from celery import shared_task
+
 # Create your views here.
 def UploadWanted(request):
     
@@ -60,6 +64,20 @@ def mark_case_registered(request,id):
         """
         send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
         print("mail registered sending to ", citizen.user_email)
+        
+        def keyword_extraction_bg():
+            print("extracting keyword")
+            try:
+                result = get_keywords(case.crime_description)
+                print(f"Extracted keywords for case {case.case_id}: {result}")
+                # Optionally: Save to DB or attach to case
+                # case.keywords = result  # if you have a field
+                # case.save()
+            except Exception as e:
+                print(f"Keyword extraction failed: {e}")
+
+        threading.Thread(target=keyword_extraction_bg).start()
+        
         messages.success(request,"Case marked as Registered")
         return JsonResponse({"status": "success"})
     except Case.DoesNotExist:
@@ -132,4 +150,16 @@ def send_case_notification_email(to_email, user_name, subject, html_message):
             print("Email sending failed:", str(e))
 
     threading.Thread(target=send).start() 
+    
+@shared_task
+def extract_case_keywords(case_id):
+    try:
+        case = Case.objects.get(case_id=case_id)
+        keywords = get_keywords(case.case_description)  # or any relevant field
+        # Optionally, store the keywords in the database if needed:
+        case.keywords = keywords  # if you have a `keywords` JSONField or TextField
+        case.save()
+        return {"status": "success", "keywords": keywords}
+    except Case.DoesNotExist:
+        return {"status": "error", "message": "Case not found."}
 # Create your views here.
