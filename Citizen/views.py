@@ -69,6 +69,20 @@ def register_case(request):
         case.save()
         case.status = "FIR_Verification"
         case.save()
+        
+        # open a txt file and write the case description into it by trimming
+        # and save it to the case description file field
+        if crime_description:
+            file_name = f"case_{case.case_id}.txt"
+            crime_description = crime_description.strip()
+            with open(file_name, 'w') as f:
+                f.write(crime_description)
+            
+            # Save the encrypted content to the model
+            
+            case.case_description_file  .save(file_name, ContentFile(crime_description))
+            case.save()
+        
         # check evidence type and create evidence instance accordingly
         save_evidence(crime_evidence,case)
 

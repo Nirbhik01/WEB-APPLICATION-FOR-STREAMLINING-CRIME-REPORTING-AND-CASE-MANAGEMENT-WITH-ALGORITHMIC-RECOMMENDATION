@@ -10,6 +10,13 @@ def Wanted_pic_path(instance, filename): #instance represents the current class 
     new_filename = f"{email_slug}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/Wanted_Pics', new_filename)
 
+def Case_description_path(instance, filename): #instance represents the current class object being used
+    ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
+    id_slug = slugify(instance.case_id)  # Sanitize email
+    # length = Case.objects.filter(case=instance.case).count()
+    new_filename = f"{id_slug}.{ext}"   # Create new filename
+    return os.path.join('ReportEaseApp/Description_Files', new_filename)
+
 case_status_choices=[("FIR_Registration","FIR Registration"),("FIR_Verification","FIR Verification"),
                      ("Investigator_Assigning","Investigator Assigning"),("Investigation_Ongoing","Investigation Ongoing"),
                      ("Investigation_Termination","Investigation Termination")]
@@ -49,7 +56,9 @@ class Case(models.Model):
     is_registered = models.BooleanField(default=False) # true if FIR is registered
     registered_by = models.ForeignKey(It, on_delete=models.SET_NULL,null=True,blank=True,related_name="registered_by")
     was_successful = models.BooleanField(default=False) # true if investigation was successful
-    
+    keywords = models.TextField(default=None,blank=True,null=True)
+    # for creating txt_file of case description
+    case_description_file = models.FileField(upload_to=Case_description_path, default=None,blank=True,null=True)
     
     def __str__(self):
         return f"Case {self.case_id} - {self.case_title} - {self.status} - {self.upload_date}"
@@ -118,3 +127,5 @@ class Wanted(models.Model):
     
     def __str__(self):
         return f" {self.wanted_id} - {self.wanted_name} - {self.wanted_reason}"
+    
+    

@@ -54,13 +54,13 @@ class Citizen(models.Model):
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"
 
-
 class Citizenship_photo(models.Model):
     user = models.ForeignKey(Citizen, on_delete=models.SET_NULL,null=True)
     citizenship_photo = models.ImageField(upload_to=citizen_citizenship_pic_path,null=True, blank=True)
     
     def __str__(self):
         return f"{self.user.user_email}-{self.citizenship_photo}"
+
 
 def Investigator_profile_pic_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
@@ -91,3 +91,5 @@ class Investigator(models.Model):
 
     def verify_password(self, password):
         return check_password(password, self.user_password)
+    
+    
