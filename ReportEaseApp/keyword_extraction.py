@@ -126,7 +126,7 @@ def get_keywords(docs):
         results = {}
         for idx in range(len(feature_vals)):
             results[feature_vals[idx]] = score_vals[idx]
-        print(results)
+        # print(results)
         return results
     except Exception as e:
         print(f"Error in get_keywords: {str(e)}")

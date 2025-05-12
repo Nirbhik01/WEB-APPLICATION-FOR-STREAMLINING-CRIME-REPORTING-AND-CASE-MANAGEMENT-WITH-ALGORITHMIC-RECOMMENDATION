@@ -21,14 +21,7 @@ from Citizen.views import save_evidence
 from django.conf import settings
 
 def LandingPage(request):
-    # print('vectorizer : ',count_vectorizer,'feature_names',len(feature_names),'tfidf_transformer',tfidf_transformer)
-    # print('scammed' in feature_names)
-    # read a file
-    with open(r'C:\Users\ASUS\OneDrive\Documents\notes sixth sem\project\Project Code\ReportEase\ReportEaseApp\media\ReportEaseApp\Description_Files\47.txt','r') as file:
-        # read the content of the file
-        file_content = file.read()
-        # keywords=(get_keywords(file_content))
-        
+    
     return render(request, 'LandingPage.html' )
 
 # enable get_news(request) during presentation
@@ -165,6 +158,8 @@ def case_details(request,id):
                 "registered_by":str(case.registered_by.user_name), #
                 "registered_by_pic":str(case.registered_by.user_profile_picture.url), #
                 "available_investigators":available_investigators_data, #
+                "best_investigator_name":str(case.best_investigator.user_name), #
+                "best_investigator_email":str(case.best_investigator.user_email), #  
             }
         data['case_data']=(case_data)
         
