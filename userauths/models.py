@@ -79,6 +79,7 @@ class Investigator(models.Model):
     user_profile_picture = models.ImageField(upload_to = Investigator_profile_pic_path,null=True, blank=True)
     user_district=models.CharField(max_length=200,default=None)
     joined_on = models.DateField(auto_now_add=True)
+    keywords = models.TextField(default=None,blank=True,null=True)
     
     def __str__(self):
         return f"{self.user_name}-{self.user_email}"

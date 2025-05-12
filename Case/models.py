@@ -59,6 +59,7 @@ class Case(models.Model):
     keywords = models.TextField(default=None,blank=True,null=True)
     # for creating txt_file of case description
     case_description_file = models.FileField(upload_to=Case_description_path, default=None,blank=True,null=True)
+    best_investigator=models.ForeignKey(It,on_delete=models.SET_NULL, null=True,blank=True,related_name="best_investigator")
     
     def __str__(self):
         return f"Case {self.case_id} - {self.case_title} - {self.status} - {self.upload_date}"
@@ -115,7 +116,6 @@ class Evidence(models.Model):
     
     def __str__(self):
         return f"Evidence for {self.case.case_id} - {self.evidence_type} - {self.upload_date}"
-    
     
 class Wanted(models.Model):
     wanted_id = models.AutoField(primary_key=True) # id of wanted person

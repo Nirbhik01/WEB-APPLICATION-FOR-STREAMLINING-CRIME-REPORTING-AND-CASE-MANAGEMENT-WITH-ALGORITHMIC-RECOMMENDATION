@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from Case.models import Wanted as Wt
 from Case.models import Case, Evidence
 from userauths.models import Investigator as Iv,Citizenship_photo as Cp
-
+import nltk
 import threading
 import smtplib
 from email.mime.text import MIMEText
@@ -13,8 +13,6 @@ from email.mime.multipart import MIMEMultipart
 from django.conf import settings
 
 from ReportEaseApp.keyword_extraction import get_keywords
-
-from celery import shared_task
 
 # Create your views here.
 def UploadWanted(request):
@@ -68,14 +66,19 @@ def mark_case_registered(request,id):
         def keyword_extraction_bg():
             print("extracting keyword")
             try:
+                # nltk.data.find('corpora/wordnet')
+                # nltk.data.find('tokenizers/punkt')
+                # nltk.data.find('taggers/averaged_perceptron_tagger_eng')
                 result = get_keywords(case.crime_description)
                 print(f"Extracted keywords for case {case.case_id}: {result}")
                 # Optionally: Save to DB or attach to case
-                # case.keywords = result  # if you have a field
-                # case.save()
+                keyword_list = list(result.keys())
+                keywords_str = ",".join(keyword_list)
+                case.keywords = keywords_str
+                case.save()
             except Exception as e:
                 print(f"Keyword extraction failed: {e}")
-
+            print("matching cases and investigators")
         threading.Thread(target=keyword_extraction_bg).start()
         
         messages.success(request,"Case marked as Registered")
@@ -151,15 +154,15 @@ def send_case_notification_email(to_email, user_name, subject, html_message):
 
     threading.Thread(target=send).start() 
     
-@shared_task
-def extract_case_keywords(case_id):
-    try:
-        case = Case.objects.get(case_id=case_id)
-        keywords = get_keywords(case.case_description)  # or any relevant field
-        # Optionally, store the keywords in the database if needed:
-        case.keywords = keywords  # if you have a `keywords` JSONField or TextField
-        case.save()
-        return {"status": "success", "keywords": keywords}
-    except Case.DoesNotExist:
-        return {"status": "error", "message": "Case not found."}
+
+# def extract_case_keywords(case_id):
+#     try:
+#         case = Case.objects.get(case_id=case_id)
+#         keywords = get_keywords(case.case_description)  # or any relevant field
+#         # Optionally, store the keywords in the database if needed:
+#         case.keywords = keywords  # if you have a `keywords` JSONField or TextField
+#         case.save()
+#         return {"status": "success", "keywords": keywords}
+#     except Case.DoesNotExist:
+#         return {"status": "error", "message": "Case not found."}
 # Create your views here.

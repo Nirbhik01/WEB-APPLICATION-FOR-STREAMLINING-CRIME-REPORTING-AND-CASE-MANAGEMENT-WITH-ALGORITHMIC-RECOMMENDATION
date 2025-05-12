@@ -8,6 +8,12 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import wordnet, words
 from nltk import pos_tag
 
+import os
+import nltk
+
+nltk.data.path.append(os.path.join(os.environ['USERPROFILE'], 'AppData', 'Roaming', 'nltk_data'))
+
+
 # Load count_vectorizer from the Keyword_extractor directory
 count_vectorizer_path = r'C:\Users\ASUS\OneDrive\Documents\notes sixth sem\project\Project Code\Keyword_extractor\count_vectorizer.pkl'
 feature_name_path = r'C:\Users\ASUS\OneDrive\Documents\notes sixth sem\project\Project Code\Keyword_extractor\feature_names.pkl'
