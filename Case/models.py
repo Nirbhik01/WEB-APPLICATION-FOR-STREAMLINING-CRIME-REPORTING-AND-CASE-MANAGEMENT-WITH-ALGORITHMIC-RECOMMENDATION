@@ -58,7 +58,7 @@ class Case(models.Model):
     was_successful = models.BooleanField(default=False) # true if investigation was successful
     keywords = models.TextField(default=None,blank=True,null=True)
     # for creating txt_file of case description
-    case_description_file = models.FileField(upload_to=Case_description_path, default=None,blank=True,null=True)
+    # case_description_file = models.FileField(upload_to=Case_description_path, default=None,blank=True,null=True)
     best_investigator=models.ForeignKey(It,on_delete=models.SET_NULL, null=True,blank=True,related_name="best_investigator")
     
     def __str__(self):

@@ -32,6 +32,7 @@ urlpatterns = [
     path("evidence/<int:evidence_id>/<str:media_type>/", serve_decrypted_evidence, name= "serve_decrypted_evidence"),
     path("citizenship_photo/<int:citizenship_id>/", serve_decrypted_citizenship_photo, name="serve_decrypted_citizenship_photo"),
     path("recent_photo/<int:user_id>/", serve_decrypted_recent_photo, name="serve_decrypted_recent_photo"),
+    path('chatmessages/<int:case_id>/', get_chat_messages, name='GetChatMessages'),
 ]
 
 # if settings.DEBUG:  # Serve media files only in development

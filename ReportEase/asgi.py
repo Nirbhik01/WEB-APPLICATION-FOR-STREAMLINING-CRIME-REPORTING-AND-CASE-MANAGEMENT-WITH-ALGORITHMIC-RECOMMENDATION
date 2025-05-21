@@ -1,16 +1,16 @@
-"""
-ASGI config for ReportEase project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
-"""
+# asgi.py
 
 import os
-
+import django
+from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
-
+from chat.routing import wsPattern
+from channels.sessions import SessionMiddlewareStack
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ReportEase.settings')
+django.setup()
 
-application = get_asgi_application()
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    "websocket": 
+        SessionMiddlewareStack(URLRouter(wsPattern)),
+})

@@ -72,16 +72,16 @@ def register_case(request):
         
         # open a txt file and write the case description into it by trimming
         # and save it to the case description file field
-        if crime_description:
-            file_name = f"case_{case.case_id}.txt"
-            crime_description = crime_description.strip()
-            with open(file_name, 'w') as f:
-                f.write(crime_description)
+        # if crime_description:
+        #     file_name = f"case_{case.case_id}.txt"
+        #     crime_description = crime_description.strip()
+        #     with open(file_name, 'w') as f:
+        #         f.write(crime_description)
             
-            # Save the encrypted content to the model
+        #     # Save the encrypted content to the model
             
-            case.case_description_file  .save(file_name, ContentFile(crime_description))
-            case.save()
+        #     case.case_description_file  .save(file_name, ContentFile(crime_description))
+        #     case.save()
         
         # check evidence type and create evidence instance accordingly
         save_evidence(crime_evidence,case)
@@ -97,6 +97,7 @@ def register_case(request):
 
 def save_evidence(crime_evidence,case):        
     for file in crime_evidence:
+        print(file)
         file_type = is_image_or_video(file.name)
         encrypted_content = encrypt_file(file)
         encrypted_file = ContentFile(encrypted_content)

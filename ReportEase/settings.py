@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'daphne',
     'django.contrib.staticfiles',
     'userauths',
     'ReportEaseApp',
@@ -65,8 +66,17 @@ INSTALLED_APPS = [
     'ReportEaseAppTailwind',
     'django_browser_reload',
     'Citizen',
-    "Investigator",    
+    "Investigator",  
+    'channels',
+    'chat',  
 ]
+
+ASGI_APPLICATION = 'ReportEase.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

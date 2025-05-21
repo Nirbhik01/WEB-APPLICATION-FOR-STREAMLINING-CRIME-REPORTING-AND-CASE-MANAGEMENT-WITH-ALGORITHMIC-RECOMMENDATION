@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from Case.models import Case,Evidence,Wanted,Activity_log
 from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigator as Iv
+from chat.models import Message
 from django.db.models import Count,Q
 from datetime import datetime, timedelta
 import os
@@ -58,8 +59,6 @@ def CasePage(request,id):
     login_check = check_for_login(request)
     if login_check:
         return login_check
-    # if request.method == 'POST':
-    #     return redirect
     return render(request, 'CasePage.html')
 
 def ReportCrimePage(request):
@@ -272,8 +271,7 @@ def activity_log(request,id):
             send_case_notification_email(citizen.user_email, citizen.user_name, subject, html_message)
         
         if activity_file:
-            for files in activity_file:
-                save_evidence(files,case) # Imported from Citizen.Views
+            save_evidence(activity_file,case) # Imported from Citizen.Views
             
         return JsonResponse({"status":"success"})
         # print(activity_name,activity_description,activity_file)
@@ -513,4 +511,27 @@ def serve_decrypted_recent_photo(request, user_id):
 
     except Ct.DoesNotExist:
         raise Http404("User not found")
+
+def get_chat_messages(request, case_id):
+    try:
+        case = Case.objects.get(case_id=case_id)
+        messages = Message.objects.filter(case=case).order_by('timestamp')
+        
+        messages_data = []
+        for msg in messages:
+            message_data = {
+                'content': msg.content,
+                'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                'is_read': msg.is_read,
+                'sender_type': 'Citizen' if msg.sender_citizen else 'Investigator',
+                'sender_name': msg.sender_citizen.user_name if msg.sender_citizen else msg.sender_investigator.user_name,
+                'sender_id': msg.sender_citizen.user_id if msg.sender_citizen else msg.sender_investigator.user_id
+            }
+            messages_data.append(message_data)
+            
+        return JsonResponse({'messages': messages_data}, safe=False)
+    except Case.DoesNotExist:
+        return JsonResponse({"error": "Case not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 

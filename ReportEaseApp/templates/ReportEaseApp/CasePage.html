@@ -54,15 +54,7 @@
                         <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
                                 class="hidden md:inline"><br></span> Ongoing</h3>
                     </div>
-                    <!-- <span
-                        class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
-                        <span
-                            class="animate-scale animation-delay-500 absolute z-10 md:h-8 md:w-8 w-6 h-6 rounded-full bg-cool-gray ring-4 ring-white"></span>
-                    </span>
-                    <div class="mx-9 md:mx-0 ">
-                        <h3 class=" font-medium leading-tight text-wrap md:mt-4 ">
-                            Investigation<span class="hidden md:inline"><br></span> Ongoing</h3>
-                    </div> -->
+                    
 
                 </li>
                 <li class="items-center flex -ml-3 md:ml-0 bg-white md:block" id="Investigation_Termination">
@@ -94,14 +86,7 @@
                         class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo"></video>
                     <p id="filelabel" class="self-center my-5 font-medium text-center"></p>
                     <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden transform duration-500" id="imagelist">
-                        {% comment %} 
-                        <div onclick="getinfo(this)">
-                            <video src="{{ MEDIA_URL }}ReportEaseApp/Evidence/Video/vid.mp4" alt="evidence"
-                                onclick="changeVideo(this.src)" preload="metadata"
-                                class="size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300">play</video>
-                            <p id="imagelabels" class="hidden self-center my-5 font-medium text-center"></p>
-                        </div>
-                         {% endcomment %}
+                        
                     </div>
                 </div>
     
@@ -141,6 +126,7 @@
                             </div>
                         {%endif%}
                         
+                        
                         <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
                     </div>
                 </div>
@@ -172,18 +158,7 @@
                     
                 </div>
                 <ul id="activity_list" role="list" class="divide-y mt-3 divide-gray-100 transform duration-500">
-                    {% comment %} <li class="flex justify-between gap-x-6 py-5">
-                        <div class="flex min-w-0 gap-x-4">
-                            <div class="min-w-0 flex-auto">
-                                <p class="text-base font-semibold ">Suspect Investigation</p>
-                                <p class="mt-1 text-sm">Your suspect "hari godar" was investigated about the issue</p>
-                            </div>
-                        </div>
-                        <div class=" shrink-0 sm:flex sm:flex-col sm:items-end">
-                            <p class=" text-xs/5 ">Updated <time datetime="2023-01-23T13:23Z">13h
-                                    ago</time></p>
-                        </div>
-                    </li> {% endcomment %}
+                    
                 </ul>
             </div>
         </div>
@@ -234,7 +209,7 @@
                             <div class="col-span-2">
                                 <label for="description" class="block mb-2 text-sm font-medium  ">File
                                     </label>
-                                <input id="activity_file" rows="4" type="file" name="activity_file" multiple
+                                <input id="activity_file" rows="4" type="file" name="activity_file" multiple accept='video/*,image/*'
                                     class="block p-2.5 w-full text-sm  bg-white rounded-lg border focus:border-black focus:ring-0 "
                                     placeholder="for eg:- cctv footage of location was collected and was inconclusive"/>
                             </div>
@@ -265,6 +240,8 @@
                     clip-rule="evenodd"></path>
             </svg>
         </button>
+        <input type="hidden" name="" id="user_type" value="{{user_type}}">
+        <input type="hidden" name="" id="user_id" value="{{logged_in_user.user_id}}">
     </div>
     <div id="chat-container" class="hidden fixed bottom-16 right-4 w-72 sm:w-80 md:w-96 rounded-lg">
         <div class="bg-white shadow-md rounded-lg max-w-md w-full">
@@ -283,20 +260,6 @@
                 <!-- Chat messages will be displayed here -->
                 <div class="mb-2 text-right">
                     <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">hello</p>
-                </div>
-                <div class="mb-2">
-                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
-                        chatbot.</p>
-                </div>
-                <div class="mb-2 text-right">
-                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">this example of chat</p>
-                </div>
-                <div class="mb-2">
-                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
-                        chatbot.</p>
-                </div>
-                <div class="mb-2 text-right">
-                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">design with tailwind</p>
                 </div>
                 <div class="mb-2">
                     <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
@@ -337,6 +300,7 @@
 
 
     <script>
+         //for chat 
         const chatbox = document.getElementById("chatbox");
         const chatContainer = document.getElementById("chat-container");
 
@@ -344,6 +308,8 @@
         const sendButton = document.getElementById("send-button");
         const openChatButton = document.getElementById("open-chat");
         const closeChatButton = document.getElementById("close-chat");
+
+        let chatSocket = null;
 
         const pathParts = window.location.pathname.split('/');
         const firId = parseInt(pathParts[pathParts.length - 2]);
@@ -356,55 +322,100 @@
             isChatboxOpen = !isChatboxOpen; // Toggle the state
             chatbox.scrollTop = chatbox.scrollHeight;
         }
-
+        
         // Add an event listener to the open chat button
-        openChatButton.addEventListener("click", toggleChatbox);
+        openChatButton.addEventListener("click", function(e){
+            toggleChatbox();
+            loadChatHistory();
+            chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/casepage/' + firId + '/'
+            );
+            
+            chatSocket.addEventListener('message',(e)=>{
+                const data = JSON.parse(e.data)['message'];
+                //console.log("received message", data);
+                let sender = data['sender'];
+                let content = data['message'];
+                //console.log(sender, content);
+                if (sender == document.getElementById("user_id").value){
+                    const messagesContainer = document.getElementById('chatbox');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `mb-2 text-right`;
+                    messageDiv.innerHTML = `
+                        <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">${content}</p>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+                else{
+                    const messagesContainer = document.getElementById('chatbox');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `mb-2 text-left`;
+                    messageDiv.innerHTML = `
+                        <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${content}</p>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            });
+            
+        });
 
         // Add an event listener to the close chat button
-        closeChatButton.addEventListener("click", toggleChatbox);
+        closeChatButton.addEventListener("click", function (e){
+            toggleChatbox();
+            if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.close();
+            }
+            chatSocket = null;
+        });
 
         // Add an event listener to the send button
         sendButton.addEventListener("click", function () {
             const userMessage = userInput.value;
-            if (userMessage.trim() !== "") {
-                addUserMessage(userMessage);
-                respondToUser(userMessage);
+            if (userMessage.trim() != "") {
+                chatSocket.send(
+                    JSON.stringify({
+                        message: userMessage,
+                        room_name : firId,
+                        sender : document.getElementById("user_id").value,
+                        sender_type : document.getElementById("user_type").value,
+                    })
+                );
                 userInput.value = "";
             }
+
         });
-
-        userInput.addEventListener("keyup", function (event) {
-            if (event.key === "Enter") {
-                const userMessage = userInput.value;
-                addUserMessage(userMessage);
-                respondToUser(userMessage);
-                userInput.value = "";
-            }
-        });
-
-        function addUserMessage(message) {
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("mb-2", "text-right");
-            messageElement.innerHTML = `<p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
-            chatbox.appendChild(messageElement);
-            chatbox.scrollTop = chatbox.scrollHeight;
+        
+        const caseId = window.location.pathname.split('/').filter(Boolean).pop();
+        
+        
+        function displayMessage(data) {
+            const messagesContainer = document.getElementById('chatbox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mb-2 ${(data.sender_type == document.getElementById("user_type").value) ? 'text-right' : 'text-left'}`;
+            
+            messageDiv.innerHTML = `
+                <p class=" ${(data.sender_type == document.getElementById("user_type").value) ? 'bg-dark-blue' : 'bg-cool-gray'} text-white rounded-lg py-2 px-4 inline-block">${data.content}</p>
+                
+            `;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function addBotMessage(message) {
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("mb-2");
-            messageElement.innerHTML = `<p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
-            chatbox.appendChild(messageElement);
-            chatbox.scrollTop = chatbox.scrollHeight;
+        function loadChatHistory() {
+            fetch(`/chatmessages/${caseId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const messagesContainer = document.getElementById('chatbox');
+                    messagesContainer.innerHTML = '';
+                    data.messages.forEach(message => displayMessage(message));
+                })
+                .catch(error => console.error('Error loading chat history:', error));
         }
 
-        function respondToUser(userMessage) {
-            // Replace this with your chatbot logic
-            setTimeout(() => {
-                addBotMessage("This is a response from the chatbot.");
-            }, 500);
-        }
-
+        //for chat
     
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector('#crud-modal form');
@@ -503,7 +514,7 @@
                 }
             })
             .then(data => {
-                //console.log(data); // Check the data structure in the console
+                console.log(data); // Check the data structure in the console
                 document.getElementById('title').innerText = data.case_data.case_title;
                 document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
                 if(data.case_data.reporter){
