@@ -322,15 +322,20 @@
             isChatboxOpen = !isChatboxOpen; // Toggle the state
             chatbox.scrollTop = chatbox.scrollHeight;
         }
+        function mark_as_read(){
+            fetch(`/mark_messages_read/${firId}/`).then(response=> response.json()).then(data => {
+                console.log(data);
+            });
+        }
         
         // Add an event listener to the open chat button
         openChatButton.addEventListener("click", function(e){
             toggleChatbox();
             loadChatHistory();
+            mark_as_read();
             chatSocket = new WebSocket(
                 'ws://' + window.location.host + '/casepage/' + firId + '/'
             );
-            
             chatSocket.addEventListener('message',(e)=>{
                 const data = JSON.parse(e.data)['message'];
                 //console.log("received message", data);
@@ -565,6 +570,7 @@
                             const vid_disp = document.getElementById("mainVideo");
                             vid_disp.style.display="block";
                             vid_disp.src = evidence.evidence_vid_file
+                            vid_disp.play();
                         }
                         const filelabel = document.getElementById('filelabel');
                         filelabel.innerText = `Evidence`;

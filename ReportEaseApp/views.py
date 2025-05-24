@@ -246,11 +246,11 @@ def activity_log(request,id):
             activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_citizen=user)
             activity_log.save()
             investigator = case.investigator
-            subject_investigator = "Activity Log Updated"
+            subject_investigator = "Case Update"
             html_message_investigator = f"""
             <html>
             <body>
-                <p>Activity lof of case <b>{case.case_title} </b> has been updated by {case.reporter.user_name}.</p>
+                <p>Activity log of case <b>{case.case_title} </b> has been updated by {case.reporter.user_name}.</p>
             </body>
             </html>
             """
@@ -260,11 +260,11 @@ def activity_log(request,id):
             activity_log = Activity_log(case=case,activity_title=activity_name,activity_description=activity_description,uploaded_by_investigator=user)
             activity_log.save()
             citizen = case.reporter
-            subject = "Investigator Assigned"
+            subject = "Case update"
             html_message = f"""
             <html>
             <body>
-                <p>Activity lof of case <b>{case.case_title} </b> has been updated by {case.investigator.user_name}.</p>
+                <p>Activity log of case <b>{case.case_title} </b> has been updated by {case.investigator.user_name}.</p>
             </body>
             </html>
             """
@@ -535,3 +535,23 @@ def get_chat_messages(request, case_id):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+def mark_messages_read(request, case_id):
+    try:
+        # user_id = request.session.get('user_id')
+        user_type = request.session.get('user_type')
+        case = Case.objects.get(case_id=case_id)
+        messages = None
+        
+        if user_type == 'Citizen':
+            messages = Message.objects.filter(case=case, sender_investigator = case.investigator)
+            for message in messages:
+                message.is_read = True
+                message.save()
+        elif user_type == 'Investigator':
+            messages = Message.objects.filter(case=case, sender_citizen = case.reporter)
+            for message in messages:
+                message.is_read = True
+                message.save()    
+        return JsonResponse({"status":"success"})
+    except:
+        return JsonResponse({"status":"error"})
