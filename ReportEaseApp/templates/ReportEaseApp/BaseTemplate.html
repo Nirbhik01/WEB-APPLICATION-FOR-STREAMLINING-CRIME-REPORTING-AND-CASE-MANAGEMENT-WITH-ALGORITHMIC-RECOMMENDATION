@@ -40,10 +40,12 @@
                             <a href="{%url 'ReportEaseApp:ProfilePage'%}"
                                 class="block px-4 py-2  hover:bg-cool-gray">Profile</a>
                         </li>
-                        <li class="">
-                            <button id="dropdownNotification" class="w-full block px-4 py-2 text-left hover:bg-cool-gray relative"
+                        <li class="flex">
+                            <button id="dropdownNotification"
+                                class="w-full block px-4 py-2 text-left hover:bg-cool-gray relative"
                                 onclick="notificationHandler()">
                                 Notifications
+                                <span id="notification_numbers" class="hidden bg-dark-red text-white font semibold p-1 box-border rounded-md">0</span>
                             </button>
                         </li>
                         <li class="">
@@ -64,10 +66,12 @@
                                     aria-current="page">Home</a>
                             </li>
                             <li>
-                                <button id="normalNotification" class="text-white hover:underline relative" onclick="notificationHandler()">
+                                <button id="normalNotification" class="text-white hover:underline relative"
+                                    onclick="notificationHandler()">
                                     Notifications
                                 </button>
-                                <span id="notification_numbers" class="hidden bg-dark-red text-white font semibold p-1 h-1 box-border rounded-md">0</span>
+                                <span id="notification_numbers"
+                                    class="hidden bg-dark-red text-white font semibold p-1 h-1 box-border rounded-md"></span>
                             </li>
                             <li>
                                 <button class="text-white hover:underline" data-drawer-target="drawer-right-example"
@@ -248,38 +252,81 @@
 
         normalNotification.addEventListener("click", fetchNotifications);
         dropdownNotification.addEventListener("click", fetchNotifications);
-        
-        function fetchNotifications(){
+        function fetchNotifications() {
             fetch(`/notifications/`).then(response => response.json()).then(data => {
-                console.log(data.notifications);
-                notifications_list = data.notifications;
-                notifications_list.forEach(notification => {
-                    let notificationContainer = document.getElementById("notification-container");
-                    let notificationElement = document.createElement("div");
-                    notificationElement.classList.add("p-3", "mt-4", "bg-white", "rounded", "flex");
-                    notificationElement.innerHTML = `
-                        <div tabindex="0" aria-label="post icon" role="img"
-                            class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4.30325 12.6667L1.33325 15V2.66667C1.33325 2.48986 1.40349 2.32029 1.52851 2.19526C1.65354 2.07024 1.82311 2 1.99992 2H13.9999C14.1767 2 14.3463 2.07024 14.4713 2.19526C14.5963 2.32029 14.6666 2.48986 14.6666 2.66667V12C14.6666 12.1768 14.5963 12.3464 14.4713 12.4714C14.3463 12.5964 14.1767 12.6667 13.9999 12.6667H4.30325ZM5.33325 6.66667V8H10.6666V6.66667H5.33325Z"
-                                    fill="#95A5A6" />
-                            </svg>
-                        </div>
-                        <div class="pl-3">
-                            <p tabindex="0" class="focus:outline-none text-sm leading-none">${notification}</p>
-                        </div>
+                const notifications = data.notifications;
+                const notificationContainer = document.getElementById("notification-container");
+                notificationContainer.innerHTML = ""; // Clear previous
 
-                    `;
-                    notificationContainer.appendChild(notificationElement);
+                const today = new Date().toISOString().split("T")[0];
+                let todaySection = createNotificationSection("Today");
+                let earlierSection = createNotificationSection("Earlier");
 
+                notifications.forEach(([message, timestamp]) => {
+                    const notifDate = new Date(timestamp);
+                    const notifDateString = notifDate.toISOString().split("T")[0];
+                    const timeElement = (notifDateString === today)
+                        ? formatRelativeTime(notifDate)
+                        : notifDate.toLocaleString();
+
+                    const notificationElement = createNotificationElement(message, timeElement);
+
+                    if (notifDateString === today) {
+                        todaySection.appendChild(notificationElement);
+                    } else {
+                        earlierSection.appendChild(notificationElement);
+                    }
                 });
 
+                if (todaySection.children.length > 1) notificationContainer.appendChild(todaySection);
+                if (earlierSection.children.length > 1) notificationContainer.appendChild(earlierSection);
             });
         }
 
+        function createNotificationSection(title) {
+            const section = document.createElement("div");
+            const header = document.createElement("h2");
+            header.textContent = title;
+            header.classList.add("text-gray-600", "text-lg", "font-semibold", "mt-4", "mb-2");
+            section.appendChild(header);
+            return section;
+        }
+
+        function createNotificationElement(message, timeText) {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("p-3", "mt-2", "bg-white", "rounded", "flex", "items-start", "justify-between");
+
+            wrapper.innerHTML = `
+        <div class="flex">
+            <div tabindex="0" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.30325 12.6667L1.33325 15V2.66667C1.33325 2.48986 1.40349 2.32029 1.52851 2.19526C1.65354 2.07024 1.82311 2 1.99992 2H13.9999C14.1767 2 14.3463 2.07024 14.4713 2.19526C14.5963 2.32029 14.6666 2.48986 14.6666 2.66667V12C14.6666 12.1768 14.5963 12.3464 14.4713 12.4714C14.3463 12.5964 14.1767 12.6667 13.9999 12.6667H4.30325ZM5.33325 6.66667V8H10.6666V6.66667H5.33325Z" fill="#95A5A6" />
+                </svg>
+            </div>
+            <div class="pl-3">
+                <p class="text-sm leading-none">${message}</p>
+                <div class="text-xs text-gray-400 pt-2">${timeText}</div>
+            </div>
+        </div>
         
+    `;
+            return wrapper;
+        }
+
+        function formatRelativeTime(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+
+            if (diffMins < 1)
+                return "Just now";
+            if (diffMins < 60) return `${diffMins}m ago`;
+            const diffHours = Math.floor(diffMins / 60);
+            return `${diffHours}h ago`;
+        }
+
+
+
         function toggleDropdown(dropdownId) {
             const dropdown = document.getElementById(dropdownId);
             if (!dropdown) return; // Exit if dropdown is not found
@@ -312,16 +359,19 @@
                 });
             }
             fetchNotificationCount();
-            
+
         });
-        function fetchNotificationCount(){
+        function fetchNotificationCount() {
             fetch(`/fetchnotificationcount/`).then(response => response.json()).then(data => {
                 if (data.notification_count > 0) {
-                    document.getElementById("notification_numbers").classList.remove("hidden");
-                    document.getElementById("notification_numbers").innerHTML = data.notification_count;
+                    document.querySelectorAll("#notification_numbers")[0].classList.remove("hidden");
+                    document.querySelectorAll("#notification_numbers")[1].classList.remove("hidden");
+                    document.querySelectorAll("#notification_numbers")[0].innerHTML = data.notification_count;
+                    document.querySelectorAll("#notification_numbers")[1].innerHTML = data.notification_count;
                 }
-                else{
-                    document.getElementById("notification_numbers").classList.add("hidden");
+                else {
+                    document.querySelectorAll("#notification_numbers")[0].classList.add("hidden");
+                    document.querySelectorAll("#notification_numbers")[1].classList.add("hidden");
                 }
             });
         }
