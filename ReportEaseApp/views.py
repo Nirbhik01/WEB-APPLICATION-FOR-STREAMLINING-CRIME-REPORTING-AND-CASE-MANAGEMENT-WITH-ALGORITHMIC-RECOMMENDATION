@@ -8,14 +8,14 @@ from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigato
 from chat.models import Message
 from django.db.models import Count,Q
 from datetime import datetime, timedelta
-import os
+
 from django.conf import settings
 
 from django.http import HttpResponse, Http404
 from ReportEase.encryption import decrypt_file
 
 from Investigator.views import send_case_notification_email
-
+from .models import Notification
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -555,3 +555,51 @@ def mark_messages_read(request, case_id):
         return JsonResponse({"status":"success"})
     except:
         return JsonResponse({"status":"error"})
+
+def notification_view(request):
+    user_type = request.session.get("user_type")
+    user_id = request.session.get("user_id")
+
+    notifications = []
+
+    if user_type == "Citizen":
+        user = Ct.objects.get(user_id=user_id)
+        notifications_query = Notification.objects.filter(
+            belongs_to_citizen=user
+        ).order_by('-timestamp')
+        for notification in notifications_query:
+            notifications.append([notification.message,notification.timestamp])
+        # Mark as read
+        Notification.objects.filter(
+            belongs_to_citizen=user,
+            status="UNREAD"
+        ).update(status="READ")
+        
+    elif user_type == "Investigator":
+        user = Iv.objects.get(user_id=user_id)
+        notifications_query = Notification.objects.filter(
+            belongs_to_investigator=user
+        ).order_by('-timestamp')
+        for notification in notifications_query:
+            notifications.append([notification.message,notification.timestamp])
+        # Mark as read
+        Notification.objects.filter(
+            belongs_to_investigator=user,
+            status="UNREAD"
+        ).update(status="READ")
+    print("notification-------------",notifications)
+    return JsonResponse({"notifications":notifications})
+
+def fetch_number_of_notifications(request):
+    user_id = request.session.get("user_id")
+    user_type = request.session.get("user_type")
+    user = None
+    if user_type == 'Citizen':
+        user = Ct.objects.get(user_id=user_id)
+        notifications = Notification.objects.filter(belongs_to_citizen=user,status="UNREAD").count()
+        return JsonResponse({"notification_count":notifications})
+    elif user_type == "Investigator":
+        user = Ct.objects.get(user_id=user_id)
+        notifications = Notification.objects.filter(belongs_to_investigator=user,status="UNREAD").count()
+        return JsonResponse({"notification_count":notifications})
+    return JsonResponse({"notification_count":0})

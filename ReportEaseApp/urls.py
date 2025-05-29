@@ -33,7 +33,8 @@ urlpatterns = [
     path("citizenship_photo/<int:citizenship_id>/", serve_decrypted_citizenship_photo, name="serve_decrypted_citizenship_photo"),
     path("recent_photo/<int:user_id>/", serve_decrypted_recent_photo, name="serve_decrypted_recent_photo"),
     path('chatmessages/<int:case_id>/', get_chat_messages, name='GetChatMessages'),
-    path('mark_messages_read/<int:case_id>/', mark_messages_read, name='MarkMessagesRead'),
+    path('notifications/', notification_view, name='Notifications'),
+    path('fetchnotificationcount/', fetch_number_of_notifications,name="FetchNotificationCount"),
 ]
 
 # if settings.DEBUG:  # Serve media files only in development
