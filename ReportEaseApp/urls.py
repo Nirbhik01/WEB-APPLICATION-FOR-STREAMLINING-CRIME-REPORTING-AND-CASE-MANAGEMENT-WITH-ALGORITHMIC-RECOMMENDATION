@@ -35,6 +35,7 @@ urlpatterns = [
     path('chatmessages/<int:case_id>/', get_chat_messages, name='GetChatMessages'),
     path('notifications/', notification_view, name='Notifications'),
     path('fetchnotificationcount/', fetch_number_of_notifications,name="FetchNotificationCount"),
+    path('mark_messages_read/<int:case_id>/',mark_messages_read,name = "MarkMessagesRead")
 ]
 
 # if settings.DEBUG:  # Serve media files only in development

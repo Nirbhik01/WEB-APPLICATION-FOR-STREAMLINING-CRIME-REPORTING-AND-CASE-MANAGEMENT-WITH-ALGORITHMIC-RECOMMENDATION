@@ -520,7 +520,8 @@ def get_chat_messages(request, case_id):
         messages_data = []
         for msg in messages:
             message_data = {
-                'content': msg.content,
+                'content': msg.image.url if msg.message_type == 'image' else msg.content,
+                'message_type': msg.message_type,
                 'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
                 'is_read': msg.is_read,
                 'sender_type': 'Citizen' if msg.sender_citizen else 'Investigator',
@@ -537,7 +538,7 @@ def get_chat_messages(request, case_id):
 
 def mark_messages_read(request, case_id):
     try:
-        # user_id = request.session.get('user_id')
+        user_id = request.session.get('user_id')
         user_type = request.session.get('user_type')
         case = Case.objects.get(case_id=case_id)
         messages = None

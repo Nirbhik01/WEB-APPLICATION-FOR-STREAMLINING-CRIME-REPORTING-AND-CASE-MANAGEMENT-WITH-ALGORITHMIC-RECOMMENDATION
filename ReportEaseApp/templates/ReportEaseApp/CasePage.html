@@ -246,7 +246,7 @@
     <div id="chat-container" class="hidden fixed bottom-16 right-4 w-72 sm:w-80 md:w-96 rounded-lg">
         <div class="bg-white shadow-md rounded-lg max-w-md w-full">
             <div class="p-4 border-b bg-dark-blue text-white rounded-t-lg flex justify-between items-center">
-                <p class="text-lg font-semibold">Investigator Name</p>
+                <p class="text-lg font-semibold">Inbox</p>
                 <button id="close-chat"
                     class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -258,17 +258,16 @@
             </div>
             <div id="chatbox" class="p-4 h-80 bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
                 <!-- Chat messages will be displayed here -->
-                <div class="mb-2 text-right">
-                    <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">hello</p>
-                </div>
-                <div class="mb-2">
-                    <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">This is a response from the
-                        chatbot.</p>
-                </div>
             </div>
             <div class="p-4 border-t bg-light-gray flex">
+                <input type="file" id="image-upload" accept="image/*" class="hidden">
+                <button id="image-button" class="bg-cool-gray text-white px-3 py-2 rounded-l-md hover:bg-blue-600 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                    </svg>
+                </button>
                 <input id="user-input" type="text" placeholder="Type a message"
-                    class="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-0 focus:border-black ">
+                    class="w-full px-3 py-2 border focus:outline-none focus:ring-0 focus:border-black">
                 <button id="send-button"
                     class="bg-cool-gray text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
             </div>
@@ -324,7 +323,7 @@
         }
         function mark_as_read(){
             fetch(`/mark_messages_read/${firId}/`).then(response=> response.json()).then(data => {
-                console.log(data);
+                //console.log(data);
             });
         }
         
@@ -332,7 +331,8 @@
         openChatButton.addEventListener("click", function(e){
             toggleChatbox();
             loadChatHistory();
-            mark_as_read();
+            let y = mark_as_read();
+            // console.log(y);
             chatSocket = new WebSocket(
                 'ws://' + window.location.host + '/casepage/' + firId + '/'
             );
@@ -341,24 +341,43 @@
                 //console.log("received message", data);
                 let sender = data['sender'];
                 let content = data['message'];
+                let messageType = data['message_type'] || 'text';
+                let sender_type = data['sender_type'];
                 //console.log(sender, content);
-                if (sender == document.getElementById("user_id").value){
+                if ((sender == document.getElementById("user_id").value) && (sender_type == document.getElementById("user_type").value)){
                     const messagesContainer = document.getElementById('chatbox');
                     const messageDiv = document.createElement('div');
-                    messageDiv.className = `mb-2 text-right`;
-                    messageDiv.innerHTML = `
-                        <p class="bg-dark-blue text-white rounded-lg py-2 px-4 inline-block">${content}</p>
-                    `;
+                    const isSender = data.sender_type == document.getElementById("user_type").value;
+                    messageDiv.className = `mb-2 text-right `;
+                    let messageContent = '';
+                    if (messageType == 'image') {
+                        messageContent = `
+                            <img src="${content}" class="float-right max-w-[70%] mb-2 rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
+                            <div class="clear-both"></div>
+                            `;
+
+                    } else {
+                        messageContent = `<p class="bg-dark-blue text-right text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                    }
+                    messageDiv.innerHTML = messageContent;
                     messagesContainer.appendChild(messageDiv);
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }
                 else{
                     const messagesContainer = document.getElementById('chatbox');
                     const messageDiv = document.createElement('div');
-                    messageDiv.className = `mb-2 text-left`;
-                    messageDiv.innerHTML = `
-                        <p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${content}</p>
-                    `;
+                    messageDiv.className = `mb-2 text-left `;
+                    const isSender = data.sender_type == document.getElementById("user_type").value;
+                    let messageContent = '';
+                    if (messageType == 'image') {
+
+                        messageContent = `<img src="${content}" class="float-left max-w-[70%] mb-2 rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
+                                            <div class="clear-both"></div>
+                        `;
+                    } else {
+                        messageContent = `<p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                    }
+                    messageDiv.innerHTML = messageContent;
                     messagesContainer.appendChild(messageDiv);
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 }
@@ -382,14 +401,14 @@
                 chatSocket.send(
                     JSON.stringify({
                         message: userMessage,
-                        room_name : firId,
-                        sender : document.getElementById("user_id").value,
-                        sender_type : document.getElementById("user_type").value,
+                        message_type: 'text',
+                        room_name: firId,
+                        sender: document.getElementById("user_id").value,
+                        sender_type: document.getElementById("user_type").value,
                     })
                 );
                 userInput.value = "";
             }
-
         });
         
         const caseId = window.location.pathname.split('/').filter(Boolean).pop();
@@ -398,12 +417,21 @@
         function displayMessage(data) {
             const messagesContainer = document.getElementById('chatbox');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `mb-2 ${(data.sender_type == document.getElementById("user_type").value) ? 'text-right' : 'text-left'}`;
+            messageDiv.className = `mb-2 flex  ${(data.sender_type == document.getElementById("user_type").value) ? 'justify-end' : 'justify-start'}`;
+            const isSender = data.sender_type == document.getElementById("user_type").value;
+            let messageContent = '';
+            console.log("data ho yo ----------", data);
+            if (data.message_type == 'image') {
+                messageContent = `
+                                    <div class="inline-block max-w-[70%] ${isSender ? 'float-right' : 'float-left'} clear-both">
+                                        <img src="${data.content}" class="rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
+                                    </div>
+                                `;
+            } else {
+                messageContent = `<p class="${(data.sender_type == document.getElementById("user_type").value) ? 'bg-dark-blue text-right' : 'bg-cool-gray text-left'} text-white rounded-lg py-2 px-4 inline-block">${data.content}</p>`;
+            }
             
-            messageDiv.innerHTML = `
-                <p class=" ${(data.sender_type == document.getElementById("user_type").value) ? 'bg-dark-blue' : 'bg-cool-gray'} text-white rounded-lg py-2 px-4 inline-block">${data.content}</p>
-                
-            `;
+            messageDiv.innerHTML = messageContent;
             messagesContainer.appendChild(messageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
@@ -412,7 +440,7 @@
             fetch(`/chatmessages/${caseId}/`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+                    console.log("load data ho yo ----------------", data);
                     const messagesContainer = document.getElementById('chatbox');
                     messagesContainer.innerHTML = '';
                     data.messages.forEach(message => displayMessage(message));
@@ -519,7 +547,7 @@
                 }
             })
             .then(data => {
-                console.log(data); // Check the data structure in the console
+                //console.log(data); // Check the data structure in the console
                 document.getElementById('title').innerText = data.case_data.case_title;
                 document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
                 if(data.case_data.reporter){
@@ -667,7 +695,7 @@
                     }
                 }
                 else if (data.status && (data.status == "solved")){
-                    console.log("solved");
+                    //console.log("solved");
                     arr.forEach(data=>{
                         document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
                         document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
@@ -680,7 +708,7 @@
                     document.getElementById("deleteButton").classList.add("hidden");
                 }
                 else if (data.status && (data.status=="terminated_but_unsolved")){
-                    console.log("terminated_but_unsolved");
+                    //console.log("terminated_but_unsolved");
                     for (let i = 0 ; i < 5 ; i++){
                         if (i<=2){
                             document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
@@ -701,7 +729,7 @@
             });
 
             fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{
-                console.log(data);
+                //console.log(data);
                 const list = document.getElementById('activity_list');
                 data.forEach(activity => {
                     const li = document.createElement('li');
@@ -768,6 +796,36 @@
             });
         }
 
+        // Add image upload handling
+        const imageButton = document.getElementById("image-button");
+        const imageUpload = document.getElementById("image-upload");
+
+        imageButton.addEventListener("click", () => {
+            imageUpload.click();
+        });
+
+        imageUpload.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const base64Image = e.target.result;
+                    if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                        chatSocket.send(
+                            JSON.stringify({
+                                message: base64Image,
+                                message_type: 'image',
+                                room_name: firId,
+                                sender: document.getElementById("user_id").value,
+                                sender_type: document.getElementById("user_type").value,
+                            })
+                        );
+                    }
+                };
+                reader.readAsDataURL(file);
+                imageUpload.value = ''; // Reset the input
+            }
+        });
 
     </script>
     {%endblock%}
