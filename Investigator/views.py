@@ -181,11 +181,9 @@ def send_case_notification_email(to_email, user_name, subject, html_message):
             print("Email sending failed:", str(e))
 
     threading.Thread(target=send).start() 
-    
 
 def cosine_sim(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-
 
 def case_investigator_match(case_keywords_dict,investigator_keywords_dict):
     # Compute embeddings for all keywords once

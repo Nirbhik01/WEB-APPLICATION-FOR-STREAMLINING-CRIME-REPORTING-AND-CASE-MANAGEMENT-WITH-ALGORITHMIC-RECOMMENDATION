@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body class="">
     {% block main_content %}
 
     <!-- i was unable to override/modify elements in parent template using include so using include in base template because nav bar shouldnt be changed anywhere-->
@@ -39,13 +39,11 @@
         </div>
     </div>
 
-    <div class=" bg-gradient-to-b from-dark-blue  w-full min-h-screen px-6 py-6">
-        
-
+    <div class="bg-gradient-to-b from-gray to-white w-full min-h-screen px-6 py-6">
         <!-- block fields is inside the form in register page so to identify which just include a hidden input tag with a value "crime" form -->
         <div class="text-center sm:p-6 p-4">
             {%block topic%}
-            <h4 class="text-2xl text-white md:text-3xl font-bold mt-3">Report Incident</h4>
+            <h4 class="text-2xl text-black md:text-3xl font-bold mt-3">Report Incident</h4>
             {%endblock%}
         </div>
         <form action="" method="post" id="register_form" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-6 rounded-md transform duration-500" enctype="multipart/form-data">
@@ -98,7 +96,7 @@
                 <div>
                     <label class="text-gray-900 text-sm  mb-2 block">Provide Evidence</label>
                     <input type="file" name="crime_evidence" accept="image/*,video/*" multiple
-                        class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
+                        class=" w-full text-sm  px-4 rounded focus:ring-0 border  focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all">
                 </div>
                 <div>
                     <label class="text-gray-900 text-sm  mb-2 block">Describe the crime</label>
@@ -110,7 +108,7 @@
                 <div class="">
                     <label class="text-gray-900 text-sm  mb-2 block">Upload your Citizenship</label>
                     <input type="file" name="citizenship" required multiple
-                        class=" w-full text-sm  px-4 py-[0.45rem] rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
+                        class=" w-full text-sm  px-4  rounded focus:ring-0 border focus:border-none outline-0 box-border h-10 selection:ring-0 transition-all"
                         accept="image/*">
                 </div>
                 <div class="">

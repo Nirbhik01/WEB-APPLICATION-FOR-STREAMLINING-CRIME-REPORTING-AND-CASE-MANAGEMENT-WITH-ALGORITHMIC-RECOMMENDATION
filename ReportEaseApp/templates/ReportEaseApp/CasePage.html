@@ -14,6 +14,21 @@
 <body class="transform duration-500">
     {%block main_content%}
     <div id="main_content" class="mt-10 px-5 md:px-5 md:mt-14">
+        <div id="toast-success" class="hidden z-30 fixed mt-5 left-[50%] -translate-x-[50%] items-center w-full max-w-xs p-4 mb-4  bg-white rounded-lg shadow-md  " role="alert">
+                <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-dark-green bg-green-100 rounded-lg">
+                    <svg class="w-5 h-5 text-dark_green" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                    </svg>
+                    <span class="sr-only">Check icon</span>
+                </div>
+                <div id='toast-message' class="ms-3 text-sm text-black font-normal text-dark_green"></div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-dark_green  rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:   dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+        </div>
         {%if True%}
         <div class="px-5 md:px-0 md:mx-7 md:border-t ">
             <ol
@@ -45,7 +60,8 @@
                                 class="hidden md:inline"><br></span> Assigning</h3>
                     </div>
                 </li>
-                <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block " id="Investigation_Ongoing">
+                <li class=" group flex items-center bg-white mb-10 -ml-3 md:mb-0 md:ml-0 md:block "
+                    id="Investigation_Ongoing">
 
                     <span
                         class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
@@ -54,13 +70,13 @@
                         <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
                                 class="hidden md:inline"><br></span> Ongoing</h3>
                     </div>
-                    
+
 
                 </li>
                 <li class="items-center flex -ml-3 md:ml-0 bg-white md:block" id="Investigation_Termination">
                     <span
                         class="  bg-cool-gray flex items-center justify-center w-6 h-6 md:w-8 md:h-8  bg-gray-100 rounded-full -start-3 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700 md:mx-auto">
-                        
+
                     </span>
                     <div class="mx-3 md:mx-0">
                         <h3 class="font-medium leading-tight text-wrap md:mt-2">Investigation<span
@@ -77,19 +93,29 @@
                 <div class="w-full md:w-5/12 min-w-72 rounded-lg bg-light-gray h-auto md:mr-5  p-5 self-start transform duration-500"
                     onload="getelementdetail(this)">
                     <h1 class="text-2xl font-semibold mb-5">Evidences: </h1>
-                    <img src=""
-                        style="display: none;" alt="Product"
+                    <img src="" style="display: none;" alt="Product"
                         class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
                         id="mainImage">
-    
-                    <video preload="metadata" src="" autoplay controls
-                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white" style="display: none;" id="mainVideo"></video>
+
+                    <video preload="metadata" src="" controls playsinline loop muted
+                        class="object-contain w-full md:h-80 sm:h-72 h-64 border border-gray rounded-lg shadow-md mb-5 bg-white"
+                        style="display: none;" id="mainVideo">
+                        <source type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- <button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-dark-blue text-white rounded-full p-2 hover:bg-dark-blue/90 transition-colors" onclick="playVideo()" style="display: none;" id="playButton">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </button> -->
                     <p id="filelabel" class="self-center my-5 font-medium text-center"></p>
-                    <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden transform duration-500" id="imagelist">
-                        
+                    <div class="flex gap-5 overflow-x-scroll [&::-webkit-scrollbar]:hidden transform duration-500"
+                        id="imagelist">
+
                     </div>
                 </div>
-    
+
                 <!-- Fir report Details -->
                 <div class="w-full mt-10 md:my-0 md:pl-5 transform duration-500">
                     <div class=" rounded-lg p-5 bg-light-gray transform duration-500">
@@ -97,8 +123,7 @@
                         <p class="mb-7 text-sm" id="upload_date"></p>
                         <div class="flex mb-5 items-center gap-5 ">
                             <button>
-                                <img  id="reporter_image"
-                                    src="">
+                                <img id="reporter_image" src="">
                             </button>
                             <div>
                                 <p class="text-lg mr-2" id="reporter"></p>
@@ -106,573 +131,791 @@
                             </div>
                         </div>
                         <p class="text-lg font-medium " id="">Description : </p>
-                        <p class="text-gray-700 mb-7" id="description"></p>
-    
+                        <p class=" mb-7" id="description"></p>
+
                         <div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Date of Crime :</h3><p id="crime_date"></p>
+                                <h3 class="text-md font-semibold mb-2">Date of Crime :</h3>
+                                <p id="crime_date"></p>
                             </div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Time of Crime :</h3><p id="crime_time">12 : 53 PM</p>
+                                <h3 class="text-md font-semibold mb-2">Time of Crime :</h3>
+                                <p id="crime_time">12 : 53 PM</p>
                             </div>
                             <div class="flex gap-2">
-                                <h3 class="text-md font-semibold mb-2">Location of Crime : </h3> <p id="crime_location"></p> <a href="" id="crime_link" target=”_blank”> <u class="text-cool-gray" >click for exact location</u></a>
+                                <h3 class="text-md font-semibold mb-2">Location of Crime : </h3>
+                                <p id="crime_location"></p> <a href="" id="crime_link" target=”_blank”> <u
+                                        class="text-cool-gray">click for exact location</u></a>
                             </div>
-                            
+
                         </div>
                         {%if user_type == "Investigator"%}
-                            <div class="md:flex mt-10 md:gap-5 transform duration-500">
-                                <button type='button' id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="block rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark As Terminated</button>
-                            </div>
-                        {%endif%}
-                        
-                        
-                        <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
+                        <div class="md:flex mt-10 md:gap-5 transform duration-500">
+                            <button type='button' id="deleteButton" data-modal-target="deleteModal"
+                                data-modal-toggle="deleteModal"
+                                class="block rounded-lg px-12 py-3 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium">Mark
+                                As Terminated</button>
+                            <button data-modal-target="payment-modal" data-modal-toggle="payment-modal"
+                                id="add_payment_button"
+                                class="block rounded-lg px-12 py-3 md:mt-0 mt-5 bg-dark-blue hover:shadow-md hover:scale-[1.02] hover:duration-[.2s] text-white font-medium"
+                                type="button">
+                                Introduce payment
+                            </button>
+
+                            {%endif%}
+
+                            <p id="invalid" class="mt-5 text-sm text-dark-red"></p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div id="activity_log" style="display: block;"
+                class=" mx-0 md:mx-0 my-10 bg-light-gray p-5 rounded-xl max-h-screen overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500">
+                <div id="log">
+                    <div class="flex justify-between transform duration-500">
+                        <h1 class="text-2xl font-medium">Activity Log</h1>
+
+                        <!-- true if the user is police -->
+
+                        <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" id="add_activity_button"
+                            class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
+                            type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" class="size-6 text-cool-gray transform duration-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        </button>
+
+                    </div>
+                    <ul id="activity_list" role="list" class="divide-y mt-3 divide-gray-100 transform duration-500">
+
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main modal -->
+            <div id="crud-modal" tabindex="-1" aria-hidden="true"
+                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full md:inset-0  max-h-full bg-black bg-opacity-60 transform duration-500">
+                <div class="relative p-4 w-full max-w-md max-h-full transform duration-500">
+                    <!-- Modal content -->
+                    <div class="relative bg-gray  rounded-lg shadow-sm dark:bg-gray-700 transform duration-500">
+                        <!-- Modal header -->
+                        <div
+                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                            <h3 class="text-lg font-semibold ">
+                                Add Activity
+                            </h3>
+                            <button type="button"
+                                class="  bg-transparent hover:bg-gray-200 hover:rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600"
+                                data-modal-toggle="crud-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <form class="p-4 md:p-5" action="" method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                <div class="col-span-2">
+                                    <label for="name" class="block mb-2 text-sm font-medium  ">Activity Topic</label>
+                                    <input type="text" name="activity_name" id="activity_name"
+                                        class="bg-gray-50 border   text-sm rounded-lg 0 block w-full p-2.5 focus:ring-0  focus:border-black"
+                                        placeholder="for eg:- Evidence Collection" required="">
+                                </div>
+
+                                <div class="col-span-2">
+                                    <label for="description" class="block mb-2 text-sm font-medium  ">Activity
+                                        Description</label>
+                                    <textarea id="activity_description" rows="4" name="activity_description"
+                                        class="block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border focus:border-black focus:ring-0 "
+                                        placeholder="for eg:- cctv footage of location was collected and was inconclusive"></textarea>
+                                </div>
+
+                                <div class="col-span-2">
+                                    <label for="description" class="block mb-2 text-sm font-medium  ">File
+                                    </label>
+                                    <input id="activity_file" rows="4" type="file" name="activity_file" multiple
+                                        accept='video/*,image/*'
+                                        class="block w-full text-sm  bg-white rounded-lg border focus:border-black focus:ring-0 "
+                                        />
+                                </div>
+
+                            </div>
+                            <button type="submit" id="activity_form_submit" data-modal-toggle="crud-modal"
+                                class="w-full text-white  items-center bg-cool-gray focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                Add Activity
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="payment-modal" tabindex="-1" aria-hidden="true"
+                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full md:inset-0  max-h-full bg-black bg-opacity-60 transform duration-500">
+                <div class="relative p-4 w-full max-w-md max-h-full transform duration-500">
+                    <!-- Modal content -->
+                    <div class="relative bg-gray  rounded-lg shadow-sm dark:bg-gray-700 transform duration-500">
+                        <!-- Modal header -->
+                        <div
+                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                            <h3 class="text-lg font-semibold ">
+                                Add Payment
+                            </h3>
+                            <button type="button" id='close_payment_modal'
+                                class="  bg-transparent hover:bg-gray-200 hover:rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600"
+                                data-modal-toggle="payment-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <form class="p-4 md:p-5" action="" id='payment_form' method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                <div class="col-span-2">
+                                    <label for="name" class="block mb-2 text-sm font-medium  ">Payment Description</label>
+                                    <input type="text" name="payment_name" id="payment_name"
+                                        class="bg-gray-50 border text-sm rounded-lg 0 block w-full p-2.5 focus:ring-0  focus:border-black"
+                                        placeholder="for eg:- Tax fee " required>
+                                </div>
+
+                                <div class="col-span-2">
+                                    <label for="description" class="block mb-2 text-sm font-medium">Amount</label>
+                                    <input type="number" id="payment_amount" rows="4" name="payment_amount" required
+                                        class="block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border focus:border-black focus:ring-0 "
+                                        placeholder="for eg:- 10,20,300"/>
+                                </div>
+
+                            </div>
+                            <button type="submit" id="payment_form_submit" data-modal-toggle=""
+                                class="w-full text-white  items-center bg-cool-gray focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                Add Payment
+                            </button>
+                            <p id="invalid-payment" class="mt-5 text-sm text-dark-red"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        <!-- component -->
+        <div id="chat_container_logo" class="flex group fixed bottom-0 right-0 mb-10 md:mr-10 items-center mr-5">
+            <div
+                class="  hidden group-hover:flex border border-gray h-10 rounded-lg px-2 items-center text-sm mr-3 bg-light-gray  font-medium  ">
+                <p> chat with your investigator</p>
+            </div>
+            <button id="open-chat"
+                class="bg-dark-blue p-1 text-white  rounded-full hover:bg-blue-600 transition duration-100 flex items-center ">
+                <svg class="w-10 h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <input type="hidden" name="" id="user_type" value="{{user_type}}">
+            <input type="hidden" name="" id="user_id" value="{{logged_in_user.user_id}}">
         </div>
-    
-    
-        <!-- carousel -->
-    
-    
-        <!-- end carousel -->
-
-        <div id="activity_log" style="display: block;"
-            class=" mx-0 md:mx-5 my-10 bg-light-gray p-5 rounded-xl max-h-screen overflow-y-scroll [&::-webkit-scrollbar]:hidden transform duration-500">
-            <div id="log">
-                <div class="flex justify-between transform duration-500">
-                    <h1 class="text-2xl font-medium">Activity Log</h1>
-
-                    <!-- true if the user is police -->
-                    
-                    <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" id="add_activity_button" 
-                        class="block text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center hover:scale-[1.2] transform duration-500"
-                        type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="size-6 text-cool-gray transform duration-500">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        <div id="chat-container" class="hidden fixed bottom-16 right-4 w-72 sm:w-80 md:w-96 rounded-lg">
+            <div class="bg-white shadow-md rounded-lg max-w-md w-full">
+                <div class="p-4 border-b bg-dark-blue text-white rounded-t-lg flex justify-between items-center">
+                    <p class="text-lg font-semibold">Inbox</p>
+                    <button id="close-chat"
+                        class="focus:outline-none ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12">
+                            </path>
                         </svg>
                     </button>
-                    
                 </div>
-                <ul id="activity_list" role="list" class="divide-y mt-3 divide-gray-100 transform duration-500">
-                    
-                </ul>
+                <div id="chatbox" class="p-4 h-80 bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
+                    <!-- Chat messages will be displayed here -->
+                </div>
+                <div class="p-4 border-t bg-light-gray flex">
+                    <input type="file" id="image-upload" accept="image/*" class="hidden">
+                    <button id="image-button"
+                        class="bg-cool-gray text-white px-3 py-2 rounded-l-md hover:bg-blue-600 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <input id="user-input" type="text" placeholder="Type a message"
+                        class="w-full px-3 py-2 border focus:outline-none focus:ring-0 focus:border-black">
+                    <button id="send-button"
+                        class="bg-cool-gray text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
+                </div>
             </div>
         </div>
-        
-        <!-- Main modal -->
-        <div id="crud-modal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full md:inset-0  max-h-full bg-black bg-opacity-60 transform duration-500">
-            <div class="relative p-4 w-full max-w-md max-h-full transform duration-500">
+
+        <div id="deleteModal" tabindex="-1" aria-hidden="true"
+            class="hidden bg-black bg-opacity-70 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full md:h-full">
+            <div class="relative p-4 w-full max-w-md h-full bg-opacity-70 md:h-auto">
                 <!-- Modal content -->
-                <div class="relative bg-gray  rounded-lg shadow-sm dark:bg-gray-700 transform duration-500">
-                    <!-- Modal header -->
-                    <div
-                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-lg font-semibold ">
-                            Add Activity
-                        </h3>
-                        <button type="button"
-                            class="text-gray-400  bg-transparent hover:bg-gray-200 hover:rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600"
-                            data-modal-toggle="crud-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
+                <div class="relative p-4 text-center bg-white rounded-lg shadow  sm:p-5">
+                    <button type="button"
+                        class=" absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200  rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="deleteModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <p id="are_you_sure" class="mb-4  text-black">Are you sure ?
+
+                    </p>
+                    <div class="flex justify-center items-center space-x-4">
+                        <button id="no_button" type="button"
+                            class="py-2 px-3 text-sm font-medium  bg-dark-red text-white rounded-lg focus:ring-0 focus:outline-none focus:z-10">
+                            Mark Unsuccessful
+                        </button>
+                        <button id="yes_button" type="submit"
+                            class="py-2 px-3 text-sm font-medium text-center text-white bg-cool-gray rounded-lg focus:ring-0 focus:outline-none focus:z-10">
+                            Mark Successful
                         </button>
                     </div>
-                    <!-- Modal body -->
-                    <form class="p-4 md:p-5" action="" method="POST" enctype="multipart/form-data">
-                        {%csrf_token%}
-                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                        <div class="grid gap-4 mb-4 grid-cols-2">
-                            <div class="col-span-2">
-                                <label for="name" class="block mb-2 text-sm font-medium  ">Activity Topic</label>
-                                <input type="text" name="activity_name" id="activity_name"
-                                    class="bg-gray-50 border   text-sm rounded-lg 0 block w-full p-2.5 focus:ring-0  focus:border-black"
-                                    placeholder="for eg:- Evidence Collection" required="">
-                            </div>
-
-                            <div class="col-span-2">
-                                <label for="description" class="block mb-2 text-sm font-medium  ">Activity
-                                    Description</label>
-                                <textarea id="activity_description" rows="4" name="activity_description"
-                                    class="block p-2.5 w-full text-sm  bg-gray-50 rounded-lg border focus:border-black focus:ring-0 "
-                                    placeholder="for eg:- cctv footage of location was collected and was inconclusive"></textarea>
-                            </div>
-
-                            <div class="col-span-2">
-                                <label for="description" class="block mb-2 text-sm font-medium  ">File
-                                    </label>
-                                <input id="activity_file" rows="4" type="file" name="activity_file" multiple accept='video/*,image/*'
-                                    class="block p-2.5 w-full text-sm  bg-white rounded-lg border focus:border-black focus:ring-0 "
-                                    placeholder="for eg:- cctv footage of location was collected and was inconclusive"/>
-                            </div>
-
-                        </div>
-                        <button type="submit" id="activity_form_submit" data-modal-toggle="crud-modal"
-                            class="w-full text-white  items-center bg-cool-gray focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                            Add Activity
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- component -->
-    <div id="chat_container_logo" class="flex group fixed bottom-0 right-0 mb-10 md:mr-10 items-center mr-5">
-        <div
-            class="  hidden group-hover:flex border border-gray h-10 rounded-lg px-2 items-center text-sm mr-3 bg-light-gray  font-medium  ">
-            <p> chat with your investigator</p>
-        </div>
-        <button id="open-chat"
-            class="bg-dark-blue p-1 text-white  rounded-full hover:bg-blue-600 transition duration-100 flex items-center ">
-            <svg class="w-10 h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                    clip-rule="evenodd"></path>
-            </svg>
-        </button>
-        <input type="hidden" name="" id="user_type" value="{{user_type}}">
-        <input type="hidden" name="" id="user_id" value="{{logged_in_user.user_id}}">
-    </div>
-    <div id="chat-container" class="hidden fixed bottom-16 right-4 w-72 sm:w-80 md:w-96 rounded-lg">
-        <div class="bg-white shadow-md rounded-lg max-w-md w-full">
-            <div class="p-4 border-b bg-dark-blue text-white rounded-t-lg flex justify-between items-center">
-                <p class="text-lg font-semibold">Inbox</p>
-                <button id="close-chat"
-                    class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </button>
-            </div>
-            <div id="chatbox" class="p-4 h-80 bg-light-gray overflow-y-auto [&::-webkit-scrollbar]:hidden">
-                <!-- Chat messages will be displayed here -->
-            </div>
-            <div class="p-4 border-t bg-light-gray flex">
-                <input type="file" id="image-upload" accept="image/*" class="hidden">
-                <button id="image-button" class="bg-cool-gray text-white px-3 py-2 rounded-l-md hover:bg-blue-600 transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-                <input id="user-input" type="text" placeholder="Type a message"
-                    class="w-full px-3 py-2 border focus:outline-none focus:ring-0 focus:border-black">
-                <button id="send-button"
-                    class="bg-cool-gray text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="deleteModal" tabindex="-1" aria-hidden="true" class="hidden bg-black bg-opacity-70 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full bg-opacity-70 md:h-auto">
-            <!-- Modal content -->
-            <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-                <button type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <p id="are_you_sure" class="mb-4 text-gray-500 dark:text-gray-300">Are you sure ?
-                    
-                </p>
-                <div class="flex justify-center items-center space-x-4">
-                    <button id="no_button"  type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-dark-red text-white rounded-lg focus:ring-0 focus:outline-none focus:z-10">
-                        Mark Unsuccessful
-                    </button>
-                    <button id="yes_button" type="submit" class="py-2 px-3 text-sm font-medium text-center text-white bg-cool-gray rounded-lg focus:ring-0 focus:outline-none focus:z-10">
-                        Mark Successful
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
-    <script>
-         //for chat 
-        const chatbox = document.getElementById("chatbox");
-        const chatContainer = document.getElementById("chat-container");
+        <script>
+            //for chat 
+            const chatbox = document.getElementById("chatbox");
+            const chatContainer = document.getElementById("chat-container");
 
-        const userInput = document.getElementById("user-input");
-        const sendButton = document.getElementById("send-button");
-        const openChatButton = document.getElementById("open-chat");
-        const closeChatButton = document.getElementById("close-chat");
+            const userInput = document.getElementById("user-input");
+            const sendButton = document.getElementById("send-button");
+            const openChatButton = document.getElementById("open-chat");
+            const closeChatButton = document.getElementById("close-chat");
 
-        let chatSocket = null;
+            let chatSocket = null;
 
-        const pathParts = window.location.pathname.split('/');
-        const firId = parseInt(pathParts[pathParts.length - 2]);
+            const pathParts = window.location.pathname.split('/');
+            const firId = parseInt(pathParts[pathParts.length - 2]);
 
-        let isChatboxOpen = true; // Set the initial state to open
+            let isChatboxOpen = true; // Set the initial state to open
 
-        // Function to toggle the chatbox visibility
-        function toggleChatbox() {
-            chatContainer.classList.toggle("hidden");
-            isChatboxOpen = !isChatboxOpen; // Toggle the state
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-        function mark_as_read(){
-            fetch(`/mark_messages_read/${firId}/`).then(response=> response.json()).then(data => {
-                //console.log(data);
-            });
-        }
-        
-        // Add an event listener to the open chat button
-        openChatButton.addEventListener("click", function(e){
-            toggleChatbox();
-            loadChatHistory();
-            let y = mark_as_read();
-            // console.log(y);
-            chatSocket = new WebSocket(
-                'ws://' + window.location.host + '/casepage/' + firId + '/'
-            );
-            chatSocket.addEventListener('message',(e)=>{
-                const data = JSON.parse(e.data)['message'];
-                //console.log("received message", data);
-                let sender = data['sender'];
-                let content = data['message'];
-                let messageType = data['message_type'] || 'text';
-                let sender_type = data['sender_type'];
-                //console.log(sender, content);
-                if ((sender == document.getElementById("user_id").value) && (sender_type == document.getElementById("user_type").value)){
-                    const messagesContainer = document.getElementById('chatbox');
-                    const messageDiv = document.createElement('div');
-                    const isSender = data.sender_type == document.getElementById("user_type").value;
-                    messageDiv.className = `mb-2 text-right `;
-                    let messageContent = '';
-                    if (messageType == 'image') {
-                        messageContent = `
+            // Function to toggle the chatbox visibility
+            function toggleChatbox() {
+                chatContainer.classList.toggle("hidden");
+                isChatboxOpen = !isChatboxOpen; // Toggle the state
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+            function mark_as_read() {
+                fetch(`/mark_messages_read/${firId}/`).then(response => response.json()).then(data => {
+                    //console.log(data);
+                });
+            }
+
+            // Add an event listener to the open chat button
+            openChatButton.addEventListener("click", function (e) {
+                toggleChatbox();
+                loadChatHistory();
+                let y = mark_as_read();
+                // console.log(y);
+                chatSocket = new WebSocket(
+                    'ws://' + window.location.host + '/casepage/' + firId + '/'
+                );
+                chatSocket.addEventListener('message', (e) => {
+                    const data = JSON.parse(e.data)['message'];
+                    //console.log("received message", data);
+                    let sender = data['sender'];
+                    let content = data['message'];
+                    let messageType = data['message_type'] || 'text';
+                    let sender_type = data['sender_type'];
+                    //console.log(sender, content);
+                    if ((sender == document.getElementById("user_id").value) && (sender_type == document.getElementById("user_type").value)) {
+                        const messagesContainer = document.getElementById('chatbox');
+                        const messageDiv = document.createElement('div');
+                        const isSender = data.sender_type == document.getElementById("user_type").value;
+                        messageDiv.className = `mb-2 text-right `;
+                        let messageContent = '';
+                        if (messageType == 'image') {
+                            messageContent = `
                             <img src="${content}" class="float-right max-w-[70%] mb-2 rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
                             <div class="clear-both"></div>
                             `;
 
-                    } else {
-                        messageContent = `<p class="bg-dark-blue text-right text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                        } else {
+                            messageContent = `<p class="bg-dark-blue text-right text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                        }
+                        messageDiv.innerHTML = messageContent;
+                        messagesContainer.appendChild(messageDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
-                    messageDiv.innerHTML = messageContent;
-                    messagesContainer.appendChild(messageDiv);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }
-                else{
-                    const messagesContainer = document.getElementById('chatbox');
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `mb-2 text-left `;
-                    const isSender = data.sender_type == document.getElementById("user_type").value;
-                    let messageContent = '';
-                    if (messageType == 'image') {
+                    else {
+                        const messagesContainer = document.getElementById('chatbox');
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `mb-2 text-left `;
+                        const isSender = data.sender_type == document.getElementById("user_type").value;
+                        let messageContent = '';
+                        if (messageType == 'image') {
 
-                        messageContent = `<img src="${content}" class="float-left max-w-[70%] mb-2 rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
+                            messageContent = `<img src="${content}" class="float-left max-w-[70%] mb-2 rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
                                             <div class="clear-both"></div>
                         `;
-                    } else {
-                        messageContent = `<p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                        } else {
+                            messageContent = `<p class="bg-cool-gray text-white rounded-lg py-2 px-4 inline-block">${content}</p>`;
+                        }
+                        messageDiv.innerHTML = messageContent;
+                        messagesContainer.appendChild(messageDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
-                    messageDiv.innerHTML = messageContent;
-                    messagesContainer.appendChild(messageDiv);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                });
+
+            });
+
+            // Add an event listener to the close chat button
+            closeChatButton.addEventListener("click", function (e) {
+                toggleChatbox();
+                if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                    chatSocket.close();
+                }
+                chatSocket = null;
+            });
+
+            // Add an event listener to the send button
+            sendButton.addEventListener("click", function () {
+                const userMessage = userInput.value;
+                if (userMessage.trim() != "") {
+                    chatSocket.send(
+                        JSON.stringify({
+                            message: userMessage,
+                            message_type: 'text',
+                            room_name: firId,
+                            sender: document.getElementById("user_id").value,
+                            sender_type: document.getElementById("user_type").value,
+                        })
+                    );
+                    userInput.value = "";
                 }
             });
-            
-        });
 
-        // Add an event listener to the close chat button
-        closeChatButton.addEventListener("click", function (e){
-            toggleChatbox();
-            if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
-                chatSocket.close();
-            }
-            chatSocket = null;
-        });
+            const caseId = window.location.pathname.split('/').filter(Boolean).pop();
 
-        // Add an event listener to the send button
-        sendButton.addEventListener("click", function () {
-            const userMessage = userInput.value;
-            if (userMessage.trim() != "") {
-                chatSocket.send(
-                    JSON.stringify({
-                        message: userMessage,
-                        message_type: 'text',
-                        room_name: firId,
-                        sender: document.getElementById("user_id").value,
-                        sender_type: document.getElementById("user_type").value,
-                    })
-                );
-                userInput.value = "";
-            }
-        });
-        
-        const caseId = window.location.pathname.split('/').filter(Boolean).pop();
-        
-        
-        function displayMessage(data) {
-            const messagesContainer = document.getElementById('chatbox');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `mb-2 flex  ${(data.sender_type == document.getElementById("user_type").value) ? 'justify-end' : 'justify-start'}`;
-            const isSender = data.sender_type == document.getElementById("user_type").value;
-            let messageContent = '';
-            console.log("data ho yo ----------", data);
-            if (data.message_type == 'image') {
-                messageContent = `
+
+            function displayMessage(data) {
+                const messagesContainer = document.getElementById('chatbox');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `mb-2 flex  ${(data.sender_type == document.getElementById("user_type").value) ? 'justify-end' : 'justify-start'}`;
+                const isSender = data.sender_type == document.getElementById("user_type").value;
+                let messageContent = '';
+                //console.log("data ho yo ----------", data);
+                if (data.message_type == 'image') {
+                    messageContent = `
                                     <div class="inline-block max-w-[70%] ${isSender ? 'float-right' : 'float-left'} clear-both">
                                         <img src="${data.content}" class="rounded-lg cursor-pointer hover:scale-[1.01] transition-transform" onclick="window.open(this.src, '_blank')">
                                     </div>
                                 `;
-            } else {
-                messageContent = `<p class="${(data.sender_type == document.getElementById("user_type").value) ? 'bg-dark-blue text-right' : 'bg-cool-gray text-left'} text-white rounded-lg py-2 px-4 inline-block">${data.content}</p>`;
+                } else {
+                    messageContent = `<p class="${(data.sender_type == document.getElementById("user_type").value) ? 'bg-dark-blue text-right' : 'bg-cool-gray text-left'} text-white rounded-lg py-2 px-4 inline-block">${data.content}</p>`;
+                }
+
+                messageDiv.innerHTML = messageContent;
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
-            
-            messageDiv.innerHTML = messageContent;
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
 
-        function loadChatHistory() {
-            fetch(`/chatmessages/${caseId}/`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("load data ho yo ----------------", data);
-                    const messagesContainer = document.getElementById('chatbox');
-                    messagesContainer.innerHTML = '';
-                    data.messages.forEach(message => displayMessage(message));
-                })
-                .catch(error => console.error('Error loading chat history:', error));
-        }
-
-        //for chat
-    
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector('#crud-modal form');
-        
-            if (form) {
-                form.addEventListener("submit", function (event) {
-                    event.preventDefault();
-        
-                    
-                    const formData = new FormData(form);
-                    const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-        
-                    fetch(`/activitylog/${firId}/`, {
-                        method: 'POST',
-                        headers: {
-                            "X-CSRFToken": csrftoken,
-                        },
-                        body: formData,
-                    })
+            function loadChatHistory() {
+                fetch(`/chatmessages/${caseId}/`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.status === "success") {
-                            location.reload();  // or dynamically add the new activity to #activity_list
-                        } else {
-                            alert("Something went wrong while adding the activity.");
-                        }
+                        //console.log("load data ho yo ----------------", data);
+                        const messagesContainer = document.getElementById('chatbox');
+                        messagesContainer.innerHTML = '';
+                        data.messages.forEach(message => displayMessage(message));
                     })
-                    .catch(error => {
-                        console.error("Error:", error);
+                    .catch(error => console.error('Error loading chat history:', error));
+            }
+
+            //for chat end
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const form_activity = document.querySelector('#crud-modal form');
+
+                if (form_activity) {
+                    form_activity.addEventListener("submit", function (event) {
+                        event.preventDefault();
+
+
+                        const formData = new FormData(form_activity);
+                        const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                        fetch(`/activitylog/${firId}/`, {
+                            method: 'POST',
+                            headers: {
+                                "X-CSRFToken": csrftoken,
+                            },
+                            body: formData,
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "success") {
+                                location.reload();  // or dynamically add the new activity to #activity_list
+                            } else {
+                                alert("Something went wrong while adding the activity.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
                     });
-                });
-            } else {
-                console.warn("Activity form not found!");
-            }
-        });
-    
-            
-        function changeImage(src) {
-            const video = document.getElementById('mainVideo');
-            video.style.display = 'none';
-            video.pause();
-            const image = document.getElementById('mainImage');
-            image.style.display = 'block';
-            document.getElementById('mainImage').src = src;
-        }
-        function changeVideo(src) {
-            const image = document.getElementById('mainImage');
-            image.style.display = 'none';
-            const video = document.getElementById('mainVideo');
-            video.style.display = 'block';
-            video.src = src;
-        }
-        function changetext(content) {
-            document.getElementById('filelabel').innerHTML = content;
-        }
-        function getinfo(element) {
-            try {
-                var imgSource = element.querySelector("img");
-                const imgSrc = imgSource.src;
-                changeImage(imgSrc);
-            }
-            catch {
-                var imgSource = element.querySelector("video");
-                const imgSrc = imgSource.src;
-                changeVideo(imgSrc);
-            }
-            if (element.id == 'evidence_div'){
-                const textContent = 'Evidence';
-                changetext(textContent);
-            }
-            else if (element.id == 'recent_photo_div'){
-                const textContent = 'Recent Photo';
-                changetext(textContent);
-            }
-            else if (element.id == 'Citizenship'){
-                const textContent = 'Citizenship';
-                changetext(textContent);
-            }
-
-            
-        }
-
-                
-        document.addEventListener("DOMContentLoaded", function (event){
-            //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
-            //const pathParts = window.location.pathname.split('/');
-            //const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
-            //console.log(firId); // Use this to fetch your data
-
-            fetch(`/casedetails/${firId}/`).then(response => {
-                if (response.ok) {
-                    
-                    return response.json();
                 } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .then(data => {
-                //console.log(data); // Check the data structure in the console
-                document.getElementById('title').innerText = data.case_data.case_title;
-                document.getElementById('upload_date').innerText =`Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
-                if(data.case_data.reporter){
-                    document.getElementById('reporter').innerText = data.case_data.reporter;
-                }
-                else if(data.case_data.investigator){
-                    document.getElementById('reporter').innerText = data.case_data.investigator;
-                }
-                if(data.case_data.is_reporter_the_victim){
-                    document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
-                }
-                else if(data.case_data.investigator_email){
-                    document.getElementById('is_victim').innerText = data.case_data.investigator_email;
-                }
-                document.getElementById('description').innerText = data.case_data.crime_description;
-                document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
-
-                let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
-                // i want in hh:ss am/pm format
-                time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
-                document.getElementById('crime_time').innerText = time; // Format the date as needed
-                document.getElementById('crime_location').innerText = data.case_data.crime_location;
-                document.getElementById('crime_link').href = data.case_data.crime_link;
-                if(data.case_data.reporter_pic){
-                    document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
-                    document.getElementById('reporter_image').src = data.case_data.reporter_pic;
-                    //class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
-                } // Format the date as needed
-                else if(data.case_data.investigator_pic){
-                    document.getElementById('reporter_image').className='md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
-                    document.getElementById('reporter_image').src = data.case_data.investigator_pic;
+                    console.warn("Activity form not found!");
                 }
 
-                //for displaying evidence images and videos
-                const evidenceList = data.evidence;
-                const imagelist = document.getElementById('imagelist');
-                imagelist.innerHTML = ""; // Clear existing content
-                let index=0;
-                Object.values(evidenceList).forEach(evidence => {
-                    if(index==0){
-                        //display the first evidence
-                        if (evidence.evidence_type === 'image') {
-                            const img_disp = document.getElementById("mainImage");
-                            img_disp.style.display="block";
-                            img_disp.src = evidence.evidence_pic_file
-                        }
-                        else if (evidence.evidence_type === 'video') {
-                            const vid_disp = document.getElementById("mainVideo");
-                            vid_disp.style.display="block";
-                            vid_disp.src = evidence.evidence_vid_file
-                            vid_disp.play();
-                        }
-                        const filelabel = document.getElementById('filelabel');
-                        filelabel.innerText = `Evidence`;
+                const form_payment = document.querySelector('#payment-modal form');
+                if(form_payment){
+                    form_payment.addEventListener("submit",function(event){
+                        event.preventDefault(); 
+                        const formData = new FormData(form_payment);
+                        const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                        console.log("payment initilized");
+                        fetch(`/createpayment/${firId}/`, {
+                            method: 'POST',
+                            headers: {
+                                "X-CSRFToken": csrftoken,
+                            },
+                            body: formData,
+                        }).then(response => response.json()).then(data=>{
+                            console.log(data);
+                            if(data.status=="success"){
+                                console.log("success");
+                                document.getElementById('close_payment_modal').click();
+                                document.getElementById('toast-success').classList.remove('hidden');
+                                document.getElementById('toast-success').classList.add('flex');
+                                document.getElementById('toast-message').innerText="Payment Added Successfully";
+                                
+                                const formData2 = new FormData();
+                                formData2.append("activity_name", "Payment");
+                                formData2.append("activity_description", `${formData.get('payment_name')} - amount : $${formData.get('payment_amount')}`);
+                                formData2.append("activity_file", '');
 
-                    }
-                    const div = document.createElement('div');
-                    div.id = 'evidence_div';
-                    div.onclick = function() { getinfo(this); };
-                    if (evidence.evidence_type === 'image') {
-                        const img = document.createElement('img');
-                        img.src = evidence.evidence_pic_file;
-                        img.alt = "Evidence Image";
-                        img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                        div.appendChild(img);
-                    } else if (evidence.evidence_type === 'video') {
-                        const video = document.createElement('video');
-                        video.src = evidence.evidence_vid_file;
-                        video.alt = "Evidence Video";
-                        video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                        div.appendChild(video);
-                    }
-                    
-                    imagelist.appendChild(div);
-                    index += 1;
-                });
-
-
-                //for recent photo of reporter
-                if(data.recent_photo){
-                    const div = document.createElement('div');
-                    div.id = 'recent_photo_div';
-                    div.onclick = function() { getinfo(this); };
-                    const img = document.createElement('img');
-                    img.src = data['recent_photo'].recent_photo;
-                    img.alt = "Recent Photo";
-                    img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                    div.appendChild(img);
-                    //const filelabel = document.getElementById('filelabel');
-                    //filelabel.innerText = `recent`;
-                    imagelist.appendChild(div);
+                                fetch(`/activitylog/${firId}/`, {
+                                    method: 'POST',
+                                    headers: {
+                                        "X-CSRFToken": csrftoken,
+                                    },
+                                    body: formData2
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === "success") {
+                                        location.reload();  // or dynamically add the new activity to #activity_list
+                                    } else {
+                                        alert("Something went wrong while adding the activity.");
+                                    }
+                                });
+                            }
+                            else{
+                                 document.getElementById('invalid-payment').innerText="An Error occured while creating payment."
+                            }
+                        });
+                    });
                 }
-
-                const citizenshipList = data.citizenship;
-                Object.values(citizenshipList).forEach(citizenship => {
-                    const div = document.createElement('div');
-                    div.id = 'Citizenship';
-                    div.onclick = function() { getinfo(this); };
-                    const img = document.createElement('img');
-                    img.src = citizenship.citizenship_photo;
-                    img.alt = "Citizenship Image";
-                    img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
-                    div.appendChild(img);
-                    imagelist.appendChild(div);
-                });
-
-            }).catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
             });
-            
-            fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
-                let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
-                //console.log(arr.includes(data.status));
-                //check if data.status is in the array
-                if(data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")){
-                    if(arr.includes(data.status)){
-                        let index = arr.indexOf(data.status); // 1 for FIR_Verification
-                        for (let i = 0; i < index; i++) {
-                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+
+
+            function changeImage(src) {
+                const video = document.getElementById('mainVideo');
+                video.style.display = 'none';
+                video.pause();
+                const image = document.getElementById('mainImage');
+                image.style.display = 'block';
+                document.getElementById('mainImage').src = src;
+            }
+            function changeVideo(src) {
+                const image = document.getElementById('mainImage');
+                const video = document.getElementById('mainVideo');
+
+                if (!video) {
+                    console.error('Video element not found');
+                    return;
+                }
+
+                image.style.display = 'none';
+                video.style.display = 'block';
+
+                // Clear previous source and load new one
+                video.src = '';
+                initializeVideo(video, src);
+            }
+            function changetext(content) {
+                document.getElementById('filelabel').innerHTML = content;
+            }
+            function getinfo(element) {
+                try {
+                    var mediaSource = element.querySelector("img, video");
+                    if (!mediaSource) {
+                        console.error('No media source found');
+                        return;
+                    }
+
+                    const mediaSrc = mediaSource.src;
+                    const mediaType = mediaSource.tagName.toLowerCase();
+
+                    if (mediaType === 'img') {
+                        changeImage(mediaSrc);
+                    } else if (mediaType === 'video') {
+                        // For video, just load it but don't try to play immediately
+                        changeVideo(mediaSrc);
+                        // Show play button
+                        const video = document.getElementById('mainVideo');
+                        const playButton = document.getElementById('playButton');
+                        if (video && playButton) {
+                            video.style.display = 'block';
+                            playButton.style.display = 'block';
+                            video.muted = true;
                         }
-                        blink_element = document.getElementById(data.status);
-                        
-                        let splitted = data.status.split("_");
-                        blink_element.innerHTML=`
+                    }
+
+                    if (element.id === 'evidence_div') {
+                        changetext('Evidence');
+                    } else if (element.id === 'recent_photo_div') {
+                        changetext('Recent Photo');
+                    } else if (element.id === 'Citizenship') {
+                        changetext('Citizenship');
+                    }
+                } catch (error) {
+                    console.error('Error in getinfo:', error);
+                    // Add error message display
+                    document.getElementById('error-message').textContent = 'Error loading media. Please try again later.';
+                }
+            }
+
+            function handleVideoError() {
+                const video = document.getElementById('mainVideo');
+                const playButton = document.getElementById('playButton');
+                if (video) {
+                    video.style.display = 'none';
+                    playButton.style.display = 'none';
+                    document.getElementById('error-message').textContent = 'Error loading video. Please try again later.';
+                    console.error('Video error:', video.error);
+                }
+            }
+
+            function playVideo() {
+                const video = document.getElementById('mainVideo');
+                const playButton = document.getElementById('playButton');
+                if (video) {
+                    video.muted = false;
+                    video.play().then(() => {
+                        playButton.style.display = 'none';
+                    }).catch(error => {
+                        console.error('Error playing video:', error);
+                        video.style.display = 'none';
+                        playButton.style.display = 'none';
+                        document.getElementById('error-message').textContent = 'Error playing video. Please try again later.';
+                    });
+                }
+            }
+
+            function initializeVideo(videoElement, src) {
+                if (!videoElement || !src) return;
+
+                videoElement.src = src;
+                videoElement.controls = true;
+                videoElement.loop = true;
+                videoElement.playsinline = true;
+                videoElement.preload = 'metadata';
+                videoElement.muted = true;
+                //videoElement.onerror = handleVideoError;
+                //videoElement.onloadedmetadata = handleVideoLoaded;
+
+                // Add a loading indicator
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-50';
+                loadingIndicator.innerHTML = '<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>';
+                videoElement.appendChild(loadingIndicator);
+
+                // Remove loading indicator when video is ready
+                videoElement.oncanplay = () => {
+                    loadingIndicator.remove();
+                };
+
+                // Handle stalled video
+                videoElement.onstalled = () => {
+                    console.error('Video stalled. Attempting to reload...');
+                    videoElement.src = ''; // Clear source
+                    videoElement.src = src; // Reload
+                };
+
+                // Handle seeking
+                videoElement.onseeking = () => {
+                    loadingIndicator.style.display = 'flex';
+                };
+                videoElement.onseeked = () => {
+                    loadingIndicator.style.display = 'none';
+                };
+
+                // Add click handler for video element
+                videoElement.onclick = () => {
+                    videoElement.muted = false;
+                    videoElement.play().catch(error => {
+                        console.error('Error playing video:', error);
+                    });
+                };
+            }
+
+
+            document.addEventListener("DOMContentLoaded", function (event) {
+                //get 24 from these type of urls http://127.0.0.1:8000/reviewfir/24/
+                //const pathParts = window.location.pathname.split('/');
+                //const firId = parseInt(pathParts[pathParts.length - 2]);   // '24' is before the last empty string
+                //console.log(firId); // Use this to fetch your data
+
+                fetch(`/casedetails/${firId}/`).then(response => {
+                    if (response.ok) {
+
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                    .then(data => {
+                        //console.log(data); // Check the data structure in the console
+                        document.getElementById('title').innerText = data.case_data.case_title;
+                        document.getElementById('upload_date').innerText = `Uploaded on : ${data.case_data.upload_date.split('T')[0]}`; // Format the date as needed
+                        if (data.case_data.reporter) {
+                            document.getElementById('reporter').innerText = data.case_data.reporter;
+                        }
+                        else if (data.case_data.investigator) {
+                            document.getElementById('reporter').innerText = data.case_data.investigator;
+                        }
+                        if (data.case_data.is_reporter_the_victim) {
+                            document.getElementById('is_victim').innerText = data.case_data.is_reporter_the_victim ? "Is the Victim" : "Not the Victim";
+                        }
+                        else if (data.case_data.investigator_email) {
+                            document.getElementById('is_victim').innerText = data.case_data.investigator_email;
+                        }
+                        document.getElementById('description').innerText = data.case_data.crime_description;
+                        document.getElementById('crime_date').innerText = data.case_data.crime_date; // Format the date as needed
+
+                        let time = data.case_data.crime_time.split(":"); //this gets data in hh:mm:ss format 
+                        // i want in hh:ss am/pm format
+                        time = parseInt(time[0]) > 12 ? parseInt(time[0]) - 12 + ":" + time[1] + " PM" : parseInt(time[0]) + ":" + time[1] + " AM";
+                        document.getElementById('crime_time').innerText = time; // Format the date as needed
+                        document.getElementById('crime_location').innerText = data.case_data.crime_location;
+                        document.getElementById('crime_link').href = data.case_data.crime_link;
+                        if (data.case_data.reporter_pic) {
+                            document.getElementById('reporter_image').className = 'md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
+                            document.getElementById('reporter_image').src = data.case_data.reporter_pic;
+                            //class="md:w-12 md:h-12 w-10 h-10 rounded-full object-cover"
+                        } // Format the date as needed
+                        else if (data.case_data.investigator_pic) {
+                            document.getElementById('reporter_image').className = 'md:w-12 md:h-12 w-10 h-10 rounded-full object-cover';
+                            document.getElementById('reporter_image').src = data.case_data.investigator_pic;
+                        }
+
+                        //for displaying evidence images and videos
+                        const evidenceList = data.evidence;
+                        const imagelist = document.getElementById('imagelist');
+                        //console.log("evidence list is ---------------",evidenceList);
+                        imagelist.innerHTML = ""; // Clear existing content
+                        let index = 0;
+                        Object.values(evidenceList).forEach(evidence => {
+                            if (index == 0) {
+                                //display the first evidence
+                                if (evidence.evidence_type === 'image') {
+                                    const img_disp = document.getElementById("mainImage");
+                                    img_disp.style.display = "block";
+                                    img_disp.src = evidence.evidence_pic_file
+                                }
+                                else if (evidence.evidence_type === 'video') {
+                                    const vid_disp = document.getElementById("mainVideo");
+                                    vid_disp.style.display = "block";
+                                    vid_disp.src = evidence.evidence_vid_file
+                                    vid_disp.play();
+                                }
+                                const filelabel = document.getElementById('filelabel');
+                                filelabel.innerText = `Evidence`;
+
+                            }
+                            const div = document.createElement('div');
+                            div.id = 'evidence_div';
+                            div.onclick = function () { getinfo(this); };
+                            if (evidence.evidence_type === 'image') {
+                                const img = document.createElement('img');
+                                img.src = evidence.evidence_pic_file;
+                                img.alt = "Evidence Image";
+                                img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                                div.appendChild(img);
+                            } else if (evidence.evidence_type === 'video') {
+                                const video = document.createElement('video');
+                                video.src = evidence.evidence_vid_file;
+                                video.alt = "Evidence Video";
+                                video.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                                div.appendChild(video);
+                            }
+
+                            imagelist.appendChild(div);
+                            index += 1;
+                        });
+
+
+                        //for recent photo of reporter
+                        if (data.recent_photo) {
+                            const div = document.createElement('div');
+                            div.id = 'recent_photo_div';
+                            div.onclick = function () { getinfo(this); };
+                            const img = document.createElement('img');
+                            img.src = data['recent_photo'].recent_photo;
+                            img.alt = "Recent Photo";
+                            img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                            div.appendChild(img);
+                            //const filelabel = document.getElementById('filelabel');
+                            //filelabel.innerText = `recent`;
+                            imagelist.appendChild(div);
+                        }
+
+                        const citizenshipList = data.citizenship;
+                        Object.values(citizenshipList).forEach(citizenship => {
+                            const div = document.createElement('div');
+                            div.id = 'Citizenship';
+                            div.onclick = function () { getinfo(this); };
+                            const img = document.createElement('img');
+                            img.src = citizenship.citizenship_photo;
+                            img.alt = "Citizenship Image";
+                            img.className = "size-16 sm:size-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300";
+                            div.appendChild(img);
+                            imagelist.appendChild(div);
+                        });
+
+                    }).catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+
+                fetch(`/casestatus/${firId}/`).then(response => response.json()).then(data => {
+                    let arr = ['FIR_Registration', 'FIR_Verification', 'Investigator_Assigning', 'Investigation_Ongoing', 'Investigation_Termination'];
+                    //console.log(arr.includes(data.status));
+                    //check if data.status is in the array
+                    if (data.status && (data.status != "solved" && data.status != "terminated_but_unsolved")) {
+                        if (arr.includes(data.status)) {
+                            let index = arr.indexOf(data.status); // 1 for FIR_Verification
+                            for (let i = 0; i < index; i++) {
+                                document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                                document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                            }
+                            blink_element = document.getElementById(data.status);
+
+                            let splitted = data.status.split("_");
+                            blink_element.innerHTML = `
                             <span
                                 class="relative  inline-flex items-center justify-center bg-cool-gray bg-gray-100 rounded-full start-3  ring-white  md:start-0 md:mx-auto ">
                                 <span
@@ -684,64 +927,64 @@
                                     ${splitted[0]}<span class="hidden md:inline"><br></span>${splitted[1]}</h3>
                             </div> 
                         `;
-                        
+
+                        }
+                        if (data.status != 'Investigation_Ongoing') {
+                            document.getElementById('activity_log').style.display = 'none';
+                            document.getElementById("chat_container_logo").classList.remove("flex");
+                            document.getElementById("chat_container_logo").classList.add("hidden");
+                            document.getElementById('mark_terminated').style.display = 'none';
+
+                        }
                     }
-                    if(data.status != 'Investigation_Ongoing'){
-                        document.getElementById('activity_log').style.display='none';
+                    else if (data.status && (data.status == "solved")) {
+                        //console.log("solved");
+                        arr.forEach(data => {
+                            document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
+                            document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
+                        });
                         document.getElementById("chat_container_logo").classList.remove("flex");
                         document.getElementById("chat_container_logo").classList.add("hidden");
-                        document.getElementById('mark_terminated').style.display='none';
-                        
+                        document.getElementById("add_activity_button").classList.remove("block");
+                        document.getElementById("add_activity_button").classList.add("hidden");
+                        document.getElementById("deleteButton").classList.remove("block");
+                        document.getElementById("deleteButton").classList.add("hidden");
                     }
-                }
-                else if (data.status && (data.status == "solved")){
-                    //console.log("solved");
-                    arr.forEach(data=>{
-                        document.getElementById(data).querySelector('span').classList.remove('bg-cool-gray');
-                        document.getElementById(data).querySelector('span').classList.add('bg-dark-green');
-                    });
-                    document.getElementById("chat_container_logo").classList.remove("flex");
-                    document.getElementById("chat_container_logo").classList.add("hidden");
-                    document.getElementById("add_activity_button").classList.remove("block");
-                    document.getElementById("add_activity_button").classList.add("hidden");
-                    document.getElementById("deleteButton").classList.remove("block");
-                    document.getElementById("deleteButton").classList.add("hidden");
-                }
-                else if (data.status && (data.status=="terminated_but_unsolved")){
-                    //console.log("terminated_but_unsolved");
-                    for (let i = 0 ; i < 5 ; i++){
-                        if (i<=2){
-                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                    else if (data.status && (data.status == "terminated_but_unsolved")) {
+                        //console.log("terminated_but_unsolved");
+                        for (let i = 0; i < 5; i++) {
+                            if (i <= 2) {
+                                document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                                document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-green');
+                            }
+                            else {
+                                document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
+                                document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
+                            }
                         }
-                        else{
-                            document.getElementById(arr[i]).querySelector('span').classList.remove('bg-cool-gray');
-                            document.getElementById(arr[i]).querySelector('span').classList.add('bg-dark-red');
-                        }
+                        document.getElementById("chat_container_logo").classList.remove("flex");
+                        document.getElementById("chat_container_logo").classList.add("hidden");
+                        document.getElementById("add_activity_button").classList.remove("block");
+                        document.getElementById("add_activity_button").classList.add("hidden");
+                        document.getElementById("deleteButton").classList.remove("block");
+                        document.getElementById("deleteButton").classList.add("hidden");
                     }
-                    document.getElementById("chat_container_logo").classList.remove("flex");
-                    document.getElementById("chat_container_logo").classList.add("hidden");
-                    document.getElementById("add_activity_button").classList.remove("block");
-                    document.getElementById("add_activity_button").classList.add("hidden");
-                    document.getElementById("deleteButton").classList.remove("block");
-                    document.getElementById("deleteButton").classList.add("hidden");
-                }   
-            });
+                });
 
-            fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data =>{
-                //console.log(data);
-                const list = document.getElementById('activity_list');
-                data.forEach(activity => {
-                    const li = document.createElement('li');
-                    li.classList.add('flex', 'justify-between', 'gap-x-6', 'py-5');
-                    let date = activity.activity_date.replace("T"," ").replace(".", "");
-                    date = date.split(" ");
-                    date1 = date[0];
-                    time = date[1];
-                    time = time.split(":");
-                    time = `${time[0]} : ${time[1]} `;
-                    if(activity.uploaded_by_citizen__user_name == null){
-                        li.innerHTML=`
+                fetch(`/fetchactivitylog/${firId}/`).then(response => response.json()).then(data => {
+                    //console.log(data);
+                    const list = document.getElementById('activity_list');
+                    data.forEach(activity => {
+                        const li = document.createElement('li');
+                        li.classList.add('flex', 'justify-between', 'gap-x-6', 'py-5');
+                        let date = activity.activity_date.replace("T", " ").replace(".", "");
+                        date = date.split(" ");
+                        date1 = date[0];
+                        time = date[1];
+                        time = time.split(":");
+                        time = `${time[0]} : ${time[1]} `;
+                        if (activity.uploaded_by_citizen__user_name == null) {
+                            li.innerHTML = `
                             <div class="flex min-w-0 gap-x-4">
                                     <div class="min-w-0 flex-auto">
                                         <p class="text-base font-semibold ">${activity.activity_title} - ${activity.uploaded_by_investigator__user_name}</p>
@@ -752,9 +995,9 @@
                                 <p class=" text-xs/5 "> ${date1}/${time} </p>
                             </div>
                         `;
-                    }
-                    else if(activity.uploaded_by_investigator__user_name == null){
-                        li.innerHTML=`
+                        }
+                        else if (activity.uploaded_by_investigator__user_name == null) {
+                            li.innerHTML = `
                             <div class="flex min-w-0 gap-x-4">
                                     <div class="min-w-0 flex-auto">
                                         <p class="text-base font-semibold ">${activity.activity_title} - ${activity.uploaded_by_citizen__user_name}</p>
@@ -765,69 +1008,71 @@
                                 <p class=" text-xs/5 "> ${date1}/${time} </p>
                             </div>
                         `;
-                    }
+                        }
 
-                    list.appendChild(li);
+                        list.appendChild(li);
+                    });
+
+
                 });
-                    
 
             });
-        
-        }); 
-      
-        const yes_button = document.getElementById('yes_button');
-        const no_button = document.getElementById('no_button');
-        if(yes_button){
-            yes_button.addEventListener('click', function(event) {
-                fetch(`/successfullyterminated/${firId}/`).then(response => response.json()).then(data =>{
-                    if (data.status == "success"){
-                        location.reload();
-                    }
+
+            const yes_button = document.getElementById('yes_button');
+            const no_button = document.getElementById('no_button');
+            if (yes_button) {
+                yes_button.addEventListener('click', function (event) {
+                    fetch(`/successfullyterminated/${firId}/`).then(response => response.json()).then(data => {
+                        if (data.status == "success") {
+                            location.reload();
+                        }
+                    });
                 });
-            });
-        }
-        if(no_button){
-            no_button.addEventListener('click', function(event) {
-                fetch(`/unsuccessfullyterminated/${firId}/`).then(response => response.json()).then(data =>{
-                    if (data.status == "success"){
-                        location.reload();
-                    }
-                });
-            });
-        }
-
-        // Add image upload handling
-        const imageButton = document.getElementById("image-button");
-        const imageUpload = document.getElementById("image-upload");
-
-        imageButton.addEventListener("click", () => {
-            imageUpload.click();
-        });
-
-        imageUpload.addEventListener("change", async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    const base64Image = e.target.result;
-                    if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
-                        chatSocket.send(
-                            JSON.stringify({
-                                message: base64Image,
-                                message_type: 'image',
-                                room_name: firId,
-                                sender: document.getElementById("user_id").value,
-                                sender_type: document.getElementById("user_type").value,
-                            })
-                        );
-                    }
-                };
-                reader.readAsDataURL(file);
-                imageUpload.value = ''; // Reset the input
             }
-        });
+            if (no_button) {
+                no_button.addEventListener('click', function (event) {
+                    fetch(`/unsuccessfullyterminated/${firId}/`).then(response => response.json()).then(data => {
+                        if (data.status == "success") {
+                            location.reload();
+                        }
+                    });
+                });
+            }
 
-    </script>
-    {%endblock%}
+            // Add image upload handling
+            const imageButton = document.getElementById("image-button");
+            const imageUpload = document.getElementById("image-upload");
+
+            imageButton.addEventListener("click", () => {
+                imageUpload.click();
+            });
+
+            imageUpload.addEventListener("change", async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = async (e) => {
+                        const base64Image = e.target.result;
+                        if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                            chatSocket.send(
+                                JSON.stringify({
+                                    message: base64Image,
+                                    message_type: 'image',
+                                    room_name: firId,
+                                    sender: document.getElementById("user_id").value,
+                                    sender_type: document.getElementById("user_type").value,
+                                })
+                            );
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                    imageUpload.value = ''; // Reset the input
+                }
+            });
+
+
+        </script>
+        {%endblock%}
 </body>
+
 </html>

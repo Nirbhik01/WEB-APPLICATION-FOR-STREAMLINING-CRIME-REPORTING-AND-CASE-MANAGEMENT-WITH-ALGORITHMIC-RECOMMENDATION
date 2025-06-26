@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-# import reverse
+
 from django.urls import reverse
 from django.contrib import messages
 from django.http import JsonResponse
@@ -8,14 +8,17 @@ from userauths.models import Citizen as Ct, Citizenship_photo as Cp, Investigato
 from chat.models import Message
 from django.db.models import Count,Q
 from datetime import datetime, timedelta
+import json
 
+import re
 from django.conf import settings
 
 from django.http import HttpResponse, Http404
 from ReportEase.encryption import decrypt_file
+from django.views.decorators.csrf import csrf_exempt
 
 from Investigator.views import send_case_notification_email
-from .models import Notification
+from .models import Notification,Payment
 # from Case.views import display_cases_for_homepage
 from Citizen.views import save_evidence
 
@@ -472,15 +475,45 @@ def serve_decrypted_evidence(request, evidence_id, media_type):
         if not file_field:
             raise Http404("File not found")
 
-        decrypted_content = decrypt_file(file_field.path)
+        file_path = file_field.path
+        decrypted_content = decrypt_file(file_path)
 
-        content_type = {
-            'pic': 'image/jpeg',
-            'vid': 'video/mp4',
-            'audio': 'audio/mpeg',
-        }.get(media_type, 'application/octet-stream')
-
-        return HttpResponse(decrypted_content, content_type=content_type)
+        # Get the file size
+        file_size = len(decrypted_content)
+        
+        # Handle range requests for video streaming
+        range_header = request.META.get('HTTP_RANGE', '').strip()
+        range_match = None
+        if range_header:
+            range_match = re.match(r'bytes=(\d+)-(\d*)', range_header)
+        
+        if range_match:
+            start, end = range_match.groups()
+            start = int(start)
+            end = int(end) if end else file_size - 1
+            
+            if end >= file_size:
+                end = file_size - 1
+            
+            content = decrypted_content[start:end + 1]
+            
+            response = HttpResponse(
+                content,
+                status=206,
+                content_type='video/mp4',
+            )
+            response['Content-Range'] = f'bytes {start}-{end}/{file_size}'
+            response['Content-Length'] = str(len(content))
+            response['Accept-Ranges'] = 'bytes'
+            return response
+        
+        # Full file response
+        response = HttpResponse(
+            decrypted_content,
+            content_type='video/mp4',
+        )
+        response['Content-Length'] = str(file_size)
+        return response
 
     except Evidence.DoesNotExist:
         raise Http404("Evidence not found") 
@@ -600,7 +633,67 @@ def fetch_number_of_notifications(request):
         notifications = Notification.objects.filter(belongs_to_citizen=user,status="UNREAD").count()
         return JsonResponse({"notification_count":notifications})
     elif user_type == "Investigator":
-        user = Ct.objects.get(user_id=user_id)
+        user = Iv.objects.get(user_id=user_id)
         notifications = Notification.objects.filter(belongs_to_investigator=user,status="UNREAD").count()
         return JsonResponse({"notification_count":notifications})
     return JsonResponse({"notification_count":0})
+
+def create_payment(request,case_id):
+    if request.method == "POST":
+        incident = Case.objects.get(case_id = case_id)
+        payment_desc = request.POST.get("payment_name")
+        payment_amt = request.POST.get("payment_amount")
+        payment = Payment(
+            user = incident.reporter,
+            case = incident,
+            amount = float(payment_amt),
+            description = payment_desc,
+        )
+        payment.save()
+        return JsonResponse({"status":"success"})
+    return JsonResponse({"status":"error"})
+
+def fetch_payments(request):
+    user_id = request.session.get('user_id')
+    user_type = request.session.get('user_type')
+    
+    if user_type == "Citizen":
+        user = Ct.objects.get(user_id=user_id)
+        payments = Payment.objects.filter(user=user,status='PENDING').values('payment_id', 'amount', 'description', 'timestamp','case__case_id')
+        return JsonResponse(list(payments), safe=False)
+    
+    return JsonResponse({'error': 'the user is not a citizen'})
+
+def fetchPaymentsCount(request):
+    if request.session.get('user_type') == "Citizen":
+        payments = Payment.objects.filter(user = Ct.objects.get(user_id = request.session.get('user_id')),status="PENDING").count()
+        print("count payment : ",payments)
+        return JsonResponse({'status':"success",'count': payments})
+    return JsonResponse({'error':'the user is not a citizen'})
+
+@csrf_exempt
+# path('paypal/complete/', paypal_complete, name='paypal-complete'), 
+def paypal_complete(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            payment_id = data.get("payment_id")
+            case_id = data.get("case_id")
+
+            if not payment_id or not case_id:
+                return JsonResponse({'status': 'error', 'message': 'Invalid request data.'}, status=400)
+
+            try:
+                payment = Payment.objects.get(payment_id=payment_id, case__case_id=case_id, status='PENDING')
+                payment.status = 'COMPLETED'
+                payment.save()
+                return JsonResponse({'status': 'success', 'message': 'Payment completed successfully.'})
+            except Payment.DoesNotExist:
+                return JsonResponse({'status': 'error', 'message': 'Payment not found or already completed.'}, status=404)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format.'}, status=400)
+
+    # This handles GET or other methods
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+    

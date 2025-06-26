@@ -1,6 +1,7 @@
 from userauths.models import Citizen, Investigator
 from django.shortcuts import render,redirect
 
+from django.conf import settings
 def user_context(request):
     user_id=None
     user_type=None
@@ -27,4 +28,4 @@ def user_context(request):
         except (Citizen.DoesNotExist, Investigator.DoesNotExist):
             print("not found user")  # User might have been deleted
 
-    return {'logged_in_user': user, 'user_type': user_type}
+    return {'logged_in_user': user, 'user_type': user_type,'client_id': settings.PAYPAL_CLIENT_ID}

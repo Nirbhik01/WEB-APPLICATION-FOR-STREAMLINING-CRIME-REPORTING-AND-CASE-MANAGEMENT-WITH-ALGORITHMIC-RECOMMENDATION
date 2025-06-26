@@ -43,11 +43,29 @@ FERNET_KEY = config('FERNET_KEY', default='default_value_here').encode()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-g69sscqyt_j93vz)dqv-=wqu-sgmv6m2-!1x9j!d^)e6%c4d+g'
 
+# load from env
+# STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')
+# STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+# STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET')
+
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
+PAYPAL_TEST = True  # Set to False for live environment
+PAYPAL_RECEIVER_EMAIL = config('PAYPAL_RECEIVER_EMAIL')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.71','192.168.1.68','192.168.100.232','192.168.100.239','127.0.0.1','localhost','192.168.100.138']
 
+# Add Stripe webhook endpoint to ALLOWED_HOSTS
+# ALLOWED_HOSTS = ['your-domain.com', 'localhost', '127.0.0.1']
+
+# Add Stripe webhook endpoint to CSRF_TRUSTED_ORIGINS
+# CSRF_TRUSTED_ORIGINS = ['https://your-domain.com', 'http://localhost:8000']
+
+# # Add Stripe webhook endpoint to CORS_ALLOWED_ORIGINS
+# CORS_ALLOWED_ORIGINS = ['https://your-domain.com', 'http://localhost:8000']
 
 # Application definition
 
@@ -61,6 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userauths',
     'ReportEaseApp',
+    'corsheaders',
     'Case',
     'tailwind',
     'ReportEaseAppTailwind',
@@ -69,6 +88,7 @@ INSTALLED_APPS = [
     "Investigator",  
     'channels',
     'chat',  
+    'paypal.standard.ipn',
 ]
 
 ASGI_APPLICATION = 'ReportEase.asgi.application'
@@ -92,6 +112,8 @@ MIDDLEWARE = [
     # 'userauths.middleware.IgnoreClientDisconnect',
     # 'userauths.middleware.RedirectWithJSMessageMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'ReportEase.urls'
 

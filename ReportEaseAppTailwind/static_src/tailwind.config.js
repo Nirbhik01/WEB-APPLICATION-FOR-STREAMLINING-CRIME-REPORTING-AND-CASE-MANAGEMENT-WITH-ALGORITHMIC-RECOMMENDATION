@@ -25,7 +25,7 @@ module.exports = {
          * Adjust the following line to match your project structure.
          */
         '../../**/templates/**/*.html',
-
+        './static/**/*.js',
         /**
          * JS: If you use Tailwind CSS in JavaScript, uncomment the following lines and make sure
          * patterns match your project structure.
@@ -42,21 +42,22 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        colors: {
-            "dark-blue": "#2C3E50",
-            "white": "#ffffff",
-            "black": "#000000",
-            "cool-gray": "#95A5A6",
-            "light-gray": "#f2f0ef",
-            "gray": "#d3d3d3",
-            "dark-yellow": "#d9a636",
-            "dark-red":"#590016",
-            "dark-green":"#006400",
-        },
+
         extend: {
             backgroundImage: {
                 'Homepage-bcg': "url('/static/ReportEaseApp/Homepage/image.png')",
 
+            },
+            colors: {
+                "dark-blue": "#2C3E50",
+                "white": "#ffffff",
+                "black": "#000000",
+                "cool-gray": "#95A5A6",
+                "light-gray": "#f2f0ef",
+                "gray": "#d3d3d3",
+                "dark-yellow": "#d9a636",
+                "dark-red": "#590016",
+                "dark-green": "#006400",
             },
 
             animation: {

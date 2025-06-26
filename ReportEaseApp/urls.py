@@ -3,6 +3,7 @@ from django.urls import path,include
 from .views import * 
 from django.conf.urls.static import static
 from django.conf import settings
+
 # from userauths.urls import *
 # from userauths.views import *
 
@@ -10,6 +11,7 @@ app_name='ReportEaseApp'
 
 
 urlpatterns = [
+    
     path('' , LandingPage , name='LandingPage'),
     path('home/' , HomePage , name='HomePage'),
     path('caselist/' , CaseListPage , name='CaseListPage'),
@@ -35,7 +37,11 @@ urlpatterns = [
     path('chatmessages/<int:case_id>/', get_chat_messages, name='GetChatMessages'),
     path('notifications/', notification_view, name='Notifications'),
     path('fetchnotificationcount/', fetch_number_of_notifications,name="FetchNotificationCount"),
-    path('mark_messages_read/<int:case_id>/',mark_messages_read,name = "MarkMessagesRead")
+    path('mark_messages_read/<int:case_id>/',mark_messages_read,name = "MarkMessagesRead"),
+    path('payments/', fetch_payments, name='FetchPayment'),
+    path('createpayment/<int:case_id>/', create_payment, name='CreatePayment'),
+    path('fetchpaymentscount/', fetchPaymentsCount, name='FetchPaymentsCount'),
+    path('paypal/complete/', paypal_complete, name='paypal-complete'),
 ]
 
 # if settings.DEBUG:  # Serve media files only in development
