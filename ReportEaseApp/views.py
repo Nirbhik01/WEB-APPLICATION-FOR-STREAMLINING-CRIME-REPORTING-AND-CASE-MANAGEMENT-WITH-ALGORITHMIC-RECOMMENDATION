@@ -9,7 +9,7 @@ from chat.models import Message
 from django.db.models import Count,Q
 from datetime import datetime, timedelta
 import json
-
+import requests
 import re
 from django.conf import settings
 
@@ -696,4 +696,67 @@ def paypal_complete(request):
 
     # This handles GET or other methods
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
-    
+  
+@csrf_exempt
+def khalti_payment(request):
+    # if request.method == "POST":
+        url = "https://dev.khalti.com/api/v2/epayment/initiate/"
+
+        payload = json.dumps({
+            "return_url": str(request.POST.get("return_url")),
+            "website_url": "http://127.0.0.1:8000/",
+            "amount": str(int(request.POST.get("amount")) * 100),  # Convert to paisa
+            "purchase_order_id": str(request.POST.get("payment_id")),
+            "purchase_order_name": request.POST.get("payment_name"),
+            "customer_info": {
+            "name": str(request.POST.get("customer_name")),
+            "email": str(request.POST.get("customer_email")),
+            "phone": str(request.POST.get("customer_phone"))
+            }
+        })
+        headers = {
+            'Authorization': f'key {settings.KHALTI_LIVE_SECRET_KEY}',
+            'Content-Type': 'application/json',
+        }
+        
+        print("payload is ",payload)
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+        print("Raw response text:", response.text)  # Check what Khalti actually returns
+
+        try:
+            res_json = response.json()
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Khalti returned invalid JSON', 'raw': response.text}, status=500)
+
+        if response.status_code == 200 and 'payment_url' in res_json:
+            return JsonResponse({'payment_url': res_json['payment_url']})
+        else:
+            return JsonResponse({'error': res_json}, status=400)
+
+# path('khalti/complete/', khalti_complete, name='khalti-complete'),
+@csrf_exempt
+def khalti_complete(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            payment_id = data.get("payment_id")
+            case_id = data.get("case_id")
+            print("Payment ID:", payment_id,
+                "Case ID:", case_id)
+            if not payment_id or not case_id:
+                return JsonResponse({'status': 'error', 'message': 'Invalid request data.'}, status=400)
+
+            try:
+                payment = Payment.objects.get(payment_id=payment_id, case__case_id=case_id, status='PENDING')
+                payment.status = 'COMPLETED'
+                payment.save()
+                return JsonResponse({'status': 'success', 'message': 'Payment completed successfully.'})
+            except Payment.DoesNotExist:
+                return JsonResponse({'status': 'error', 'message': 'Payment not found or already completed.'}, status=404)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+    # This handles GET or other methods

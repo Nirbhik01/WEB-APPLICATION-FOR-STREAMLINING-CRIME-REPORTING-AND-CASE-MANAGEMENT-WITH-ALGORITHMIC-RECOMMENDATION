@@ -8,7 +8,7 @@
     {%load static tailwind_tags%}
     {%tailwind_css%}
     {%load static%}
-   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body class="relative bg-gradient-to-b from-dark-blue" onclick="toggleDropdown(dropdownDotsHorizontal)">
@@ -45,7 +45,8 @@
                                 class="w-full block px-4 py-2 text-left hover:bg-cool-gray relative"
                                 onclick="notificationHandler()">
                                 Notifications
-                                <span id="notification_numbers" class="hidden bg-dark-red text-white font semibold p-1 box-border rounded-md">0</span>
+                                <span id="notification_numbers"
+                                    class="hidden bg-dark-red text-white font semibold p-1 box-border rounded-md">0</span>
                             </button>
                         </li>
                         <li class="">
@@ -55,14 +56,14 @@
                                 aria-controls="drawer-right-example">Settings</button>
                         </li>
                         {%if logged_in_user.user_type == 'Citizen'%}
-                            <li class="hidden" id="dropdown_payment_list">
-                                <button id="dropdownPayment"
-                                    class="w-full  px-4 py-2 text-left hover:bg-cool-gray relative"
-                                    onclick="">
-                                    Payments
-                                    <span id="payment_numbers" class=" bg-dark-red text-white font semibold p-1 box-border rounded-md">0</span>
-                                </button>
-                            </li>
+                        <li class="hidden" id="dropdown_payment_list">
+                            <button id="dropdownPayment" class="w-full  px-4 py-2 text-left hover:bg-cool-gray relative"
+                                onclick="">
+                                Payments
+                                <span id="payment_numbers"
+                                    class=" bg-dark-red text-white font semibold p-1 box-border rounded-md">0</span>
+                            </button>
+                        </li>
                         {%endif%}
                     </ul>
                 </div>
@@ -89,16 +90,15 @@
                                     aria-controls="drawer-right-example">Settings</button>
                             </li>
                             {%if logged_in_user.user_type == 'Citizen'%}
-                                <li id="normal_payment_list" class="hidden">
-                                    <button id="normalPayment" class="text-white hover:underline relative"
-                                        onclick="">
-                                        Payments
-                                    </button>
-                                    <span id="payment_numbers"
-                                        class="bg-dark-red text-white font semibold p-1 h-1 box-border rounded-md"></span>
-                                </li>
+                            <li id="normal_payment_list" class="hidden">
+                                <button id="normalPayment" class="text-white hover:underline relative" onclick="">
+                                    Payments
+                                </button>
+                                <span id="payment_numbers"
+                                    class="bg-dark-red text-white font semibold p-1 h-1 box-border rounded-md"></span>
+                            </li>
                             {%endif%}
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -168,9 +168,8 @@
                 <li>
                     <a href="{%url 'userauths:LogoutPage'%}"
                         class="flex items-center p-2 hover:bg-white  rounded-lg   group">
-                        <svg fill=" none" stroke-linecap="round"
-                            class="w-5 h-5  transition duration-75 font-black" stroke-linejoin="round"
-                            stroke-width="2" viewBox="0 0 22 21" stroke="currentColor">
+                        <svg fill=" none" stroke-linecap="round" class="w-5 h-5  transition duration-75 font-black"
+                            stroke-linejoin="round" stroke-width="2" viewBox="0 0 22 21" stroke="currentColor">
                             <path class="" d="M17 16l4-4m0 0l-4-4 m4 4h-14m5 8 H6a3 3 0 01-3-3V7a3 3 0 013-3h7"></path>
                         </svg>
                         <span class="ms-3">Logout</span>
@@ -180,9 +179,8 @@
                 <li>
                     <a href="{%url 'ReportEaseApp:EditProfilePage'%}"
                         class="flex items-center p-2 hover:bg-white  rounded-lg  hover:bg-gray-100  group">
-                        <svg class="flex-shrink-0 w-5 h-5  transition duration-75   "
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                            viewBox="0 0 20 18">
+                        <svg class="flex-shrink-0 w-5 h-5  transition duration-75   " aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                             <path
                                 d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                         </svg>
@@ -246,6 +244,7 @@
                         </svg>
                     </button>
                 </div>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
                 <div id="payment-container" class="w-full mt-4">
                 </div>
@@ -264,6 +263,86 @@
     <script src="https://www.paypal.com/sdk/js?client-id={{client_id}}&currency=USD"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script>
+        //clean the redirect url from khalti
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get("status");
+
+        if (status === "Completed") {
+            // Do something after successful payment
+            const purchaseOrderName = urlParams.get("purchase_order_name"); // e.g. "case_49 -  stamp duty - payment_no_2"
+            const paymentId = urlParams.get("purchase_order_id");           // e.g. "2"
+
+            console.log("name and id is", purchaseOrderName, paymentId);
+
+            // Use regex or string parsing to extract case number
+            const match1 = purchaseOrderName.match(/case(\d+)/i);
+            const payment_description = purchaseOrderName.match(/^case\d+\s*-\s*(.*?)\s*-\s*payment_no_\d+$/)[1]; 
+            const payment_amount = parseInt(urlParams.get("total_amount"))/100; // e.g. "stamp duty - payment_no_2"
+            console.log("payment description and amount is", payment_description, payment_amount);
+            let caseId = null;
+            if (match1) {
+                console.log("match is", match1);
+                caseId = match1[1];
+                fetch(`/khalti/complete/`,{
+                    method: "POST", 
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        payment_id: paymentId,
+                        case_id: caseId,
+                        purchase_order_name: purchaseOrderName
+                    })
+                }).then(response => response.json()).then(data => {
+                    if (data.status == "success"){
+                        const khalti_payment_formData = new FormData();
+                        khalti_payment_formData.append("activity_name", "Payment");
+                        khalti_payment_formData.append("activity_description", `${payment_description} - amount : $${payment_amount} is paid`);
+                        khalti_payment_formData.append("activity_file", '');
+                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                        fetch(`/activitylog/${caseId}/`, {
+                            method: 'POST',
+                            headers: {
+                                "X-CSRFToken": csrftoken,
+                            },
+                            body: khalti_payment_formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status == "success") {
+                                //get the url location
+                                console.log("activity for payment paid");
+                                if (window.location.href.includes("casepage")) {
+                                    window.location.reload();
+                                }
+                                // Optionally, you can update the UI to reflect the new activity
+                            } else {
+                                alert("Something went wrong while adding the activity.");
+                            }
+                        });
+                    }
+                }).catch(error => {
+                    console.error("Error completing Khalti payment:", error);
+                });
+            }
+
+            console.log(`Payment completed successfully!`,caseId,paymentId);
+            // Optionally send confirmation to backend or update page
+        } else if (status) {
+            alert("❌ Payment failed or was cancelled.");
+        }
+
+    // Clean up URL
+        if (status) {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+        //if (window.location.search.includes("pidx") || window.location.search.includes("transaction_id")) {
+        //    const cleanUrl = window.location.origin + window.location.pathname;
+        //    window.history.replaceState({}, document.title, cleanUrl);
+        //}
+
+        //end clean url
         let notification = document.getElementById("notification");
         let checdiv = document.getElementById("chec-div");
         let flag3 = true;
@@ -311,10 +390,10 @@
             normalPayment.addEventListener("click", paymentHandler);
             dropdownPayment.addEventListener("click", paymentHandler);
         }
-        
+
         function fetchNotifications() {
             fetch(`/notifications/`).then(response => response.json()).then(data => {
-                console.log("notifications is ---",data);
+                console.log("notifications is ---", data);
                 const notifications = data.notifications;
                 const notificationContainer = document.getElementById("notification-container");
                 notificationContainer.innerHTML = ""; // Clear previous
@@ -423,7 +502,7 @@
             }
             fetchNotificationCount();
             fetchPaymentsCount();
-            console.log('location is',window.location.href);
+            console.log('location is', window.location.href);
 
         });
         function fetchNotificationCount() {
@@ -441,9 +520,9 @@
             });
         }
 
-        function fetchPaymentsCount(){
+        function fetchPaymentsCount() {
             fetch(`/fetchpaymentscount/`).then(response => response.json()).then(data => {
-                if (data.status == 'success' && data.count > 0){
+                if (data.status == 'success' && data.count > 0) {
                     let count = document.querySelectorAll("#payment_numbers");
                     document.getElementById("normal_payment_list").classList.remove("hidden");
                     document.getElementById("dropdown_payment_list").classList.remove("hidden");
@@ -452,7 +531,7 @@
                     count[1].innerText = data.count;
                     console.log(count);
                 }
-                else{
+                else {
                     let count = document.querySelectorAll("#payment_numbers");
                     document.getElementById("normal_payment_list").classList.add("hidden");
                     document.getElementById("dropdown_payment_list").classList.add("hidden");
@@ -481,30 +560,43 @@
         function createPaymentElement(payment) {
             const wrapper = document.createElement("div");
             const paypalButtonId = `paypal-button-${payment.payment_id}`; // unique ID
+            const khaltiButtonId = `khalti_button_${payment.payment_id}`;
 
-            wrapper.classList.add("p-3", "mt-2", "bg-white", "rounded", "flex", "items-start", "justify-between");
+
+            wrapper.classList.add("p-3", "mt-2", "bg-white", "rounded", "items-start");
 
             wrapper.innerHTML = `
-                <div class="flex">
-                    <div tabindex="0" class="focus:outline-none w-8 h-8 rounded-full border-gray-200 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="40" height="40">
-                            <rect x="2" y="6" width="20" height="12" rx="2" ry="2" stroke="currentColor" fill="#95A5A6"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" fill="white"/>
-                            <path d="M6 9h.01M18 15h.01" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/>
-                        </svg>
+                <div class="flex w-[100%] justify-between rounded">
+                    <div>
+                        <div class="flex">
+                            <div tabindex="0" class="focus:outline-none w-8 h-8 rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="40" height="40">
+                                    <rect x="2" y="6" width="20" height="12" rx="2" ry="2" stroke="currentColor" fill="#95A5A6"/>
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" fill="white"/>
+                                    <path d="M6 9h.01M18 15h.01" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"/>
+                                </svg>
+                            </div>
+                            <div class="pl-3">
+                                <p class="text-sm leading-none">${payment.description} - $${payment.amount}</p>
+                                <div class="text-xs  pt-2">${new Date(payment.timestamp).toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <div class="mt-2 bg-dark-blue px-2 py-1.5 rounded-md text-white font-semibold hover:scale-[1.02] hover:underline">
+                            <button class='w-full h-full' id='khalti_button_${khaltiButtonId}' onclick="khaltipayment(${payment.amount},${payment.payment_id},${payment.case__case_id},'${payment.description}')">Pay with Khalti</button>
+                        </div>
                     </div>
-                    <div class="pl-3">
-                        <p class="text-sm leading-none">${payment.description} - $${payment.amount}</p>
-                        <div class="text-xs  pt-2">${new Date(payment.timestamp).toLocaleString()}</div>
+                    <div>
+                        <div id="${paypalButtonId}" class></div>
                     </div>
                 </div>
-                <div id="${paypalButtonId}"></div>
+                
+                
             `;
 
             // Defer rendering PayPal until after the DOM is updated
             setTimeout(() => {
                 paypal.Buttons({
-                    createOrder: function(data, actions) {
+                    createOrder: function (data, actions) {
                         return actions.order.create({
                             purchase_units: [{
                                 amount: {
@@ -513,9 +605,9 @@
                             }]
                         });
                     },
-                    onApprove: function(data, actions) {
+                    onApprove: function (data, actions) {
                         document.getElementById("close-payment-modal").click(); // Close the modal after approval
-                        return actions.order.capture().then(function(details) {
+                        return actions.order.capture().then(function (details) {
                             return fetch("/paypal/complete/", {
                                 method: "POST",
                                 headers: {
@@ -524,11 +616,11 @@
                                 body: JSON.stringify({
                                     payment_id: payment.payment_id,
                                     case_id: payment.case__case_id,
-                                    
+
                                 })
                             }).then(response => response.json())
-                            .then(data => {
-                                const toast=`
+                                .then(data => {
+                                    const toast = `
                                         
                                             <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-dark-green bg-green-100 rounded-lg">
                                                 <svg class="w-5 h-5 text-dark_green" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -545,64 +637,83 @@
                                             </button>
                                         
                                     `;
-                                const toastContainer = document.createElement("div")
-                                toastContainer.className="hidden z-50 fixed top-0 mt-5 left-[50%] -translate-x-[50%] items-center w-full max-w-xs p-4 mb-4  bg-white rounded-lg shadow-sm ";
-                                toastContainer.id = "toast-success-payment";
-                                toastContainer.setAttribute("role", "alert");
-                                toastContainer.innerHTML = toast;
-                                document.body.appendChild(toastContainer);
-                                const toastElement = document.getElementById("toast-success-payment");
-                                toastElement.classList.remove("hidden");
-                                toastElement.classList.add("flex");
-                                const messageElement = document.getElementById("payment_message");
-                                if (data.status == 'success') {
-                                    console.log("Payment completed successfully:", data);
-                                    fetchPaymentsCount(); // Refresh payment count
-                                    messageElement.innerHTML = "Payment Successful";
-                                    const payment_formData2 = new FormData();
-                                    payment_formData2.append("activity_name", "Payment");
-                                    payment_formData2.append("activity_description", `${payment.description} - amount : $${payment.amount} is paid`);
-                                    payment_formData2.append("activity_file", '');
-                                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                                    const case_id_for_payment = payment.case__case_id;
-                                    fetch(`/activitylog/${case_id_for_payment}/`, {
-                                        method: 'POST',
-                                        headers: {
-                                            "X-CSRFToken": csrftoken,
-                                        },
-                                        body: payment_formData2
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.status == "success") {
-                                            //get the url location
-                                            console.log("activity for payment paid");
-                                            if(window.location.href.includes("casepage")){
-                                                window.location.reload();
+                                    const toastContainer = document.createElement("div")
+                                    toastContainer.className = "hidden z-50 fixed top-0 mt-5 left-[50%] -translate-x-[50%] items-center w-full max-w-xs p-4 mb-4  bg-white rounded-lg shadow-sm ";
+                                    toastContainer.id = "toast-success-payment";
+                                    toastContainer.setAttribute("role", "alert");
+                                    toastContainer.innerHTML = toast;
+                                    document.body.appendChild(toastContainer);
+                                    const toastElement = document.getElementById("toast-success-payment");
+                                    toastElement.classList.remove("hidden");
+                                    toastElement.classList.add("flex");
+                                    const messageElement = document.getElementById("payment_message");
+                                    if (data.status == 'success') {
+                                        console.log("Payment completed successfully:", data);
+                                        fetchPaymentsCount(); // Refresh payment count
+                                        messageElement.innerHTML = "Payment Successful";
+                                        const payment_formData2 = new FormData();
+                                        payment_formData2.append("activity_name", "Payment");
+                                        payment_formData2.append("activity_description", `${payment.description} - amount : $${payment.amount} is paid`);
+                                        payment_formData2.append("activity_file", '');
+                                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                                        const case_id_for_payment = payment.case__case_id;
+                                        fetch(`/activitylog/${case_id_for_payment}/`, {
+                                            method: 'POST',
+                                            headers: {
+                                                "X-CSRFToken": csrftoken,
+                                            },
+                                            body: payment_formData2
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.status == "success") {
+                                                //get the url location
+                                                console.log("activity for payment paid");
+                                                if (window.location.href.includes("casepage")) {
+                                                    window.location.reload();
+                                                }
+                                                // Optionally, you can update the UI to reflect the new activity
+                                            } else {
+                                                alert("Something went wrong while adding the activity.");
                                             }
-                                            // Optionally, you can update the UI to reflect the new activity
-                                        } else {
-                                            alert("Something went wrong while adding the activity.");
-                                        }
-                                    });
-                                } else {
-                                    console.error("Payment completion failed:", data);
-                                    messageElement.innerHTML = "Payment failed. Please try again.";
-                                }
-                                setTimeout(() => {
-                                    toastElement.remove();
-                                }, 3000);
-                                
-                            });
+                                        });
+                                    } else {
+                                        console.error("Payment completion failed:", data);
+                                        messageElement.innerHTML = "Payment failed. Please try again.";
+                                    }
+                                    setTimeout(() => {
+                                        toastElement.remove();
+                                    }, 3000);
+
+                                });
                         });
                     }
                 }).render(`#${paypalButtonId}`);
             }, 0); // Wait for next tick to ensure it's in the DOM
 
-            return wrapper; 
+            return wrapper;
         }
 
-        
+
+        function khaltipayment(amount,payment_id,case__case_id,description) {
+            let khalti_formdata = new FormData();
+            khalti_formdata.append("return_url", window.location.href);
+            khalti_formdata.append("amount", amount);
+            khalti_formdata.append("payment_id", payment_id);
+            khalti_formdata.append("payment_name", `case${case__case_id} - ${description} - payment_no_${payment_id}`);
+            khalti_formdata.append("customer_name", "{{ logged_in_user.user_name}}");
+            khalti_formdata.append("customer_email", "{{ logged_in_user.user_email }}");
+            khalti_formdata.append("customer_phone", "{{ logged_in_user.user_phone_number }}");
+            console.log("khalti clicked");
+            fetch(`/khaltipayment/`, {
+                method:"POST",
+                body: khalti_formdata,
+            }
+            ).then(response => response.json()).then(data => {
+                window.location.href = data.payment_url;
+            });
+        }
+
     </script>
 
 </body>

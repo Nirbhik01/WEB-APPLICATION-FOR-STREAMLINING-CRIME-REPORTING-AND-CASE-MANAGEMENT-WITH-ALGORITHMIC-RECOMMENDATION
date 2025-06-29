@@ -42,6 +42,8 @@ urlpatterns = [
     path('createpayment/<int:case_id>/', create_payment, name='CreatePayment'),
     path('fetchpaymentscount/', fetchPaymentsCount, name='FetchPaymentsCount'),
     path('paypal/complete/', paypal_complete, name='paypal-complete'),
+    path('khaltipayment/',khalti_payment,name='KhaltiPayment'),
+    path('khalti/complete/', khalti_complete, name='KhaltiPaymentSuccess'),
 ]
 
 # if settings.DEBUG:  # Serve media files only in development

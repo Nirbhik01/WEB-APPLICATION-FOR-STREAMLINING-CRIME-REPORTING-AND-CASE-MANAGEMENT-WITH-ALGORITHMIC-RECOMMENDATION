@@ -53,6 +53,10 @@ PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
 PAYPAL_TEST = True  # Set to False for live environment
 PAYPAL_RECEIVER_EMAIL = config('PAYPAL_RECEIVER_EMAIL')
 
+KHALTI_LIVE_SECRET_KEY = config('KHALTI_LIVE_SECRET_KEY')
+KHALTI_LIVE_PUBLIC_KEY = config('KHALTI_LIVE_PUBLIC_KEY')
+KHALTI_VERIFY_URL = config('KHALTI_VERIFY_URL')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -89,6 +93,7 @@ INSTALLED_APPS = [
     'channels',
     'chat',  
     'paypal.standard.ipn',
+    'khalti',
 ]
 
 ASGI_APPLICATION = 'ReportEase.asgi.application'

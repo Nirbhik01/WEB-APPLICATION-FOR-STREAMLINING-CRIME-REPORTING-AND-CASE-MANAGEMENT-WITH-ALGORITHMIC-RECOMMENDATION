@@ -30,6 +30,7 @@ urlpatterns = [
     path('investigator/', include('Investigator.urls')),  
     path('citizen/', include('Citizen.urls')),
     path('paypal/', include('paypal.standard.ipn.urls')),
+    path('khalti/', include('khalti.urls')),
 ]
 
 if settings.DEBUG:  # Serve media files only in development
