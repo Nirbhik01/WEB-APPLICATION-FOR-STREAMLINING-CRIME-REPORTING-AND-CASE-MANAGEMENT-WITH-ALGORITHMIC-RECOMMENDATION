@@ -84,11 +84,10 @@
         </div>
     </div>
     <script>
-        const search_input = document.getElementById('search-input').value;
         const filter_form = document.getElementById('filter-form');
         const filter_button = document.getElementById('filter-button');
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchQuery = urlParams.get('q');
+        let urlParamas = new URLSearchParams(window.location.search);
+        let searchQuery = urlParamas.get('q');
         let fetchUrl = '/case/getcases/';
         if (searchQuery) {
             fetchUrl = `/case/searchcases/?q=${encodeURIComponent(searchQuery)}`;

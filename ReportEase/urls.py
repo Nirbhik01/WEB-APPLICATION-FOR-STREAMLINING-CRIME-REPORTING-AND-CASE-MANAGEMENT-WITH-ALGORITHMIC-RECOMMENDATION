@@ -23,7 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('ReportEaseApp.urls')),
-    path('',include('ReportEaseApp.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path("user/", include("userauths.urls", namespace="userauths")),
     path('case/', include('Case.urls')),

@@ -264,8 +264,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script>
         //clean the redirect url from khalti
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get("status");
+        let urlParams = new URLSearchParams(window.location.search);
+        let status = urlParams.get("status");
 
         if (status === "Completed") {
             // Do something after successful payment
