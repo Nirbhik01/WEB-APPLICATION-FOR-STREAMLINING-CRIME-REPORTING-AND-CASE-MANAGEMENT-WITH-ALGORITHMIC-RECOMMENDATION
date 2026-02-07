@@ -59,6 +59,7 @@ KHALTI_VERIFY_URL = config('KHALTI_VERIFY_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['192.168.1.71','192.168.1.68','192.168.100.232','192.168.100.239','127.0.0.1','localhost','192.168.100.138']
 

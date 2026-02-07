@@ -28,7 +28,7 @@ def LandingPage(request):
     
     return render(request, 'LandingPage.html' )
 
-# enable get_news(request) during presentation
+# enable get_news(request) during presentationk
 def HomePage(request):
     login_check = check_for_login(request)
     if login_check:
@@ -37,7 +37,7 @@ def HomePage(request):
     
     return render(request, 'HomePage.html',{'wanted_list': wanted_data,
                                             # uncomment for presentation
-                                            # 'news_articles':get_news(request),
+                                            'news_articles':get_news(request),
                                             })
 
 def UploadWantedPage(request):

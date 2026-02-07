@@ -8,9 +8,9 @@
     {%load static tailwind_tags%}
     {%tailwind_css%}
 </head>
-<body class="bg-gradient-to-b from-dark-blue transform duration-500">  
+<body class="bg-light-gray h-screen transform duration-500">  
     {%block main_content%}
-        <form action="{%url 'investigator:uploadwanted'%}" id="Upload_wanted_form" class="w-screen flex justify-center bg-gradient-to-b  from-dark-blue mx-auto  bg-white p-5 h-full" enctype="multipart/form-data" method="post">
+        <form action="{%url 'investigator:uploadwanted'%}" id="Upload_wanted_form" class="w-screen   flex justify-center bg-gradient-to-b  from-dark-blue mx-auto   p-5 h-full" enctype="multipart/form-data" method="post">
         {% csrf_token %}
             <div class="inline-block grid-cols-1 mt-5  p-5 rounded-lg bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.8)]">
             <p class="mx-auto text-3xl text-center font-medium ">Upload Wanted</p>
@@ -24,7 +24,7 @@
             </div>
             <div class="my-5 w-full ">
                 <label for="caseDescription" class="form-label font-medium text-sm ">Wanted photo : </label><br>
-                <input name="Wanted_photo" type="file" name="wanted_pic" id="wanted_pic" class=" bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-0 selection:outline-none block w-full py-[0.45rem] px-2.5"/>
+                <input name="Wanted_photo" type="file" name="wanted_pic" id="wanted_pic" class=" bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-0 selection:outline-none block w-full px-2.5"/>
             </div>
             <p id="invalid" class="text-dark-red text-xs"></p>
             <div class="mx-auto mt-5 text-center">
@@ -38,8 +38,8 @@
             const form = document.getElementById('Upload_wanted_form');
             const submitButton = document.getElementById('submit');
             form.addEventListener('submit', function(event) {
-                console.log('Button clicked!'); // Log to console for debugging
-                console.log('Form data:', new FormData(form)); // Log form data for debugging
+                //console.log('Button clicked!'); // Log to console for debugging
+                //console.log('Form data:', new FormData(form)); // Log form data for debugging
                 event.preventDefault(); // Prevent the default form submission
 
                 const formData = new FormData(form); // Create a FormData object from the form

@@ -10,7 +10,6 @@ def citizen_profile_pic_path(instance, filename): #instance represents the curre
     new_filename = f"{email_slug}.{ext}"  # Create new filename
     return os.path.join('ReportEaseApp/ProfilePics/Citizen', new_filename)
 
-
 def citizen_citizenship_pic_path(instance, filename): #instance represents the current class object being used
     ext = filename.split('.')[-1]  # Get file extension (png, jpg, etc.)
     email_slug = slugify(instance.user.user_email.split('.')[0])  # Sanitize email
